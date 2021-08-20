@@ -13,7 +13,7 @@
         <PackageProjectUrl>https://github.com/fudiwei/DotNetCore.SKIT.FlurlHttpClient.Common</PackageProjectUrl>
         <PackageTags>Flurl.Http</PackageTags>
         <Version>0.1.0</Version>
-        <Description>为 SKIT.FlurlHttpClient 系列包提供核心组件。</Description>
+        <Description>为 SKIT.FlurlHttpClient 系列开发工具包提供核心组件。</Description>
         <Authors>Fu Diwei</Authors>
         <RepositoryType>git</RepositoryType>
         <RepositoryUrl>https://github.com/fudiwei/DotNetCore.SKIT.FlurlHttpClient.Common.git</RepositoryUrl>
