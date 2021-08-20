@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace SKIT.FlurlHttpClient.Wechat
+namespace SKIT.FlurlHttpClient
 {
     /// <summary>
     /// SKIT.FlurlHttpClient 响应接口。
