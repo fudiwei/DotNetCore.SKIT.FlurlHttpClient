@@ -68,14 +68,14 @@ namespace SKIT.FlurlHttpClient
             FlurlClient.Configure(flurlSettings =>
             {
                 var settings = new CommonClientSettings();
-                settings.Timeout = flurlSettings.Timeout;
+                settings.ConnectionRequestTimeout = flurlSettings.Timeout;
                 settings.ConnectionLeaseTimeout = flurlSettings.ConnectionLeaseTimeout;
                 settings.JsonSerializer = flurlSettings.JsonSerializer;
                 settings.UrlEncodedSerializer = flurlSettings.UrlEncodedSerializer;
                 settings.FlurlHttpClientFactory = flurlSettings.HttpClientFactory;
                 configure.Invoke(settings);
 
-                flurlSettings.Timeout = settings.Timeout;
+                flurlSettings.Timeout = settings.ConnectionRequestTimeout;
                 flurlSettings.ConnectionLeaseTimeout = settings.ConnectionLeaseTimeout;
                 flurlSettings.JsonSerializer = settings.JsonSerializer;
                 flurlSettings.UrlEncodedSerializer = settings.UrlEncodedSerializer;

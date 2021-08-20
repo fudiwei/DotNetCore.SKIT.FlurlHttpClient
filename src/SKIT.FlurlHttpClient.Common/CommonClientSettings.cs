@@ -11,7 +11,7 @@ namespace SKIT.FlurlHttpClient
         /// <summary>
         /// 
         /// </summary>
-        public TimeSpan? Timeout { get; set; }
+        public TimeSpan? ConnectionRequestTimeout { get; set; }
 
         /// <summary>
         /// 
