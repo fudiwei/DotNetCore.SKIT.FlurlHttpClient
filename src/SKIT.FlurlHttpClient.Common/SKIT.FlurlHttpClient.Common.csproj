@@ -10,13 +10,13 @@
     <PropertyGroup>
         <PackageId>SKIT.FlurlHttpClient.Common</PackageId>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
-        <PackageProjectUrl>https://github.com/fudiwei/DotNetCore.SKIT.FlurlHttpClient.Common</PackageProjectUrl>
+        <PackageProjectUrl>https://github.com/fudiwei/DotNetCore.SKIT.FlurlHttpClient</PackageProjectUrl>
         <PackageTags>Flurl.Http</PackageTags>
-        <Version>1.0.0</Version>
-        <Description>为 SKIT.FlurlHttpClient 系列开发工具包提供核心组件。</Description>
+        <Version>1.1.0-rc.1.210923</Version>
+        <Description>SKIT.FlurlHttpClient 系列开发工具包的公共组件。</Description>
         <Authors>Fu Diwei</Authors>
         <RepositoryType>git</RepositoryType>
-        <RepositoryUrl>https://github.com/fudiwei/DotNetCore.SKIT.FlurlHttpClient.Common.git</RepositoryUrl>
+        <RepositoryUrl>https://github.com/fudiwei/DotNetCore.SKIT.FlurlHttpClient.git</RepositoryUrl>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
         <IncludeSymbols>true</IncludeSymbols>
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
