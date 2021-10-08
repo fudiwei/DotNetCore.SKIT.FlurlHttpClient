@@ -1,6 +1,6 @@
 ﻿# SKIT.FlurlHttpClient
 
-SKIT.FlurlHttpClient 系列开发工具包核心组件。
+SKIT.FlurlHttpClient 系列开发工具包的公共组件。
 
 ---
 

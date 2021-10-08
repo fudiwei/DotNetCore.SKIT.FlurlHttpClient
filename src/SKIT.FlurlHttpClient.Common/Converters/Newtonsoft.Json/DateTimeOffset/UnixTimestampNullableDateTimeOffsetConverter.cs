@@ -25,7 +25,7 @@ namespace Newtonsoft.Json.Converters
             } 
             else if (reader.TokenType == JsonToken.Integer)
             {
-                long value = serializer.Deserialize <long>(reader);
+                long value = serializer.Deserialize<long>(reader);
                 return DateTimeOffset.FromUnixTimeSeconds(value);
             }
 
