@@ -83,6 +83,13 @@ namespace SKIT.FlurlHttpClient
             });
         }
 
+        private IFlurlRequest WrapRequest(IFlurlRequest flurlRequest)
+        {
+            return flurlRequest
+                .WithClient(FlurlClient)
+                .AllowAnyHttpStatus();
+        }
+
         /// <summary>
         /// 异步发起请求。
         /// </summary>
@@ -94,12 +101,7 @@ namespace SKIT.FlurlHttpClient
         {
             if (flurlRequest == null) throw new ArgumentNullException(nameof(flurlRequest));
 
-            var response = await flurlRequest
-                .WithClient(FlurlClient)
-                .AllowAnyHttpStatus()
-                .SendAsync(flurlRequest.Verb, httpContent, cancellationToken)
-                .ConfigureAwait(false);
-            return response;
+            return await WrapRequest(flurlRequest).SendAsync(flurlRequest.Verb, httpContent, cancellationToken);
         }
 
         /// <summary>
@@ -117,20 +119,10 @@ namespace SKIT.FlurlHttpClient
                 flurlRequest.Verb == HttpMethod.Head ||
                 flurlRequest.Verb == HttpMethod.Options)
             {
-                return await flurlRequest
-                    .WithClient(FlurlClient)
-                    .AllowAnyHttpStatus()
-                    .SendAsync(flurlRequest.Verb, cancellationToken: cancellationToken)
-                    .ConfigureAwait(false);
+                return await WrapRequest(flurlRequest).SendAsync(flurlRequest.Verb, cancellationToken: cancellationToken);
             }
-            else
-            {
-                return await flurlRequest
-                    .WithClient(FlurlClient)
-                    .AllowAnyHttpStatus()
-                    .SendJsonAsync(flurlRequest.Verb, data: data, cancellationToken: cancellationToken)
-                    .ConfigureAwait(false);
-            }
+
+            return await WrapRequest(flurlRequest).SendJsonAsync(flurlRequest.Verb, data: data, cancellationToken: cancellationToken);
         }
 
         /// <summary>
