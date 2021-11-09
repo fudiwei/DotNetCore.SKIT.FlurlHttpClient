@@ -1,6 +1,6 @@
 ﻿# SKIT.FlurlHttpClient
 
-SKIT.FlurlHttpClient 系列开发工具包的公共组件，为开发者提供使用体验一致的第三方 API SDK。
+SKIT.FlurlHttpClient 系列开发工具包的公共组件，为开发者提供使用体验一致的、可跨平台的第三方 API .NET SDK。
 
 ---
 

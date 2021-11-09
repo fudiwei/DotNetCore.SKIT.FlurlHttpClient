@@ -28,7 +28,7 @@ namespace SKIT.FlurlHttpClient
             var jsonOptions = new JsonSerializerOptions();
             jsonOptions.Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping;
             jsonOptions.NumberHandling = JsonNumberHandling.AllowReadingFromString;
-            jsonOptions.IgnoreNullValues = true;
+            jsonOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
             jsonOptions.WriteIndented = false;
             jsonOptions.PropertyNamingPolicy = null;
             jsonOptions.PropertyNameCaseInsensitive = true;
