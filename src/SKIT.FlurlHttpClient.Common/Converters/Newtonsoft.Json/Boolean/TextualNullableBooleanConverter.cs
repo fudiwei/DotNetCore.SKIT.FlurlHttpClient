@@ -1,12 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
 
 namespace Newtonsoft.Json.Converters
 {
     public class TextualNullableBooleanConverter : JsonConverter<bool?>
     {
+        private const string TRUE_TEXT = "true";
+        private const string FALSE_TEXT = "false";
+
         public override bool CanRead
         {
             get { return true; }
@@ -33,9 +33,9 @@ namespace Newtonsoft.Json.Converters
                 if (string.IsNullOrEmpty(value))
                     return existingValue;
 
-                if ("true".Equals(value, StringComparison.OrdinalIgnoreCase))
+                if (TRUE_TEXT.Equals(value, StringComparison.OrdinalIgnoreCase))
                     return true;
-                else if ("false".Equals(value, StringComparison.OrdinalIgnoreCase))
+                else if (FALSE_TEXT.Equals(value, StringComparison.OrdinalIgnoreCase))
                     return false;
             }
 
@@ -45,7 +45,7 @@ namespace Newtonsoft.Json.Converters
         public override void WriteJson(JsonWriter writer, bool? value, JsonSerializer serializer)
         {
             if (value.HasValue)
-                writer.WriteValue(value.Value ? "true" : "false");
+                writer.WriteValue(value.Value ? TRUE_TEXT : FALSE_TEXT);
             else
                 writer.WriteNull();
         }

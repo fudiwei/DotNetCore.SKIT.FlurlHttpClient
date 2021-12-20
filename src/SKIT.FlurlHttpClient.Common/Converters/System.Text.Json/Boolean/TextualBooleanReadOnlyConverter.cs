@@ -2,18 +2,18 @@
 
 namespace System.Text.Json.Converters
 {
-    public class TextualBooleanConverter : JsonConverter<bool>
+    public class TextualBooleanReadOnlyConverter : JsonConverter<bool>
     {
-        private readonly JsonConverter<bool?> _converter = new TextualNullableBooleanConverter();
+        private readonly JsonConverter<bool> _converter = new TextualBooleanConverter();
 
         public override bool Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
-            return _converter.Read(ref reader, typeToConvert, options) ?? default;
+            return _converter.Read(ref reader, typeToConvert, options);
         }
 
         public override void Write(Utf8JsonWriter writer, bool value, JsonSerializerOptions options)
         {
-            _converter.Write(writer, value, options);
+            writer.WriteBooleanValue(value);
         }
     }
 }

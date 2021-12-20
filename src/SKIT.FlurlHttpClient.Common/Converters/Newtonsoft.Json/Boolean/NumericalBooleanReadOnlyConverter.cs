@@ -2,9 +2,9 @@
 
 namespace Newtonsoft.Json.Converters
 {
-    public class NumericalBooleanConverter : JsonConverter<bool>
+    public class NumericalBooleanReadOnlyConverter : JsonConverter<bool>
     {
-        private readonly JsonConverter<bool?> _converter = new NumericalNullableBooleanConverter();
+        private readonly JsonConverter<bool> _converter = new NumericalBooleanConverter();
 
         public override bool CanRead
         {
@@ -18,12 +18,12 @@ namespace Newtonsoft.Json.Converters
 
         public override bool ReadJson(JsonReader reader, Type objectType, bool existingValue, bool hasExistingValue, JsonSerializer serializer)
         {
-            return _converter.ReadJson(reader, objectType, existingValue, hasExistingValue, serializer) ?? default;
+            return _converter.ReadJson(reader, objectType, existingValue, hasExistingValue, serializer);
         }
 
         public override void WriteJson(JsonWriter writer, bool value, JsonSerializer serializer)
         {
-            _converter.WriteJson(writer, value, serializer);
+            writer.WriteValue(value);
         }
     }
 }
