@@ -12,7 +12,7 @@
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <PackageProjectUrl>https://github.com/fudiwei/DotNetCore.SKIT.FlurlHttpClient</PackageProjectUrl>
         <PackageTags>Flurl.Http</PackageTags>
-        <Version>2.0.0</Version>
+        <Version>2.1.0</Version>
         <Description>SKIT.FlurlHttpClient 系列开发工具包的公共组件。</Description>
         <Authors>Fu Diwei</Authors>
         <RepositoryType>git</RepositoryType>
