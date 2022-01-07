@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Flurl;
@@ -106,6 +109,7 @@ namespace SKIT.FlurlHttpClient
 
         /// <summary>
         /// 异步发起请求。
+        /// <para>指定请求标头 `Content-Type` 为 `application/json`。</para>
         /// </summary>
         /// <param name="flurlRequest"></param>
         /// <param name="data"></param>
@@ -115,14 +119,74 @@ namespace SKIT.FlurlHttpClient
         {
             if (flurlRequest == null) throw new ArgumentNullException(nameof(flurlRequest));
 
-            if (flurlRequest.Verb == HttpMethod.Get ||
-                flurlRequest.Verb == HttpMethod.Head ||
-                flurlRequest.Verb == HttpMethod.Options)
+            if (data != null)
             {
-                return await WrapRequest(flurlRequest).SendAsync(flurlRequest.Verb, cancellationToken: cancellationToken);
+                if (!flurlRequest.Headers.GetAll(Contants.HttpHeaders.ContentType).Any())
+                {
+                    flurlRequest.WithHeader(Contants.HttpHeaders.ContentType, "application/json");
+                }
             }
 
             return await WrapRequest(flurlRequest).SendJsonAsync(flurlRequest.Verb, data: data, cancellationToken: cancellationToken);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="TResponse"></typeparam>
+        /// <param name="flurlResponse"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        protected async Task<TResponse> WrapResponseAsync<TResponse>(IFlurlResponse flurlResponse, CancellationToken cancellationToken = default)
+            where TResponse : ICommonResponse, new()
+        {
+            TResponse result = new TResponse();
+            result.RawStatus = flurlResponse.StatusCode;
+            result.RawHeaders = new ReadOnlyDictionary<string, string>(
+                flurlResponse.Headers
+                    .GroupBy(e => e.Name)
+                    .ToDictionary(
+                        k => k.Key,
+                        v => string.Join(", ", v.Select(e => e.Value))
+                    )
+            );
+            result.RawBytes = await flurlResponse.GetBytesAsync().ConfigureAwait(false);
+            return result;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="TResponse"></typeparam>
+        /// <param name="flurlResponse"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        protected async Task<TResponse> WrapResponseWithJsonAsync<TResponse>(IFlurlResponse flurlResponse, CancellationToken cancellationToken = default)
+            where TResponse : ICommonResponse, new()
+        {
+            TResponse tmp = await WrapResponseAsync<TResponse>(flurlResponse, cancellationToken);
+            byte tmpb1 = tmp.RawBytes.SkipWhile(b => b <= 32).FirstOrDefault(),
+                 tmpb2 = tmp.RawBytes.Reverse().SkipWhile(b => b <= 32).FirstOrDefault();
+            bool jsonable = (tmpb1 == 91 && tmpb2 == 93) || (tmpb1 == 123 && tmpb2 == 125); // "[...]" or "{...}"
+
+            TResponse result;
+            if (jsonable)
+            {
+                string? contentType = flurlResponse.Headers.GetAll(Contants.HttpHeaders.ContentType).FirstOrDefault();
+                string? charset = MediaTypeHeaderValue.TryParse(contentType, out var mediaType) ? mediaType.CharSet : null;
+                string json = (string.IsNullOrEmpty(charset) ? Encoding.UTF8 : Encoding.GetEncoding(charset)).GetString(tmp.RawBytes);
+
+                result = JsonSerializer.Deserialize<TResponse>(json);
+                result.RawStatus = tmp.RawStatus;
+                result.RawHeaders = tmp.RawHeaders;
+                result.RawBytes = tmp.RawBytes;
+            }
+            else
+            {
+                result = tmp;
+            }
+
+            return result;
         }
 
         /// <summary>
