@@ -11,8 +11,8 @@ namespace Newtonsoft.Json.Converters
         public override bool CanConvert(Type objectType)
         {
             return objectType.IsGenericType &&
-                   objectType.GetGenericTypeDefinition() == typeof(List<>) &&
-                   objectType.GetGenericArguments()[0] == typeof(int);
+                   typeof(IList<>).IsAssignableFrom(objectType.GetGenericTypeDefinition()) &&
+                   typeof(int) == objectType.GetGenericArguments()[0];
         }
 
         public override bool CanRead
@@ -33,7 +33,7 @@ namespace Newtonsoft.Json.Converters
 
         public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer)
         {
-            _converter.WriteJson(writer, value, serializer);
+            _converter.WriteJson(writer, ((IList<int>?)value)?.ToArray(), serializer);
         }
     }
 }

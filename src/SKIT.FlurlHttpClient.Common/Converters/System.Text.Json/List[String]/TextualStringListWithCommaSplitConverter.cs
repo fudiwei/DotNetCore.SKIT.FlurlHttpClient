@@ -23,11 +23,11 @@ namespace System.Text.Json.Converters
             }
         }
 
-        public override bool CanConvert(Type objectType)
+        public override bool CanConvert(Type typeToConvert)
         {
-            return objectType.IsGenericType &&
-                   objectType.GetGenericTypeDefinition() == typeof(List<>) &&
-                   objectType.GetGenericArguments()[0] == typeof(string);
+            return typeToConvert.IsGenericType &&
+                   typeof(IList<>).IsAssignableFrom(typeToConvert.GetGenericTypeDefinition()) &&
+                   typeof(string) == typeToConvert.GetGenericArguments()[0];
         }
 
         public override JsonConverter? CreateConverter(Type typeToConvert, JsonSerializerOptions options)
