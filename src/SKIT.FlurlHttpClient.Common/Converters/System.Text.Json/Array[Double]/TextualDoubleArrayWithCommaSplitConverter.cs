@@ -2,7 +2,7 @@
 
 namespace System.Text.Json.Converters
 {
-    public class TextualDoublegArrayWithCommaSplitConverter : JsonConverter<double[]?>
+    public class TextualDoubleArrayWithCommaSplitConverter : JsonConverter<double[]?>
     {
         public override double[]? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {

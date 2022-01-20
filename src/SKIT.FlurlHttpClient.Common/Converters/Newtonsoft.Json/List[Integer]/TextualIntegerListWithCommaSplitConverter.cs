@@ -12,7 +12,7 @@ namespace Newtonsoft.Json.Converters
         {
             return objectType.IsGenericType &&
                    objectType.GetGenericTypeDefinition() == typeof(List<>) &&
-                   objectType.GetElementType() == typeof(int);
+                   objectType.GetGenericArguments()[0] == typeof(int);
         }
 
         public override bool CanRead
@@ -27,7 +27,7 @@ namespace Newtonsoft.Json.Converters
 
         public override object? ReadJson(JsonReader reader, Type objectType, object? existingValue, JsonSerializer serializer)
         {
-            int[]? array = _converter.ReadJson(reader, objectType, default, serializer) as int[];
+            int[]? array = _converter.ReadJson(reader, objectType, null, false, serializer);
             return array?.ToList();
         }
 
