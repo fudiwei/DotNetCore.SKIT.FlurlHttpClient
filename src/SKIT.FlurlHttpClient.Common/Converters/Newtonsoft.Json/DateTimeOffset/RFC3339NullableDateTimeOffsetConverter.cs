@@ -41,7 +41,7 @@ namespace Newtonsoft.Json.Converters
                 return serializer.Deserialize<DateTimeOffset>(reader);
             }
 
-            throw new JsonReaderException();
+            throw new JsonSerializationException();
         }
 
         public override void WriteJson(JsonWriter writer, DateTimeOffset? value, JsonSerializer serializer)

@@ -35,7 +35,7 @@ namespace Newtonsoft.Json.Converters
                     return Convert.ToInt32(value);
             }
 
-            throw new JsonReaderException();
+            throw new JsonSerializationException();
         }
 
         public override void WriteJson(JsonWriter writer, int? value, JsonSerializer serializer)

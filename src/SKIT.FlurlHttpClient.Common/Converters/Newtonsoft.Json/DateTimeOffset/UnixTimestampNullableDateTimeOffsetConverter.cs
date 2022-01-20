@@ -26,7 +26,7 @@ namespace Newtonsoft.Json.Converters
                 return DateTimeOffset.FromUnixTimeSeconds(value);
             }
 
-            throw new JsonReaderException();
+            throw new JsonSerializationException();
         }
 
         public override void WriteJson(JsonWriter writer, DateTimeOffset? value, JsonSerializer serializer)

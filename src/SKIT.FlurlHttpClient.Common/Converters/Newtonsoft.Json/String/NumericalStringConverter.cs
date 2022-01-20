@@ -35,7 +35,7 @@ namespace Newtonsoft.Json.Converters
                 return serializer.Deserialize<string>(reader);
             }
 
-            throw new JsonReaderException();
+            throw new JsonSerializationException();
         }
 
         public override void WriteJson(JsonWriter writer, string? value, JsonSerializer serializer)
