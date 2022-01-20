@@ -7,9 +7,9 @@ namespace Newtonsoft.Json.Converters
     {
         internal const string DATETIME_FORMAT = "yyyy-MM-dd'T'HH:mm:sszzz";
 
-        public override bool CanRead 
-        { 
-            get { return true; } 
+        public override bool CanRead
+        {
+            get { return true; }
         }
 
         public override bool CanWrite

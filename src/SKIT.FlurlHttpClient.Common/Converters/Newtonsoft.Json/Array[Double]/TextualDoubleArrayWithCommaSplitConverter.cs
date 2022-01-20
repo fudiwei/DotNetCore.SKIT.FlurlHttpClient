@@ -30,7 +30,7 @@ namespace Newtonsoft.Json.Converters
 
                 string[] strArr = value.Split(',');
                 double[] dblArr = new double[strArr.Length];
-                for (int i = 0; i < strArr.Length; i ++)
+                for (int i = 0; i < strArr.Length; i++)
                 {
                     if (!double.TryParse(strArr[i], out double j))
                         throw new JsonSerializationException("Unexpected token when parsing string to double.");

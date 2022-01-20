@@ -13,13 +13,13 @@ namespace SKIT.FlurlHttpClient
         }
 
         /// <inheritdoc/>
-        public CommonExceptionBase(string message) 
+        public CommonExceptionBase(string message)
             : base(message)
         {
         }
 
         /// <inheritdoc/>
-        public CommonExceptionBase(string message, Exception innerException) 
+        public CommonExceptionBase(string message, Exception innerException)
             : base(message, innerException)
         {
         }

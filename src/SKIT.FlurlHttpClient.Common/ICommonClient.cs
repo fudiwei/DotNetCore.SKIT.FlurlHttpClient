@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Net.Http;
-using Flurl.Http;
 using Flurl.Http.Configuration;
 
 namespace SKIT.FlurlHttpClient

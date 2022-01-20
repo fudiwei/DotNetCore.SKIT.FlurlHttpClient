@@ -6,9 +6,9 @@ namespace Newtonsoft.Json.Converters
     {
         private readonly JsonConverter<string?> _converter = new NumericalStringConverter();
 
-        public override bool CanRead 
-        { 
-            get { return true; } 
+        public override bool CanRead
+        {
+            get { return true; }
         }
 
         public override bool CanWrite

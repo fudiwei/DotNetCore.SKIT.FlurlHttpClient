@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace SKIT.FlurlHttpClient
+﻿namespace SKIT.FlurlHttpClient
 {
     /// <summary>
     /// SKIT.FlurlHttpClient 请求接口。

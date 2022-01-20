@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Net.Http;
-using Flurl;
-using Flurl.Http;
 
 namespace Flurl.Http
 {

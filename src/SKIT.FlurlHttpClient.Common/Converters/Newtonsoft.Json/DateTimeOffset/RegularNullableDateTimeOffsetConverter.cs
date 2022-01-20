@@ -22,7 +22,7 @@ namespace Newtonsoft.Json.Converters
             if (reader.TokenType == JsonToken.Null)
             {
                 return existingValue;
-            } 
+            }
             else if (reader.TokenType == JsonToken.String)
             {
                 string? value = serializer.Deserialize<string>(reader);

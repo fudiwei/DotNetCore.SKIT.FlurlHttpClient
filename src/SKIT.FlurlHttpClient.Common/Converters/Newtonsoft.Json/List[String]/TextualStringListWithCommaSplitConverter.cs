@@ -10,7 +10,7 @@ namespace Newtonsoft.Json.Converters
 
         public override bool CanConvert(Type objectType)
         {
-            return objectType.IsGenericType && 
+            return objectType.IsGenericType &&
                    objectType.GetGenericTypeDefinition() == typeof(List<>) &&
                    objectType.GetElementType() == typeof(string);
         }

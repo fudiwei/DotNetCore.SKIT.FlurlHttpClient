@@ -30,7 +30,7 @@ namespace Newtonsoft.Json.Converters
 
                 string[] strArr = value.Split(',');
                 long[] lngArr = new long[strArr.Length];
-                for (int i = 0; i < strArr.Length; i ++)
+                for (int i = 0; i < strArr.Length; i++)
                 {
                     if (!long.TryParse(strArr[i], out long j))
                         throw new JsonSerializationException("Unexpected token when parsing string to long.");

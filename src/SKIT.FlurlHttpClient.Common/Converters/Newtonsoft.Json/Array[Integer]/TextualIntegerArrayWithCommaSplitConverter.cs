@@ -30,7 +30,7 @@ namespace Newtonsoft.Json.Converters
 
                 string[] strArr = value.Split(',');
                 int[] intArr = new int[strArr.Length];
-                for (int i = 0; i < strArr.Length; i ++)
+                for (int i = 0; i < strArr.Length; i++)
                 {
                     if (!int.TryParse(strArr[i], out int j))
                         throw new JsonSerializationException("Unexpected token when parsing string to integer.");

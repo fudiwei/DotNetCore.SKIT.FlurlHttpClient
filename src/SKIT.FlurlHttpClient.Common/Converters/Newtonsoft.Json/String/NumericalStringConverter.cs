@@ -4,9 +4,9 @@ namespace Newtonsoft.Json.Converters
 {
     public class NumericalStringConverter : JsonConverter<string?>
     {
-        public override bool CanRead 
-        { 
-            get { return true; } 
+        public override bool CanRead
+        {
+            get { return true; }
         }
 
         public override bool CanWrite

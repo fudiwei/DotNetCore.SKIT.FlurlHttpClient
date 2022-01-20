@@ -19,7 +19,7 @@ namespace Newtonsoft.Json.Converters
             if (reader.TokenType == JsonToken.Null)
             {
                 return existingValue;
-            } 
+            }
             else if (reader.TokenType == JsonToken.Integer)
             {
                 long value = serializer.Deserialize<long>(reader);
