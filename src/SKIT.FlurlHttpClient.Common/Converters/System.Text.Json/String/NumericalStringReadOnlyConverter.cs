@@ -13,10 +13,6 @@ namespace System.Text.Json.Converters
 
         public override void Write(Utf8JsonWriter writer, string? value, JsonSerializerOptions options)
         {
-            if (value != null)
-                writer.WriteStringValue(value);
-            else
-                writer.WriteNullValue();
         }
     }
 }

@@ -13,7 +13,7 @@ namespace Newtonsoft.Json.Converters
 
         public override bool CanWrite
         {
-            get { return true; }
+            get { return false; }
         }
 
         public override double ReadJson(JsonReader reader, Type objectType, double existingValue, bool hasExistingValue, JsonSerializer serializer)
@@ -23,7 +23,6 @@ namespace Newtonsoft.Json.Converters
 
         public override void WriteJson(JsonWriter writer, double value, JsonSerializer serializer)
         {
-            writer.WriteValue(value);
         }
     }
 }

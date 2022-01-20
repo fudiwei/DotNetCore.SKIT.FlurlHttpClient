@@ -13,7 +13,6 @@ namespace System.Text.Json.Converters
 
         public override void Write(Utf8JsonWriter writer, bool value, JsonSerializerOptions options)
         {
-            writer.WriteBooleanValue(value);
         }
     }
 }
