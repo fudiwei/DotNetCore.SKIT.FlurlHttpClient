@@ -117,7 +117,7 @@ namespace SKIT.FlurlHttpClient.UnitTests
             public IList<string> TextualStringListWithCommaSplitProperty { get; set; } = new List<string>() { "a", "b", "c" };
         }
 
-        [Test(Description = "自定义 Newtosoft.Json 序列化转换器功能测试")]
+        [Test(Description = "测试用例：自定义 Newtosoft.Json 序列化转换器")]
         public void TestCustomNewtosoftJsonConverters()
         {
             var serializerSettings = FlurlNewtonsoftJsonSerializer.GetDefaultSerializerSettings();
@@ -158,7 +158,7 @@ namespace SKIT.FlurlHttpClient.UnitTests
             CollectionAssert.AreEqual(rawObj.TextualStringListWithCommaSplitProperty, parsedObj.TextualStringListWithCommaSplitProperty);
         }
 
-        [Test(Description = "自定义 System.Text.Json 序列化转换器功能测试")]
+        [Test(Description = "测试用例：自定义 System.Text.Json 序列化转换器")]
         public void TestCustomSystemTextJsonConverters()
         {
             var serializerSettings = FlurlNewtonsoftJsonSerializer.GetDefaultSerializerSettings();
