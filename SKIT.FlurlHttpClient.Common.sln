@@ -1,11 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31605.320
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32014.148
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{BB683F79-A839-4BA0-9756-749CA2AF45CF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SKIT.FlurlHttpClient.Common", "src\SKIT.FlurlHttpClient.Common\SKIT.FlurlHttpClient.Common.csproj", "{8F874697-2E7D-49FF-85ED-E164B78EECB8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SKIT.FlurlHttpClient.Common", "src\SKIT.FlurlHttpClient.Common\SKIT.FlurlHttpClient.Common.csproj", "{8F874697-2E7D-49FF-85ED-E164B78EECB8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{E5DB8823-AE19-4A85-A078-3F168F5E9DB4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SKIT.FlurlHttpClient.Common.UnitTests", "test\SKIT.FlurlHttpClient.Common.UnitTests\SKIT.FlurlHttpClient.Common.UnitTests.csproj", "{DE6E5CC0-2C58-4B22-A69C-1CA442F23379}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,12 +21,17 @@ Global
 		{8F874697-2E7D-49FF-85ED-E164B78EECB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8F874697-2E7D-49FF-85ED-E164B78EECB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8F874697-2E7D-49FF-85ED-E164B78EECB8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DE6E5CC0-2C58-4B22-A69C-1CA442F23379}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE6E5CC0-2C58-4B22-A69C-1CA442F23379}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE6E5CC0-2C58-4B22-A69C-1CA442F23379}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE6E5CC0-2C58-4B22-A69C-1CA442F23379}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{8F874697-2E7D-49FF-85ED-E164B78EECB8} = {BB683F79-A839-4BA0-9756-749CA2AF45CF}
+		{DE6E5CC0-2C58-4B22-A69C-1CA442F23379} = {E5DB8823-AE19-4A85-A078-3F168F5E9DB4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FA445A94-054D-4A07-8A86-8A20E6F6EEDC}

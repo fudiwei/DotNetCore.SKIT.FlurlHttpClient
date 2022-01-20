@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFrameworks>net461; netcoreapp3.1; net6.0</TargetFrameworks>
+		<LangVersion>9.0</LangVersion>
+		<Nullable>enable</Nullable>
+		<NullableReferenceTypes>true</NullableReferenceTypes>
+		<IsPackable>false</IsPackable>
+		<RootNamespace>SKIT.FlurlHttpClient.UnitTests</RootNamespace>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.0.0" />
+		<PackageReference Include="NUnit" Version="3.13.2" />
+		<PackageReference Include="NUnit3TestAdapter" Version="4.2.0" />
+		<PackageReference Include="coverlet.collector" Version="3.1.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\..\src\SKIT.FlurlHttpClient.Common\SKIT.FlurlHttpClient.Common.csproj" />
+	</ItemGroup>
+
+</Project>
