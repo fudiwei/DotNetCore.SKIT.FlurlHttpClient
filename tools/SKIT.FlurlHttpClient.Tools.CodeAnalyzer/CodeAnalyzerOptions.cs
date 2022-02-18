@@ -18,6 +18,18 @@
         public string WorkDirectoryForTestSample { get; set; }
 
         /// <summary>
+        /// 获取或设置每个 API 模型的内嵌类型包装标识。
+        /// <para>默认值："Types"</para>
+        /// </summary>
+        public string KeywordForApiModelInnerNestedTypesWrapperIdentifier { get; set; }
+
+        /// <summary>
+        /// 获取或设置每个 API 方法的 FlurlRequest 构造方法标识。
+        /// <para>默认值："CreateRequest"</para>
+        /// </summary>
+        public string KeywordForApiMethodInnerFlurlRequestInitializerIdentifier { get; set; }
+
+        /// <summary>
         /// 获取或设置是否允许空的 API 模型类型；否则将在分析断言时抛出异常。
         /// </summary>
         public bool AllowNotFoundModelTypes { get; set; }
@@ -42,6 +54,8 @@
             AssemblyName = string.Empty;
             WorkDirectoryForSourceCode = string.Empty;
             WorkDirectoryForTestSample = string.Empty;
+            KeywordForApiMethodInnerFlurlRequestInitializerIdentifier = "CreateRequest";
+            KeywordForApiModelInnerNestedTypesWrapperIdentifier = "Types";
         }
     }
 }
