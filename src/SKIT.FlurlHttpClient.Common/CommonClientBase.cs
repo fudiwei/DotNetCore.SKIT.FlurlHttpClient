@@ -138,7 +138,14 @@ namespace SKIT.FlurlHttpClient
         protected async Task<TResponse> WrapResponseAsync<TResponse>(IFlurlResponse flurlResponse, CancellationToken cancellationToken = default)
             where TResponse : ICommonResponse, new()
         {
+            Task<byte[]> taskReadBytes = flurlResponse.GetBytesAsync();
+            Task taskCancellationToken = Task.FromCanceled(cancellationToken);
+
+            await Task.WhenAny(taskReadBytes, taskCancellationToken);
+            cancellationToken.ThrowIfCancellationRequested();
+
             TResponse result = new TResponse();
+            result.RawBytes = await taskReadBytes;
             result.RawStatus = flurlResponse.StatusCode;
             result.RawHeaders = new ReadOnlyDictionary<string, string>(
                 flurlResponse.Headers
@@ -148,7 +155,6 @@ namespace SKIT.FlurlHttpClient
                         v => string.Join(", ", v.Select(e => e.Value))
                     )
             );
-            result.RawBytes = await flurlResponse.GetBytesAsync().ConfigureAwait(false);
             return result;
         }
 
