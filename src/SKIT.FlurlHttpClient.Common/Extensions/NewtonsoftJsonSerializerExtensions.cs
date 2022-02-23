@@ -9,7 +9,9 @@
 
             return new JsonSerializerSettings
             {
+#pragma warning disable CS0618
                 Binder = serializer.Binder,
+#pragma warning restore CS0618
                 Context = serializer.Context,
                 Culture = serializer.Culture,
                 ContractResolver = serializer.ContractResolver,
@@ -33,13 +35,17 @@
                 ObjectCreationHandling = serializer.ObjectCreationHandling,
                 PreserveReferencesHandling = serializer.PreserveReferencesHandling,
                 ReferenceLoopHandling = serializer.ReferenceLoopHandling,
+#pragma warning disable CS0618
                 ReferenceResolver = serializer.ReferenceResolver,
+#pragma warning restore CS0618
                 ReferenceResolverProvider = () => serializer.ReferenceResolver,
                 StringEscapeHandling = serializer.StringEscapeHandling,
                 TraceWriter = serializer.TraceWriter,
                 TypeNameHandling = serializer.TypeNameHandling,
                 SerializationBinder = serializer.SerializationBinder,
+#pragma warning disable CS0618
                 TypeNameAssemblyFormat = serializer.TypeNameAssemblyFormat,
+#pragma warning restore CS0618
                 TypeNameAssemblyFormatHandling = serializer.TypeNameAssemblyFormatHandling
             };
         }

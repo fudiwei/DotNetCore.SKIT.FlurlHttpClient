@@ -66,21 +66,16 @@ namespace SKIT.FlurlHttpClient
         {
             if (configure == null) throw new ArgumentNullException(nameof(configure));
 
-            FlurlClient.Configure(flurlSettings =>
+            FlurlClient.Configure(flurlClientSettings =>
             {
-                var settings = new CommonClientSettings();
-                settings.ConnectionRequestTimeout = flurlSettings.Timeout;
-                settings.ConnectionLeaseTimeout = flurlSettings.ConnectionLeaseTimeout;
-                settings.JsonSerializer = flurlSettings.JsonSerializer;
-                settings.UrlEncodedSerializer = flurlSettings.UrlEncodedSerializer;
-                settings.FlurlHttpClientFactory = flurlSettings.HttpClientFactory;
+                CommonClientSettings settings = new CommonClientSettings(flurlClientSettings);
                 configure.Invoke(settings);
 
-                flurlSettings.Timeout = settings.ConnectionRequestTimeout;
-                flurlSettings.ConnectionLeaseTimeout = settings.ConnectionLeaseTimeout;
-                flurlSettings.JsonSerializer = settings.JsonSerializer;
-                flurlSettings.UrlEncodedSerializer = settings.UrlEncodedSerializer;
-                flurlSettings.HttpClientFactory = settings.FlurlHttpClientFactory;
+                flurlClientSettings.Timeout = settings.ConnectionRequestTimeout;
+                flurlClientSettings.ConnectionLeaseTimeout = settings.ConnectionLeaseTimeout;
+                flurlClientSettings.JsonSerializer = settings.JsonSerializer;
+                flurlClientSettings.UrlEncodedSerializer = settings.UrlEncodedSerializer;
+                flurlClientSettings.HttpClientFactory = settings.FlurlHttpClientFactory;
             });
         }
 
@@ -199,6 +194,7 @@ namespace SKIT.FlurlHttpClient
         public virtual void Dispose()
         {
             FlurlClient?.Dispose();
+            GC.SuppressFinalize(this);
         }
     }
 }

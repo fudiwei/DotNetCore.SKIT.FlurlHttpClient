@@ -33,11 +33,18 @@ namespace SKIT.FlurlHttpClient
         /// </summary>
         public IHttpClientFactory FlurlHttpClientFactory { get; set; } = default!;
 
-        /// <summary>
-        /// 
-        /// </summary>
         internal CommonClientSettings()
         {
+        }
+
+        internal CommonClientSettings(ClientFlurlHttpSettings flurlClientSettings)
+            : this()
+        {
+            ConnectionRequestTimeout = flurlClientSettings.Timeout;
+            ConnectionLeaseTimeout = flurlClientSettings.ConnectionLeaseTimeout;
+            JsonSerializer = flurlClientSettings.JsonSerializer;
+            UrlEncodedSerializer = flurlClientSettings.UrlEncodedSerializer;
+            FlurlHttpClientFactory = flurlClientSettings.HttpClientFactory;
         }
     }
 }

@@ -17,9 +17,7 @@ namespace SKIT.FlurlHttpClient
 
         public FlurlNewtonsoftJsonSerializer(JsonSerializerSettings settings)
         {
-            if (settings == null) throw new ArgumentNullException(nameof(settings));
-
-            _settings = settings;
+            _settings = settings ?? throw new ArgumentNullException(nameof(settings));
         }
 
         public static JsonSerializerSettings GetDefaultSerializerSettings()
@@ -35,7 +33,7 @@ namespace SKIT.FlurlHttpClient
 
         public T Deserialize<T>(string json)
         {
-            return JsonConvert.DeserializeObject<T>(json, _settings);
+            return JsonConvert.DeserializeObject<T>(json, _settings)!;
         }
 
         T ISerializer.Deserialize<T>(Stream stream)
@@ -45,11 +43,9 @@ namespace SKIT.FlurlHttpClient
                 stream.Seek(0, SeekOrigin.Begin);
             }
 
-            using (var reader = new StreamReader(stream))
-            {
-                string json = reader.ReadToEnd();
-                return Deserialize<T>(json);
-            }
+            using TextReader reader = new StreamReader(stream);
+            string json = reader.ReadToEnd();
+            return Deserialize<T>(json);
         }
 
         public object Deserialize(string json, Type type)
