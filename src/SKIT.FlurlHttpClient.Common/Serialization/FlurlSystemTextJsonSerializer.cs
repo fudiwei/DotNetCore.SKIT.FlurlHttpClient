@@ -18,21 +18,19 @@ namespace SKIT.FlurlHttpClient
 
         public FlurlSystemTextJsonSerializer(JsonSerializerOptions options)
         {
-            if (options == null) throw new ArgumentNullException(nameof(options));
-
-            _options = options;
+            _options = options ?? throw new ArgumentNullException(nameof(options));
         }
 
         public static JsonSerializerOptions GetDefaultSerializerOptions()
         {
-            var jsonOptions = new JsonSerializerOptions();
-            jsonOptions.Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping;
-            jsonOptions.NumberHandling = JsonNumberHandling.AllowReadingFromString;
-            jsonOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
-            jsonOptions.WriteIndented = false;
-            jsonOptions.PropertyNamingPolicy = null;
-            jsonOptions.PropertyNameCaseInsensitive = true;
-            return jsonOptions;
+            JsonSerializerOptions options = new JsonSerializerOptions();
+            options.Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping;
+            options.NumberHandling = JsonNumberHandling.AllowReadingFromString;
+            options.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
+            options.WriteIndented = false;
+            options.PropertyNamingPolicy = null;
+            options.PropertyNameCaseInsensitive = true;
+            return options;
         }
 
         public T Deserialize<T>(string json)
@@ -47,11 +45,9 @@ namespace SKIT.FlurlHttpClient
                 stream.Seek(0, SeekOrigin.Begin);
             }
 
-            using (var reader = new StreamReader(stream))
-            {
-                string json = reader.ReadToEnd();
-                return Deserialize<T>(json);
-            }
+            using TextReader reader = new StreamReader(stream);
+            string json = reader.ReadToEnd();
+            return Deserialize<T>(json);
         }
 
         public object Deserialize(string json, Type type)

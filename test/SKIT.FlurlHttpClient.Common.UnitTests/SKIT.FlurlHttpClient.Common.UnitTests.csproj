@@ -10,6 +10,11 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<Reference Include="Microsoft.CSharp" Condition="'$(TargetFramework)' == 'net461'" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.CSharp" Version="4.7.0" Condition="'$(TargetFramework)' != 'net461'" />
 		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.1.0" />
 		<PackageReference Include="NUnit" Version="3.13.2" />
 		<PackageReference Include="NUnit3TestAdapter" Version="4.2.1" />

@@ -115,6 +115,30 @@ namespace SKIT.FlurlHttpClient.UnitTests
             [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.TextualStringListWithCommaSplitConverter))]
             [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Converters.TextualStringListWithCommaSplitConverter))]
             public IList<string> TextualStringListWithCommaSplitProperty { get; set; } = new List<string>() { "a", "b", "c" };
+
+            [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Converters.DynamicObjectConverter))]
+            public dynamic DynamicObjectConverter_Boolean { get; set; } = true;
+
+            [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Converters.DynamicObjectConverter))]
+            public dynamic DynamicObjectConverter_Number { get; set; } = 1;
+
+            [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Converters.DynamicObjectConverter))]
+            public dynamic DynamicObjectConverter_String { get; set; } = "a";
+
+            [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Converters.DynamicObjectConverter))]
+            public dynamic DynamicObjectConverter_Guid { get; set; } = Guid.Parse("11112222-3333-4444-5555-666677778888");
+
+            [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Converters.DynamicObjectConverter))]
+            public dynamic DynamicObjectConverter_Array { get; set; } = new object[] { true, 1, "a" };
+
+            [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Converters.DynamicObjectConverter))]
+            public dynamic DynamicObjectConverter_List { get; set; } = new List<object>() { true, 1, "a" };
+
+            [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Converters.DynamicObjectConverter))]
+            public dynamic DynamicObjectConverter_Dictionary { get; set; } = new Dictionary<string, object>() { { "k1", true }, { "k2", 1 }, { "k3", "a" } };
+
+            [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Converters.DynamicObjectConverter))]
+            public dynamic DynamicObjectConverter_AnonymousObject { get; set; } = new { k1 = true, k2 = 1, k3 = "a" };
         }
 
         [Test(Description = "测试用例：自定义 Newtosoft.Json 序列化转换器")]
@@ -161,10 +185,10 @@ namespace SKIT.FlurlHttpClient.UnitTests
         [Test(Description = "测试用例：自定义 System.Text.Json 序列化转换器")]
         public void TestCustomSystemTextJsonConverters()
         {
-            var serializerSettings = FlurlNewtonsoftJsonSerializer.GetDefaultSerializerSettings();
-            serializerSettings.Formatting = Newtonsoft.Json.Formatting.None;
-            serializerSettings.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore;
-            var serializer = new FlurlNewtonsoftJsonSerializer(serializerSettings);
+            var serializerOptions = FlurlSystemTextJsonSerializer.GetDefaultSerializerOptions();
+            serializerOptions.WriteIndented = true;
+            serializerOptions.DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull;
+            var serializer = new FlurlSystemTextJsonSerializer(serializerOptions);
 
             var rawObj = new InnerFakeClass();
             var rawJson = serializer.Serialize(rawObj);
@@ -197,6 +221,14 @@ namespace SKIT.FlurlHttpClient.UnitTests
             CollectionAssert.AreEqual(rawObj.TextualIntegerListWithCommaSplitProperty, parsedObj.TextualIntegerListWithCommaSplitProperty);
             CollectionAssert.AreEqual(rawObj.TextualLongListWithCommaSplitProperty, parsedObj.TextualLongListWithCommaSplitProperty);
             CollectionAssert.AreEqual(rawObj.TextualStringListWithCommaSplitProperty, parsedObj.TextualStringListWithCommaSplitProperty);
+            Assert.NotNull(parsedObj.DynamicObjectConverter_Boolean);
+            Assert.NotNull(parsedObj.DynamicObjectConverter_Number);
+            Assert.NotNull(parsedObj.DynamicObjectConverter_String);
+            Assert.NotNull(parsedObj.DynamicObjectConverter_Guid);
+            Assert.NotNull(parsedObj.DynamicObjectConverter_Array);
+            Assert.NotNull(parsedObj.DynamicObjectConverter_List);
+            Assert.NotNull(parsedObj.DynamicObjectConverter_Dictionary);
+            Assert.NotNull(parsedObj.DynamicObjectConverter_AnonymousObject);
         }
     }
 }

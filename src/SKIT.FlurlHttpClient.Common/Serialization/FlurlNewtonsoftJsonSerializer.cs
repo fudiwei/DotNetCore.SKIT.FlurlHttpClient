@@ -22,13 +22,13 @@ namespace SKIT.FlurlHttpClient
 
         public static JsonSerializerSettings GetDefaultSerializerSettings()
         {
-            var jsonSettings = new JsonSerializerSettings();
-            jsonSettings.ReferenceLoopHandling = ReferenceLoopHandling.Serialize;
-            jsonSettings.PreserveReferencesHandling = PreserveReferencesHandling.None;
-            jsonSettings.NullValueHandling = NullValueHandling.Ignore;
-            jsonSettings.Formatting = Formatting.None;
-            jsonSettings.ContractResolver = new DefaultContractResolver();
-            return jsonSettings;
+            JsonSerializerSettings settings = new JsonSerializerSettings();
+            settings.ReferenceLoopHandling = ReferenceLoopHandling.Serialize;
+            settings.PreserveReferencesHandling = PreserveReferencesHandling.None;
+            settings.NullValueHandling = NullValueHandling.Ignore;
+            settings.Formatting = Formatting.None;
+            settings.ContractResolver = new DefaultContractResolver();
+            return settings;
         }
 
         public T Deserialize<T>(string json)
