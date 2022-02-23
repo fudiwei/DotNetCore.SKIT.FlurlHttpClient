@@ -342,7 +342,7 @@ namespace System.Text.Json.Converters
 
                     foreach (PropertyInfo property in properties)
                     {
-                        string propertyKey = property.GetCustomAttribute<JsonPropertyNameAttribute>()?.Name ?? property.Name;
+                        string propertyKey = property.GetCustomAttribute<JsonPropertyNameAttribute>(inherit: true)?.Name ?? property.Name;
                         object? propertyValue = property.GetValue(value);
 
                         if (propertyValue == null)
@@ -355,7 +355,17 @@ namespace System.Text.Json.Converters
                         }
 
                         writer.WritePropertyName(propertyKey);
-                        WriteValue(ref writer, propertyValue, options);
+
+                        JsonConverterAttribute? jsonConverterAttribute = property.GetCustomAttribute<JsonConverterAttribute>(inherit: true);
+                        if (jsonConverterAttribute == null)
+                        {
+                            WriteValue(ref writer, propertyValue, options);
+                        }
+                        else
+                        {
+                            JsonConverter jsonConverter = jsonConverterAttribute.CreateConverter(property.PropertyType) ?? (JsonConverter)Activator.CreateInstance(jsonConverterAttribute.ConverterType!);
+                            WriteValueWithJsonConverter(ref writer, value, options, jsonConverter);
+                        }
                     }
                 }
 
@@ -397,7 +407,17 @@ namespace System.Text.Json.Converters
                         }
 
                         writer.WritePropertyName(fieldKey);
-                        WriteValue(ref writer, fieldValue, options);
+
+                        JsonConverterAttribute? jsonConverterAttribute = field.GetCustomAttribute<JsonConverterAttribute>(inherit: true);
+                        if (jsonConverterAttribute == null)
+                        {
+                            WriteValue(ref writer, fieldValue, options);
+                        }
+                        else
+                        {
+                            JsonConverter jsonConverter = jsonConverterAttribute.CreateConverter(field.FieldType) ?? (JsonConverter)Activator.CreateInstance(jsonConverterAttribute.ConverterType!);
+                            WriteValueWithJsonConverter(ref writer, value, options, jsonConverter);
+                        }
                     }
                 }
             }
