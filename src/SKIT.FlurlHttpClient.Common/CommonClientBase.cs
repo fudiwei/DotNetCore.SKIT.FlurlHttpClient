@@ -133,8 +133,8 @@ namespace SKIT.FlurlHttpClient
         protected async Task<TResponse> WrapResponseAsync<TResponse>(IFlurlResponse flurlResponse, CancellationToken cancellationToken = default)
             where TResponse : ICommonResponse, new()
         {
-            Task<byte[]> taskReadBytes = flurlResponse.GetBytesAsync();
-            Task taskCancellationToken = Task.FromCanceled(cancellationToken);
+            using Task<byte[]> taskReadBytes = flurlResponse.GetBytesAsync();
+            using Task taskCancellationToken = Task.Run(async () => { while (!cancellationToken.IsCancellationRequested && !taskReadBytes.IsCompleted) await Task.Yield(); });
 
             await Task.WhenAny(taskReadBytes, taskCancellationToken);
             cancellationToken.ThrowIfCancellationRequested();
