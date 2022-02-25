@@ -13,3 +13,9 @@ SKIT.FlurlHttpClient 系列现有以下开发工具包：
 -   SKIT.FlurlHttpClient.Meituan：美团系列 API SDK，内部开发，敬请期待。
 
 -   SKIT.FlurlHttpClient.JD：京东系列 API SDK，内部开发，敬请期待。
+
+---
+
+## 更新日志
+
+详细更新说明请参阅 [CHANGELOG](./CHANGELOG.md)。
