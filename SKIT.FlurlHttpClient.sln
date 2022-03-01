@@ -13,7 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SKIT.FlurlHttpClient.Common
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tools", "tools", "{F47F25AD-DC53-4057-9E10-A34934D1C359}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SKIT.FlurlHttpClient.Tools.CodeAnalyzer", "tools\SKIT.FlurlHttpClient.Tools.CodeAnalyzer\SKIT.FlurlHttpClient.Tools.CodeAnalyzer.csproj", "{090474A7-E42C-455F-B1AD-A70A5D1D6152}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SKIT.FlurlHttpClient.Tools.CodeAnalyzer", "tools\SKIT.FlurlHttpClient.Tools.CodeAnalyzer\SKIT.FlurlHttpClient.Tools.CodeAnalyzer.csproj", "{090474A7-E42C-455F-B1AD-A70A5D1D6152}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SKIT.FlurlHttpClient.Tools.DocsTracker", "tools\SKIT.FlurlHttpClient.Tools.DocsTracker\SKIT.FlurlHttpClient.Tools.DocsTracker.csproj", "{8FA2257C-519D-48F8-A57B-32CC09F2D3A7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{090474A7-E42C-455F-B1AD-A70A5D1D6152}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{090474A7-E42C-455F-B1AD-A70A5D1D6152}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{090474A7-E42C-455F-B1AD-A70A5D1D6152}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8FA2257C-519D-48F8-A57B-32CC09F2D3A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8FA2257C-519D-48F8-A57B-32CC09F2D3A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8FA2257C-519D-48F8-A57B-32CC09F2D3A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8FA2257C-519D-48F8-A57B-32CC09F2D3A7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -41,6 +47,7 @@ Global
 		{8F874697-2E7D-49FF-85ED-E164B78EECB8} = {BB683F79-A839-4BA0-9756-749CA2AF45CF}
 		{DE6E5CC0-2C58-4B22-A69C-1CA442F23379} = {E5DB8823-AE19-4A85-A078-3F168F5E9DB4}
 		{090474A7-E42C-455F-B1AD-A70A5D1D6152} = {F47F25AD-DC53-4057-9E10-A34934D1C359}
+		{8FA2257C-519D-48F8-A57B-32CC09F2D3A7} = {F47F25AD-DC53-4057-9E10-A34934D1C359}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FA445A94-054D-4A07-8A86-8A20E6F6EEDC}
