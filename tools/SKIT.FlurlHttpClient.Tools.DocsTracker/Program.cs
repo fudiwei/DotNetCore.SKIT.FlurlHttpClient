@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Net.Http;
-using System.Threading;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 namespace SKIT.FlurlHttpClient.Tools.DocsTracker
 {
@@ -12,13 +6,7 @@ namespace SKIT.FlurlHttpClient.Tools.DocsTracker
     {
         static async Task Main(string[] args)
         {
-            CancellationToken cancellationToken = default;
-            using HttpClient httpClient = new HttpClient();
-            httpClient.BaseAddress = new Uri("https://developers.weixin.qq.com/miniprogram/dev/api-backend/");
-
-            string html = await httpClient.GetStringAsync("", cancellationToken);
-
-            Console.WriteLine("Hello World");
+            new Trackers.WeixinMiniProgramTracker(new DocsTrackerOptions() { OutputPath = "./Logs/Weixin/MiniProgram/" }).RunAsync().Wait();
         }
     }
 }
