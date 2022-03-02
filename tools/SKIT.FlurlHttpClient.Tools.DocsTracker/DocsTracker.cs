@@ -26,7 +26,7 @@ namespace SKIT.FlurlHttpClient.Tools.DocsTracker
         {
             IList<Exception> errors = new List<Exception>();
 
-            using HttpClient httpClient = new HttpClient() { BaseAddress = GetDocumentationUri() };
+            using HttpClient httpClient = new HttpClient() { BaseAddress = GetDocumentationEntrypointUri() };
 
             using HttpRequestMessage catalogHttpRequest = new HttpRequestMessage(HttpMethod.Get, "");
             using HttpResponseMessage catalogHttpResponse = await httpClient.SendAsync(catalogHttpRequest, cancellationToken);
@@ -64,7 +64,7 @@ namespace SKIT.FlurlHttpClient.Tools.DocsTracker
             }
         }
 
-        protected abstract Uri GetDocumentationUri();
+        protected abstract Uri GetDocumentationEntrypointUri();
 
         protected abstract Models.Catalog ParseDocumentationCatalog(HtmlDocument htmlDocument);
 

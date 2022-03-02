@@ -10,7 +10,7 @@ namespace SKIT.FlurlHttpClient.Tools.DocsTracker.Trackers
         {
         }
 
-        protected override Uri GetDocumentationUri()
+        protected override Uri GetDocumentationEntrypointUri()
         {
             return new Uri("https://pay.weixin.qq.com/wiki/doc/apiv3_partner/index.shtml");
         }

@@ -3,16 +3,16 @@ using HtmlAgilityPack;
 
 namespace SKIT.FlurlHttpClient.Tools.DocsTracker.Trackers
 {
-    public class WeixinMiniProgramPlatformTracker : WeixinMediaPlatformTracker
+    public class WeixinOpenPlatformTracker : WeixinMediaPlatformTracker
     {
-        public WeixinMiniProgramPlatformTracker(DocsTrackerOptions options)
+        public WeixinOpenPlatformTracker(DocsTrackerOptions options)
             : base(options)
         {
         }
 
         protected override Uri GetDocumentationEntrypointUri()
         {
-            return new Uri("https://developers.weixin.qq.com/miniprogram/dev/platform-capabilities/");
+            return new Uri("https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/getting_started/how_to_read.html");
         }
 
         protected override Models.Catalog ParseDocumentationCatalog(HtmlDocument htmlDocument)

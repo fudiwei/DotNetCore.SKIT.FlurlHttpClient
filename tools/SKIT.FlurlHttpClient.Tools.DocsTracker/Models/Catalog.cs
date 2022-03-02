@@ -1,4 +1,6 @@
-﻿namespace SKIT.FlurlHttpClient.Tools.DocsTracker.Models
+﻿using System;
+
+namespace SKIT.FlurlHttpClient.Tools.DocsTracker.Models
 {
     public class Catalog
     {
@@ -21,6 +23,11 @@
         public string InnerHtml { get; }
 
         public Types.Section[] Sections { get; }
+
+        public Catalog(string innerHtml)
+            : this(innerHtml, Array.Empty<Types.Section>())
+        {
+        }
 
         public Catalog(string innerHtml, Types.Section[] sections)
         {
