@@ -5,9 +5,9 @@ using HtmlAgilityPack;
 
 namespace SKIT.FlurlHttpClient.Tools.DocsTracker.Trackers
 {
-    public class WeixinMiniProgramTracker : DocsTracker
+    public class WeixinMiniProgramBackendTracker : DocsTracker
     {
-        public WeixinMiniProgramTracker(DocsTrackerOptions options)
+        public WeixinMiniProgramBackendTracker(DocsTrackerOptions options)
             : base(options)
         {
         }
@@ -39,7 +39,7 @@ namespace SKIT.FlurlHttpClient.Tools.DocsTracker.Trackers
                 }
             }
 
-            return new Models.Catalog(innerHtml: tAsideNode.InnerText, sections: lstSection.ToArray());
+            return new Models.Catalog(innerHtml: tAsideNode.InnerHtml, sections: lstSection.ToArray());
         }
 
         protected override Models.Content ParseDocumentationContent(Models.Catalog.Types.Section section, HtmlDocument htmlDocument)

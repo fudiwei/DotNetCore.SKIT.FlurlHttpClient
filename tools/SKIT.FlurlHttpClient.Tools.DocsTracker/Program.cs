@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 
 namespace SKIT.FlurlHttpClient.Tools.DocsTracker
 {
@@ -6,7 +7,8 @@ namespace SKIT.FlurlHttpClient.Tools.DocsTracker
     {
         static async Task Main(string[] args)
         {
-            new Trackers.WeixinMiniProgramTracker(new DocsTrackerOptions() { OutputPath = "./Logs/Weixin/MiniProgram/" }).RunAsync().Wait();
+            //new Trackers.WeixinMiniProgramBackendTracker(new DocsTrackerOptions() { OutputPath = "./Logs/Weixin.MiniProgramBackend/" }).RunAsync().Wait();
+            new Trackers.WeixinMiniProgramPlatformTracker(new DocsTrackerOptions() { OutputPath = "./Logs/Weixin.MiniProgramPlatform/" }).RunAsync().Wait();
         }
     }
 }

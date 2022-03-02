@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Web;
 using HtmlAgilityPack;
 
 namespace SKIT.FlurlHttpClient.Tools.DocsTracker
@@ -22,6 +24,8 @@ namespace SKIT.FlurlHttpClient.Tools.DocsTracker
 
         public async Task RunAsync(CancellationToken cancellationToken = default)
         {
+            IList<Exception> errors = new List<Exception>();
+
             Uri httpUri = GetDocumentationUri();
             using HttpClient httpClient = new HttpClient() { BaseAddress = new Uri($"{httpUri.Scheme}://{httpUri.Host}") };
 
@@ -37,13 +41,28 @@ namespace SKIT.FlurlHttpClient.Tools.DocsTracker
 
             await Parallel.ForEachAsync(catalogModel.Sections, async (sectionModel, cancellationToken) =>
             {
-                using HttpRequestMessage contentHttpRequest = new HttpRequestMessage(HttpMethod.Get, sectionModel.Uri);
-                using HttpResponseMessage contentHttpResponse = await httpClient.SendAsync(contentHttpRequest, cancellationToken);
-                contentHttpResponse.EnsureSuccessStatusCode();
+                try
+                {
+                    using HttpRequestMessage contentHttpRequest = new HttpRequestMessage(HttpMethod.Get, HttpUtility.HtmlDecode(sectionModel.Uri));
+                    using HttpResponseMessage contentHttpResponse = await httpClient.SendAsync(contentHttpRequest, cancellationToken);
+                    contentHttpResponse.EnsureSuccessStatusCode();
 
-                Models.Content contentModel = ParseDocumentationContent(sectionModel, catalogHtmlDocument);
-                await SaveAllTextAsync($"content-{sectionModel.Title}.html", contentModel.InnerHtml, cancellationToken);
+                    HtmlDocument sectionHtmlDocument = new HtmlDocument();
+                    sectionHtmlDocument.Load(contentHttpResponse.Content.ReadAsStream(), Encoding.UTF8);
+
+                    Models.Content contentModel = ParseDocumentationContent(sectionModel, sectionHtmlDocument);
+                    await SaveAllTextAsync($"content-{sectionModel.Title}.html", contentModel.InnerHtml, cancellationToken);
+                }
+                catch (Exception ex)
+                {
+                    errors.Add(ex);
+                }
             });
+
+            if (errors.Any())
+            {
+                throw new AggregateException(errors);
+            }
         }
 
         protected abstract Uri GetDocumentationUri();
