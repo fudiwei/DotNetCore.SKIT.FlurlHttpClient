@@ -9,8 +9,8 @@ namespace SKIT.FlurlHttpClient.Tools.DocsTracker
         {
             //new Trackers.WeixinMiniProgramBackendTracker(new DocsTrackerOptions() { OutputPath = "./Logs/Weixin.MiniProgram.Backend/" }).RunAsync().Wait();
             //new Trackers.WeixinMiniProgramPlatformTracker(new DocsTrackerOptions() { OutputPath = "./Logs/Weixin.MiniProgram.Platform/" }).RunAsync().Wait();
-            //new Trackers.WeixinPayCommonTracker(new DocsTrackerOptions() { OutputPath = "./Logs/Weixin.Pay.Common/" }).RunAsync().Wait();
-            new Trackers.WeixinPayPartnerTracker(new DocsTrackerOptions() { OutputPath = "./Logs/Weixin.Pay.Partner/" }).RunAsync().Wait();
+            new Trackers.WeixinPayCommonTracker(new DocsTrackerOptions() { OutputPath = "./Logs/Weixin.Pay.Common/" }).RunAsync().Wait();
+            //new Trackers.WeixinPayPartnerTracker(new DocsTrackerOptions() { OutputPath = "./Logs/Weixin.Pay.Partner/" }).RunAsync().Wait();
         }
     }
 }
