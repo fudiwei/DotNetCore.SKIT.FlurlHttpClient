@@ -38,7 +38,7 @@ namespace SKIT.FlurlHttpClient.Tools.DocsTracker
 
             Models.Catalog catalogModel = ParseDocumentationCatalog(catalogHtmlDocument);
             await SaveAllTextAsync("catalog.html", catalogModel.InnerHtml, cancellationToken);
-
+            
             await Parallel.ForEachAsync(catalogModel.Sections, async (sectionModel, cancellationToken) =>
             {
                 try

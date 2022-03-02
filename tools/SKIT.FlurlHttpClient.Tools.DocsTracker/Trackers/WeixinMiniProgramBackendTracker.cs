@@ -21,7 +21,7 @@ namespace SKIT.FlurlHttpClient.Tools.DocsTracker.Trackers
         {
             IList<Models.Catalog.Types.Section> lstSection = new List<Models.Catalog.Types.Section>();
             HtmlNode tAsideNode = htmlDocument.DocumentNode.SelectSingleNode("//aside");
-            HtmlNode[] tParentNodes = tAsideNode.SelectNodes(".//div[contains(@class, 'NavigationLevel--level-1')]").ToArray();
+            HtmlNode[] tParentNodes = tAsideNode.SelectNodes(".//div[contains(@class, 'NavigationLevel--level-1')]")?.ToArray() ?? Array.Empty<HtmlNode>();
             foreach (HtmlNode tParentNode in tParentNodes)
             {
                 HtmlNode tParentItemNode = tParentNode
