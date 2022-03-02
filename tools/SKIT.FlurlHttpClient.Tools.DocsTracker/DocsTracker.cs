@@ -37,7 +37,7 @@ namespace SKIT.FlurlHttpClient.Tools.DocsTracker
             catalogHtmlDocument.Load(catalogHttpResponse.Content.ReadAsStream(), Encoding.UTF8);
 
             Models.Catalog catalogModel = ParseDocumentationCatalog(catalogHtmlDocument);
-            await SaveAllTextAsync("catalog.html", catalogModel.InnerHtml, cancellationToken);
+            await Helpers.FileHelper.WriteTextAsync(_outputPath, "catalog.html", catalogModel.InnerHtml, cancellationToken);
             
             await Parallel.ForEachAsync(catalogModel.Sections, async (sectionModel, cancellationToken) =>
             {
@@ -51,7 +51,7 @@ namespace SKIT.FlurlHttpClient.Tools.DocsTracker
                     sectionHtmlDocument.Load(contentHttpResponse.Content.ReadAsStream(), Encoding.UTF8);
 
                     Models.Content contentModel = ParseDocumentationContent(sectionModel, sectionHtmlDocument);
-                    await SaveAllTextAsync($"content-{sectionModel.Title}.html", contentModel.InnerHtml, cancellationToken);
+                    await Helpers.FileHelper.WriteTextAsync(_outputPath, $"content-{sectionModel.Title}.html", contentModel.InnerHtml, cancellationToken);
                 }
                 catch (Exception ex)
                 {
@@ -70,23 +70,5 @@ namespace SKIT.FlurlHttpClient.Tools.DocsTracker
         protected abstract Models.Catalog ParseDocumentationCatalog(HtmlDocument htmlDocument);
 
         protected abstract Models.Content ParseDocumentationContent(Models.Catalog.Types.Section section, HtmlDocument htmlDocument);
-
-        private async Task SaveAllTextAsync(string fileName, string text, CancellationToken cancellationToken)
-        {
-            foreach (char c in Path.GetInvalidFileNameChars())
-                fileName = fileName.Replace(c.ToString(), "");
-
-            string filePath = Path.Combine(_outputPath, fileName);
-            string fileDir = Path.GetDirectoryName(filePath)!;
-
-            try
-            {
-                if (!Directory.Exists(fileDir))
-                    Directory.CreateDirectory(fileDir);
-            }
-            catch (NotSupportedException) { }
-
-            await File.WriteAllTextAsync(path: filePath, contents: text, cancellationToken);
-        }
     }
 }
