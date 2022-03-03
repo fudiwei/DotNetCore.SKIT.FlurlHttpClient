@@ -5,9 +5,17 @@
 		<LangVersion>latest</LangVersion>
 		<Nullable>enable</Nullable>
 		<NullableReferenceTypes>true</NullableReferenceTypes>
-		<OutputType>exe</OutputType>
-		<IsPackable>false</IsPackable>
 	</PropertyGroup>
+
+	<PropertyGroup>
+		<PackageId>SKIT.FlurlHttpClient.Tools.CodeAnalyzer</PackageId>
+		<PackageVersion>0.1.0-alpha.1</PackageVersion>
+		<PackageIcon>LOGO.png</PackageIcon>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<None Include="../../LOGO.png" Pack="true" PackagePath="/" />
+	</ItemGroup>
 
 	<ItemGroup>
 		<PackageReference Include="Microsoft.CodeAnalysis.Common" Version="4.1.0" />

@@ -5,21 +5,19 @@
 		<LangVersion>latest</LangVersion>
 		<Nullable>enable</Nullable>
 		<NullableReferenceTypes>true</NullableReferenceTypes>
-		<OutputType>Exe</OutputType>
+		<OutputType>exe</OutputType>
+		<IsPackable>false</IsPackable>
 	</PropertyGroup>
 
-	<PropertyGroup>
-		<PackageId>SKIT.FlurlHttpClient.Tools.DocsTracker</PackageId>
-		<PackageVersion>0.1.0-alpha.1</PackageVersion>
-		<PackageIcon>LOGO.png</PackageIcon>
+	<PropertyGroup Condition="'$(Configuration)' == 'Release'">
+		<PublishTrimmed>true</PublishTrimmed>
+		<PublishSingleFile>true</PublishSingleFile>
 	</PropertyGroup>
-
-	<ItemGroup>
-		<None Include="../../LOGO.png" Pack="true" PackagePath="/" />
-	</ItemGroup>
 
 	<ItemGroup>
 		<PackageReference Include="HtmlAgilityPack" Version="1.11.42" />
+		<PackageReference Include="Utility.CommandLine.Arguments" Version="0.0.5" />
+		<PackageReference Include="Utility.CommandLine.Progress" Version="0.0.5" />
 	</ItemGroup>
 
 </Project>

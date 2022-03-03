@@ -24,43 +24,43 @@ namespace SKIT.FlurlHttpClient.Tools.DocsTracker
 
         public async Task RunAsync(CancellationToken cancellationToken = default)
         {
-            IList<Exception> errors = new List<Exception>();
-
-            using HttpClient httpClient = new HttpClient() { BaseAddress = GetDocumentationEntrypointUri() };
-
-            using HttpRequestMessage catalogHttpRequest = new HttpRequestMessage(HttpMethod.Get, "");
-            using HttpResponseMessage catalogHttpResponse = await httpClient.SendAsync(catalogHttpRequest, cancellationToken);
-            catalogHttpResponse.EnsureSuccessStatusCode();
-
-            HtmlDocument catalogHtmlDocument = new HtmlDocument();
-            catalogHtmlDocument.Load(catalogHttpResponse.Content.ReadAsStream(), Encoding.UTF8);
-
-            Models.Catalog catalogModel = ParseDocumentationCatalog(catalogHtmlDocument);
-            await Helpers.FileHelper.WriteTextAsync(_outputPath, "catalog.html", catalogModel.InnerHtml, cancellationToken);
-            
-            await Parallel.ForEachAsync(catalogModel.Sections, async (sectionModel, cancellationToken) =>
+            try
             {
-                try
+                using HttpClient httpClient = new HttpClient() { BaseAddress = GetDocumentationEntrypointUri() };
+
+                using HttpRequestMessage catalogHttpRequest = new HttpRequestMessage(HttpMethod.Get, "");
+                using HttpResponseMessage catalogHttpResponse = await httpClient.SendAsync(catalogHttpRequest, cancellationToken);
+                catalogHttpResponse.EnsureSuccessStatusCode();
+
+                HtmlDocument catalogHtmlDocument = new HtmlDocument();
+                catalogHtmlDocument.Load(catalogHttpResponse.Content.ReadAsStream(), Encoding.UTF8);
+
+                Models.Catalog catalogModel = ParseDocumentationCatalog(catalogHtmlDocument);
+                await Helpers.FileHelper.WriteTextAsync(_outputPath, "catalog.html", catalogModel.InnerHtml, cancellationToken);
+
+                await Parallel.ForEachAsync(catalogModel.Sections, async (sectionModel, cancellationToken) =>
                 {
-                    using HttpRequestMessage contentHttpRequest = new HttpRequestMessage(HttpMethod.Get, HttpUtility.HtmlDecode(sectionModel.Uri));
-                    using HttpResponseMessage contentHttpResponse = await httpClient.SendAsync(contentHttpRequest, cancellationToken);
-                    contentHttpResponse.EnsureSuccessStatusCode();
+                    try
+                    {
+                        using HttpRequestMessage contentHttpRequest = new HttpRequestMessage(HttpMethod.Get, HttpUtility.HtmlDecode(sectionModel.Uri));
+                        using HttpResponseMessage contentHttpResponse = await httpClient.SendAsync(contentHttpRequest, cancellationToken);
+                        contentHttpResponse.EnsureSuccessStatusCode();
 
-                    HtmlDocument sectionHtmlDocument = new HtmlDocument();
-                    sectionHtmlDocument.Load(contentHttpResponse.Content.ReadAsStream(), Encoding.UTF8);
+                        HtmlDocument sectionHtmlDocument = new HtmlDocument();
+                        sectionHtmlDocument.Load(contentHttpResponse.Content.ReadAsStream(), Encoding.UTF8);
 
-                    Models.Content contentModel = ParseDocumentationContent(sectionModel, sectionHtmlDocument);
-                    await Helpers.FileHelper.WriteTextAsync(_outputPath, $"content-{sectionModel.Title}.html", contentModel.InnerHtml, cancellationToken);
-                }
-                catch (Exception ex)
-                {
-                    errors.Add(ex);
-                }
-            });
+                        Models.Content contentModel = ParseDocumentationContent(sectionModel, sectionHtmlDocument);
+                        await Helpers.FileHelper.WriteTextAsync(_outputPath, $"content-{sectionModel.Title}.html", contentModel.InnerHtml, cancellationToken);
+                    }
+                    catch (Exception ex)
+                    {
 
-            if (errors.Any())
+                    }
+                });
+            }
+            catch (Exception ex)
             {
-                throw new AggregateException(errors);
+
             }
         }
 
