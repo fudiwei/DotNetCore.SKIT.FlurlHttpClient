@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading;
@@ -14,16 +12,20 @@ namespace SKIT.FlurlHttpClient.Tools.DocsTracker
     public abstract class DocsTracker
     {
         private readonly string _outputPath;
+        private readonly SemaphoreSlim _semaphore;
 
         public DocsTracker(DocsTrackerOptions options)
         {
             if (options == null) throw new ArgumentNullException(nameof(options));
 
             _outputPath = Path.Combine(options.OutputPath, DateTimeOffset.Now.ToString("yyyyMMdd"));
+            _semaphore = new SemaphoreSlim(1, 1);
         }
 
         public async Task RunAsync(CancellationToken cancellationToken = default)
         {
+            await _semaphore.WaitAsync(cancellationToken);
+
             try
             {
                 using HttpClient httpClient = new HttpClient() { BaseAddress = GetDocumentationEntrypointUri() };
@@ -61,6 +63,10 @@ namespace SKIT.FlurlHttpClient.Tools.DocsTracker
             catch (Exception ex)
             {
 
+            }
+            finally
+            {
+                _semaphore.Release();
             }
         }
 
