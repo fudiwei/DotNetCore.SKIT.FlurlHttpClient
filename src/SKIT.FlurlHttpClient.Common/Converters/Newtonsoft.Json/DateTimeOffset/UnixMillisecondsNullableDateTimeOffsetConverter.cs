@@ -25,8 +25,19 @@ namespace Newtonsoft.Json.Converters
                 long value = serializer.Deserialize<long>(reader);
                 return DateTimeOffset.FromUnixTimeMilliseconds(value);
             }
+            else if (reader.TokenType == JsonToken.String)
+            {
+                string? value = serializer.Deserialize<string>(reader);
+                if (string.IsNullOrEmpty(value))
+                    return existingValue;
 
-            throw new JsonSerializationException();
+                if (long.TryParse(value, out long l))
+                    DateTimeOffset.FromUnixTimeMilliseconds(l);
+
+                throw new JsonSerializationException($"Could not parse String '{value}' to Long.");
+            }
+
+            throw new JsonSerializationException($"Unexpected token type '{reader.TokenType}' when deserializing. Path '{reader.Path}'.");
         }
 
         public override void WriteJson(JsonWriter writer, DateTimeOffset? value, JsonSerializer serializer)
