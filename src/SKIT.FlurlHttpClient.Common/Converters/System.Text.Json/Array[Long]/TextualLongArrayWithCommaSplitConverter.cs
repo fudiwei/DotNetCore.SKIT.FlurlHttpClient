@@ -23,14 +23,14 @@ namespace System.Text.Json.Converters
                 for (int i = 0; i < strArr.Length; i++)
                 {
                     if (!long.TryParse(strArr[i], out long j))
-                        throw new JsonException("Unexpected token when parsing string to long.");
+                        throw new JsonException($"Could not parse String '{strArr[i]}' to Long.");
 
                     intArr[i] = j;
                 }
                 return intArr;
             }
 
-            throw new JsonException();
+            throw new JsonException($"Unexpected JSON token type '{reader.TokenType}' when reading.");
         }
 
         public override void Write(Utf8JsonWriter writer, long[]? value, JsonSerializerOptions options)

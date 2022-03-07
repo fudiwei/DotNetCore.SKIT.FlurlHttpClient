@@ -26,7 +26,7 @@ namespace System.Text.Json.Converters
                 return reader.GetString();
             }
 
-            throw new JsonException();
+            throw new JsonException($"Unexpected JSON token type '{reader.TokenType}' when reading.");
         }
 
         public override void Write(Utf8JsonWriter writer, string? value, JsonSerializerOptions options)

@@ -29,11 +29,13 @@ namespace Newtonsoft.Json.Converters
                 if (string.IsNullOrEmpty(value))
                     return existingValue;
 
-                if (DateTimeOffset.TryParseExact(value, DATETIME_FORMAT, DateTimeFormatInfo.InvariantInfo, DateTimeStyles.None, out DateTimeOffset result))
-                    return result;
+                if (DateTimeOffset.TryParseExact(value, DATETIME_FORMAT, DateTimeFormatInfo.InvariantInfo, DateTimeStyles.None, out DateTimeOffset d))
+                    return d;
 
-                if (DateTimeOffset.TryParse(value, out result))
-                    return result;
+                if (DateTimeOffset.TryParse(value, out d))
+                    return d;
+
+                throw new JsonSerializationException($"Could not parse String '{value}' to DateTimeOffset.");
             }
             else if (reader.TokenType == JsonToken.Date)
             {
@@ -41,7 +43,7 @@ namespace Newtonsoft.Json.Converters
                 return serializer.Deserialize<DateTimeOffset>(reader);
             }
 
-            throw new JsonSerializationException();
+            throw new JsonSerializationException($"Unexpected token type '{reader.TokenType}' when deserializing. Path '{reader.Path}'.");
         }
 
         public override void WriteJson(JsonWriter writer, DateTimeOffset? value, JsonSerializer serializer)

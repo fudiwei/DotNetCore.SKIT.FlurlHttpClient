@@ -28,9 +28,11 @@ namespace System.Text.Json.Converters
                     return true;
                 else if ("false".Equals(value, StringComparison.OrdinalIgnoreCase))
                     return false;
+
+                throw new JsonException($"Could not parse String '{value}' to Boolean.");
             }
 
-            throw new JsonException();
+            throw new JsonException($"Unexpected JSON token type '{reader.TokenType}' when reading.");
         }
 
         public override void Write(Utf8JsonWriter writer, bool? value, JsonSerializerOptions options)

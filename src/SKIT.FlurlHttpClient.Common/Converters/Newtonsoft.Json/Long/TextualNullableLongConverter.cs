@@ -27,15 +27,17 @@ namespace Newtonsoft.Json.Converters
             }
             else if (reader.TokenType == JsonToken.String)
             {
-                string? str = serializer.Deserialize<string>(reader);
-                if (string.IsNullOrEmpty(str))
+                string? value = serializer.Deserialize<string>(reader);
+                if (string.IsNullOrEmpty(value))
                     return existingValue;
 
-                if (long.TryParse(str, out long value))
-                    return Convert.ToInt64(value);
+                if (long.TryParse(value, out long l))
+                    return l;
+
+                throw new JsonSerializationException($"Could not parse String '{value}' to Long.");
             }
 
-            throw new JsonSerializationException();
+            throw new JsonSerializationException($"Unexpected token type '{reader.TokenType}' when deserializing. Path '{reader.Path}'.");
         }
 
         public override void WriteJson(JsonWriter writer, long? value, JsonSerializer serializer)

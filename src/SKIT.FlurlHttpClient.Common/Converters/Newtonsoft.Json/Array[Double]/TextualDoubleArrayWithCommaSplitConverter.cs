@@ -33,14 +33,14 @@ namespace Newtonsoft.Json.Converters
                 for (int i = 0; i < strArr.Length; i++)
                 {
                     if (!double.TryParse(strArr[i], out double j))
-                        throw new JsonSerializationException("Unexpected token when parsing string to double.");
+                        throw new JsonSerializationException($"Could not parse String '{strArr[i]}' to Double.");
 
                     dblArr[i] = j;
                 }
                 return dblArr;
             }
 
-            throw new JsonSerializationException();
+            throw new JsonSerializationException($"Unexpected token type '{reader.TokenType}' when deserializing. Path '{reader.Path}'.");
         }
 
         public override void WriteJson(JsonWriter writer, double[]? value, JsonSerializer serializer)

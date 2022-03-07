@@ -37,9 +37,11 @@ namespace Newtonsoft.Json.Converters
                     return true;
                 else if (FALSE_TEXT.Equals(value, StringComparison.OrdinalIgnoreCase))
                     return false;
+
+                throw new JsonSerializationException($"Could not parse String '{value}' to Boolean.");
             }
 
-            throw new JsonSerializationException();
+            throw new JsonSerializationException($"Unexpected token type '{reader.TokenType}' when deserializing. Path '{reader.Path}'.");
         }
 
         public override void WriteJson(JsonWriter writer, bool? value, JsonSerializer serializer)

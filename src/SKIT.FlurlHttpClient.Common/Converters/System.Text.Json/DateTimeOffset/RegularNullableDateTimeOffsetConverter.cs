@@ -19,14 +19,16 @@ namespace System.Text.Json.Converters
                 if (string.IsNullOrEmpty(value))
                     return null;
 
-                if (DateTimeOffset.TryParseExact(value, DATETIME_FORMAT, DateTimeFormatInfo.InvariantInfo, DateTimeStyles.None, out DateTimeOffset result))
-                    return result;
+                if (DateTimeOffset.TryParseExact(value, DATETIME_FORMAT, DateTimeFormatInfo.InvariantInfo, DateTimeStyles.None, out DateTimeOffset d))
+                    return d;
 
-                if (DateTimeOffset.TryParse(value, out result))
-                    return result;
+                if (DateTimeOffset.TryParse(value, out d))
+                    return d;
+
+                throw new JsonException($"Could not parse String '{value}' to DateTimeOffset.");
             }
 
-            throw new JsonException();
+            throw new JsonException($"Unexpected JSON token type '{reader.TokenType}' when reading.");
         }
 
         public override void Write(Utf8JsonWriter writer, DateTimeOffset? value, JsonSerializerOptions options)

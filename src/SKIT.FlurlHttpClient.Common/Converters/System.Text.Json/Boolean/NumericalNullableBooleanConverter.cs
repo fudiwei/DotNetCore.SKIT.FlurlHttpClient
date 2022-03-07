@@ -20,20 +20,22 @@ namespace System.Text.Json.Converters
             }
             else if (reader.TokenType == JsonTokenType.Number)
             {
-                if (reader.TryGetInt32(out int value))
-                    return Convert.ToBoolean(value);
+                int value = reader.GetInt32();
+                return Convert.ToBoolean(value);
             }
             else if (reader.TokenType == JsonTokenType.String)
             {
-                string? str = reader.GetString();
-                if (str == null)
+                string? value = reader.GetString();
+                if (string.IsNullOrEmpty(value))
                     return null;
 
-                if (int.TryParse(str, out int value))
-                    return Convert.ToBoolean(value);
+                if (int.TryParse(value, out int i))
+                    return Convert.ToBoolean(i);
+
+                throw new JsonException($"Could not parse String '{value}' to Integer.");
             }
 
-            throw new JsonException();
+            throw new JsonException($"Unexpected JSON token type '{reader.TokenType}' when reading.");
         }
 
         public override void Write(Utf8JsonWriter writer, bool? value, JsonSerializerOptions options)

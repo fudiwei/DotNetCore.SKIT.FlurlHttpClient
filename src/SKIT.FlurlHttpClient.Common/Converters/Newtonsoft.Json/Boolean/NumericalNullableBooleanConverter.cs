@@ -31,15 +31,17 @@ namespace Newtonsoft.Json.Converters
             }
             else if (reader.TokenType == JsonToken.String)
             {
-                string? str = serializer.Deserialize<string>(reader);
-                if (str == null)
+                string? value = serializer.Deserialize<string>(reader);
+                if (string.IsNullOrEmpty(value))
                     return existingValue;
 
-                if (int.TryParse(str, out int value))
-                    return Convert.ToBoolean(value);
+                if (int.TryParse(value, out int i))
+                    return Convert.ToBoolean(i);
+
+                throw new JsonSerializationException($"Could not parse String '{value}' to Integer.");
             }
 
-            throw new JsonSerializationException();
+            throw new JsonSerializationException($"Unexpected token type '{reader.TokenType}' when deserializing. Path '{reader.Path}'.");
         }
 
         public override void WriteJson(JsonWriter writer, bool? value, JsonSerializer serializer)
