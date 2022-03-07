@@ -15,6 +15,20 @@ namespace System.Text.Json.Converters
                 long value = reader.GetInt64();
                 return DateTimeOffset.FromUnixTimeMilliseconds(value);
             }
+            else if (reader.TokenType == JsonTokenType.String)
+            {
+                if ((options.NumberHandling & JsonNumberHandling.AllowReadingFromString) > 0)
+                {
+                    string? value = reader.GetString();
+                    if (string.IsNullOrEmpty(value))
+                        return null;
+
+                    if (long.TryParse(value, out long l))
+                        DateTimeOffset.FromUnixTimeMilliseconds(l);
+
+                    throw new JsonException($"Could not parse String '{value}' to Long.");
+                }
+            }
 
             throw new JsonException($"Unexpected JSON token type '{reader.TokenType}' when reading.");
         }
