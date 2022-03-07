@@ -19,7 +19,7 @@ namespace System.Text.Json.Converters
                 return JsonSerializer.Deserialize<T>(value)!;
             }
 
-            throw new JsonException();
+            throw new JsonException($"Unexpected JSON token type '{reader.TokenType}' when reading.");
         }
 
         public override void Write(Utf8JsonWriter writer, T value, JsonSerializerOptions options)

@@ -23,14 +23,14 @@ namespace System.Text.Json.Converters
                 for (int i = 0; i < strArr.Length; i++)
                 {
                     if (!int.TryParse(strArr[i], out int j))
-                        throw new JsonException("Unexpected token when parsing string to integer.");
+                        throw new JsonException($"Could not parse String '{strArr[i]}' to Integer.");
 
                     intArr[i] = j;
                 }
                 return intArr;
             }
 
-            throw new JsonException();
+            throw new JsonException($"Unexpected JSON token type '{reader.TokenType}' when reading.");
         }
 
         public override void Write(Utf8JsonWriter writer, int[]? value, JsonSerializerOptions options)

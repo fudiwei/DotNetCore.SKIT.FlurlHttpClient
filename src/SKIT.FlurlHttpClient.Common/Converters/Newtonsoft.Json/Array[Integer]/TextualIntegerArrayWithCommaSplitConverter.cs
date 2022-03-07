@@ -33,14 +33,14 @@ namespace Newtonsoft.Json.Converters
                 for (int i = 0; i < strArr.Length; i++)
                 {
                     if (!int.TryParse(strArr[i], out int j))
-                        throw new JsonSerializationException("Unexpected token when parsing string to integer.");
+                        throw new JsonSerializationException($"Could not parse String '{strArr[i]}' to Integer.");
 
                     intArr[i] = j;
                 }
                 return intArr;
             }
 
-            throw new JsonSerializationException();
+            throw new JsonSerializationException($"Unexpected token type '{reader.TokenType}' when deserializing. Path '{reader.Path}'.");
         }
 
         public override void WriteJson(JsonWriter writer, int[]? value, JsonSerializer serializer)

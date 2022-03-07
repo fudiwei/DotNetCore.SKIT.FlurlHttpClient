@@ -40,7 +40,7 @@ namespace Newtonsoft.Json.Converters
                     return Convert.ToInt64(value);
             }
 
-            throw new JsonSerializationException();
+            throw new JsonSerializationException($"Unexpected token type '{reader.TokenType}' when deserializing. Path '{reader.Path}'.");
         }
 
         public override void WriteJson(JsonWriter writer, double? value, JsonSerializer serializer)

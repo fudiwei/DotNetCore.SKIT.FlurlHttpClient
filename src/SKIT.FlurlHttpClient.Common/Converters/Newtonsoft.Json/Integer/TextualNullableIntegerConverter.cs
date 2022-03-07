@@ -35,7 +35,7 @@ namespace Newtonsoft.Json.Converters
                     return Convert.ToInt32(value);
             }
 
-            throw new JsonSerializationException();
+            throw new JsonSerializationException($"Unexpected token type '{reader.TokenType}' when deserializing. Path '{reader.Path}'.");
         }
 
         public override void WriteJson(JsonWriter writer, int? value, JsonSerializer serializer)

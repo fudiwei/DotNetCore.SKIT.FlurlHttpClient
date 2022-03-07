@@ -16,7 +16,7 @@ namespace System.Text.Json.Converters
                 return DateTimeOffset.FromUnixTimeMilliseconds(value);
             }
 
-            throw new JsonException();
+            throw new JsonException($"Unexpected JSON token type '{reader.TokenType}' when reading.");
         }
 
         public override void Write(Utf8JsonWriter writer, DateTimeOffset? value, JsonSerializerOptions options)

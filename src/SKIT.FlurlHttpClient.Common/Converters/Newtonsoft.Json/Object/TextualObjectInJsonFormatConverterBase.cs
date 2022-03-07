@@ -33,7 +33,7 @@ namespace Newtonsoft.Json.Converters
 #pragma warning restore CS8603
             }
 
-            throw new JsonSerializationException();
+            throw new JsonSerializationException($"Unexpected token type '{reader.TokenType}' when deserializing. Path '{reader.Path}'.");
         }
 
 #pragma warning disable CS8765
