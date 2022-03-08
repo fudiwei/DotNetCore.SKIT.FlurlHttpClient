@@ -27,15 +27,29 @@ namespace SKIT.FlurlHttpClient.Tools.CodeAnalyzer
 
         private readonly object _lockObj;
         private readonly string _dirSourceCode;
+        private readonly string _dirSourceCodeForApiModels;
+        private readonly string _dirSourceCodeForApiEvents;
+        private readonly string _dirSourceCodeForApiMethods;
         private readonly string _dirTestSample;
-        private readonly string _keywordForApiMethodInnerFlurlRequestInitializerIdentifier;
-        private readonly string _keywordForApiModelInnerNestedTypesWrapperIdentifier;
+        private readonly string _dirTestSampleForApiModels;
+        private readonly string _dirTestSampleForApiEvents;
+        private readonly string _targetSdkApiModelInnerNestedTypesWrapperIdentifier;
+        private readonly string _targetSdkApiModelNamespaceUnderAssemblyIdentifier;
+        private readonly string _targetSdkApiEventNamespaceUnderAssemblyIdentifier;
+        private readonly string _targetSdkApiMethodNamespaceUnderAssemblyIdentifier;
+        private readonly string _targetSdkApiMethodInnerFlurlRequestInitializerIdentifier;
         private readonly bool _allowNotFoundModelTypes;
         private readonly bool _allowNotFoundEventTypes;
         private readonly bool _allowNotFoundModelSamples;
         private readonly bool _allowNotFoundEventSamples;
 
         protected Assembly TargetAssembly { get; }
+
+        protected string TargetAssemblyNamespaceForApiModels { get { return $"{TargetAssembly.GetName().Name}.{_targetSdkApiModelNamespaceUnderAssemblyIdentifier}".TrimEnd('.'); } }
+        
+        protected string TargetAssemblyNamespaceForApiEvents { get { return $"{TargetAssembly.GetName().Name}.{_targetSdkApiEventNamespaceUnderAssemblyIdentifier}".TrimEnd('.'); } }
+
+        protected string TargetAssemblyNamespaceForApiMethods { get { return $"{TargetAssembly.GetName().Name}.{_targetSdkApiMethodNamespaceUnderAssemblyIdentifier}".TrimEnd('.'); } }
 
         protected IList<string> Errors { get; }
 
@@ -45,9 +59,17 @@ namespace SKIT.FlurlHttpClient.Tools.CodeAnalyzer
 
             _lockObj = new object();
             _dirSourceCode = options.WorkDirectoryForSourceCode;
+            _dirSourceCodeForApiModels = options.WorkSubDirectoryForApiModels;
+            _dirSourceCodeForApiEvents = options.WorkSubDirectoryForApiEvents;
+            _dirSourceCodeForApiMethods = options.WorkSubDirectoryForApiMethods;
             _dirTestSample = options.WorkDirectoryForTestSample;
-            _keywordForApiMethodInnerFlurlRequestInitializerIdentifier = options.KeywordForApiMethodInnerFlurlRequestInitializerIdentifier;
-            _keywordForApiModelInnerNestedTypesWrapperIdentifier = options.KeywordForApiModelInnerNestedTypesWrapperIdentifier;
+            _dirTestSampleForApiModels = options.WorkSubDirectoryForApiModelSamples;
+            _dirTestSampleForApiEvents = options.WorkSubDirectoryForApiEventSamples;
+            _targetSdkApiModelInnerNestedTypesWrapperIdentifier = options.TargetSdkApiModelInnerNestedTypesWrapperIdentifier;
+            _targetSdkApiModelNamespaceUnderAssemblyIdentifier = options.TargetSdkApiModelNamespaceUnderAssemblyIdentifier;
+            _targetSdkApiEventNamespaceUnderAssemblyIdentifier = options.TargetSdkApiEventNamespaceUnderAssemblyIdentifier;
+            _targetSdkApiMethodNamespaceUnderAssemblyIdentifier = options.TargetSdkApiMethodNamespaceUnderAssemblyIdentifier;
+            _targetSdkApiMethodInnerFlurlRequestInitializerIdentifier = options.TargetSdkApiMethodInnerFlurlRequestInitializerIdentifier;
             _allowNotFoundModelTypes = options.AllowNotFoundModelTypes;
             _allowNotFoundEventTypes = options.AllowNotFoundEventTypes;
             _allowNotFoundModelSamples = options.AllowNotFoundModelSamples;
@@ -91,7 +113,7 @@ namespace SKIT.FlurlHttpClient.Tools.CodeAnalyzer
             Type[] modelTypes = TargetAssembly.GetTypes()
                 .Where(t =>
                     t.Namespace != null &&
-                    t.Namespace.Equals($"{TargetAssembly.GetName().Name}.Models") &&
+                    t.Namespace.Equals(TargetAssemblyNamespaceForApiModels) &&
                     t.IsClass &&
                     !t.IsAbstract &&
                     !t.IsInterface &&
@@ -101,7 +123,7 @@ namespace SKIT.FlurlHttpClient.Tools.CodeAnalyzer
             Type[] eventTypes = TargetAssembly.GetTypes()
                 .Where(t =>
                     t.Namespace != null &&
-                    t.Namespace.Equals($"{TargetAssembly.GetName().Name}.Events") &&
+                    t.Namespace.Equals(TargetAssemblyNamespaceForApiEvents) &&
                     t.IsClass &&
                     !t.IsAbstract &&
                     !t.IsInterface &&
@@ -111,15 +133,15 @@ namespace SKIT.FlurlHttpClient.Tools.CodeAnalyzer
             Type[] apiTypes = TargetAssembly.GetTypes()
                 .Where(t =>
                     t.Namespace != null &&
-                    t.Namespace.Equals($"{TargetAssembly.GetName().Name}") &&
+                    t.Namespace.Equals(TargetAssemblyNamespaceForApiMethods) &&
                     t.IsClass &&
                     t.IsAbstract &&
                     t.IsSealed &&
                     new Regex("[a-zA-Z0-9]+ClientExecute[a-zA-Z0-9]+Extensions$").IsMatch(t.Name)
                 )
                 .ToArray();
-            Trace.Assert(modelTypes.Any() || _allowNotFoundModelTypes, $"程序集下不存在 API 模型类型，请检查 \"Models\" 命名空间是否为空。");
-            Trace.Assert(eventTypes.Any() || _allowNotFoundEventTypes, $"程序集下不存在 API 事件类型，请检查 \"Events\" 命名空间是否为空。");
+            Trace.Assert(modelTypes.Any() || _allowNotFoundModelTypes, $"程序集下不存在 API 模型类型，请检查 \"{_targetSdkApiModelNamespaceUnderAssemblyIdentifier}\" 命名空间是否为空。");
+            Trace.Assert(eventTypes.Any() || _allowNotFoundEventTypes, $"程序集下不存在 API 事件类型，请检查 \"{_targetSdkApiEventNamespaceUnderAssemblyIdentifier}\" 命名空间是否为空。");
             Trace.Assert(apiTypes.Any() || _allowNotFoundModelTypes, $"程序集下不存在 API 扩展方法。");
 
             /* 校验 API 模型程序集类型 */
@@ -241,7 +263,7 @@ namespace SKIT.FlurlHttpClient.Tools.CodeAnalyzer
                     }
                 }
 
-                Type[] nestedTypes = innerType.GetNestedType(_keywordForApiModelInnerNestedTypesWrapperIdentifier)?.GetNestedTypes() ?? Array.Empty<Type>();
+                Type[] nestedTypes = innerType.GetNestedType(_targetSdkApiModelInnerNestedTypesWrapperIdentifier)?.GetNestedTypes() ?? Array.Empty<Type>();
                 foreach (Type nestedType in nestedTypes)
                 {
                     DeepAnalyze(nestedType);
@@ -295,11 +317,11 @@ namespace SKIT.FlurlHttpClient.Tools.CodeAnalyzer
             DirectoryInfo dir = new DirectoryInfo(_dirSourceCode);
             Trace.Assert(dir.Exists, $"工作目录 \"{dir.FullName}\" 不存在。");
 
-            FileInfo[] modelDefinationFiles = dir.GetAllFiles("Models/*.cs");
-            FileInfo[] eventDefinationFiles = dir.GetAllFiles("Events/*.cs");
-            FileInfo[] apiDefinationFiles = dir.GetAllFiles("Extensions/*ClientExecute*Extensions.cs");
-            Trace.Assert(modelDefinationFiles.Any() || _allowNotFoundModelTypes, $"工作目录下不存在 API 模型源代码文件，请检查 \"Models\" 目录是否为空。");
-            Trace.Assert(apiDefinationFiles.Any() || _allowNotFoundModelTypes, $"工作目录下不存在 API 接口源代码文件，请检查 \"Extensions\" 目录是否为空。");
+            FileInfo[] modelDefinationFiles = dir.GetAllFiles($"{_dirSourceCodeForApiModels}/*.cs");
+            FileInfo[] eventDefinationFiles = dir.GetAllFiles($"{_dirSourceCodeForApiEvents}/*.cs");
+            FileInfo[] apiDefinationFiles = dir.GetAllFiles($"{_dirSourceCodeForApiMethods}/*ClientExecute*Extensions.cs");
+            Trace.Assert(modelDefinationFiles.Any() || _allowNotFoundModelTypes, $"工作目录下不存在 API 模型源代码文件，请检查 \"{_dirSourceCodeForApiModels}\" 目录是否为空。");
+            Trace.Assert(apiDefinationFiles.Any() || _allowNotFoundModelTypes, $"工作目录下不存在 API 接口源代码文件，请检查 \"{_dirSourceCodeForApiMethods}\" 目录是否为空。");
 
             /* 校验 API 模型源代码文件 */
             Parallel.ForEach(modelDefinationFiles, AnalyzeSourceCode_ModelDefinationFileDocumatationComment);
@@ -317,7 +339,7 @@ namespace SKIT.FlurlHttpClient.Tools.CodeAnalyzer
             WrapExceptionalAction(() =>
             {
                 string fileName = Path.GetFileNameWithoutExtension(file.Name);
-                string typeName = $"{TargetAssembly.GetName().Name}.Models.{fileName}";
+                string typeName = $"{TargetAssemblyNamespaceForApiModels}.{fileName}";
                 Type? targetType = TargetAssembly.GetType(typeName, throwOnError: false);
 
                 if (targetType == null)
@@ -463,7 +485,7 @@ namespace SKIT.FlurlHttpClient.Tools.CodeAnalyzer
                             }
 
                             string identifier = syntaxNode.Identifier.ToFullString().Trim();
-                            if (string.Equals(identifier, _keywordForApiModelInnerNestedTypesWrapperIdentifier))
+                            if (string.Equals(identifier, _targetSdkApiModelInnerNestedTypesWrapperIdentifier))
                             {
                                 ClassDeclarationSyntax[] childClassDeclarationSyntaxes = syntaxNode.ChildNodes()
                                     .Where(n => n.IsKind(SyntaxKind.ClassDeclaration))
@@ -499,7 +521,7 @@ namespace SKIT.FlurlHttpClient.Tools.CodeAnalyzer
                             }
 
                             string identifier = syntaxNode.Identifier.ToFullString().Trim();
-                            if (string.Equals(identifier, _keywordForApiModelInnerNestedTypesWrapperIdentifier))
+                            if (string.Equals(identifier, _targetSdkApiModelInnerNestedTypesWrapperIdentifier))
                             {
                                 ClassDeclarationSyntax[] childClassDeclarationSyntaxes = syntaxNode.ChildNodes()
                                     .Where(n => n.IsKind(SyntaxKind.ClassDeclaration))
@@ -523,7 +545,7 @@ namespace SKIT.FlurlHttpClient.Tools.CodeAnalyzer
             WrapExceptionalAction(() =>
             {
                 string fileName = Path.GetFileNameWithoutExtension(file.Name);
-                string typeName = $"{TargetAssembly.GetName().Name}.Events.{fileName}";
+                string typeName = $"{TargetAssemblyNamespaceForApiEvents}.{fileName}";
                 Type? targetType = TargetAssembly.GetType(typeName, throwOnError: false);
 
                 if (targetType == null)
@@ -542,7 +564,7 @@ namespace SKIT.FlurlHttpClient.Tools.CodeAnalyzer
             void AnalyzeApiRelatedRequest(string expectedApiName, string expectedApiVerb, string expectedApiRoute)
             {
                 FileInfo[] modelDefinationFiles = new DirectoryInfo(_dirSourceCode)
-                    .GetAllFiles($"Models/*{expectedApiName}{MEMBER_NAME_SUFFIX_REQUEST_MODEL}.cs")
+                    .GetAllFiles($"{_dirSourceCodeForApiModels}/*{expectedApiName}{MEMBER_NAME_SUFFIX_REQUEST_MODEL}.cs")
                     .Where(f => string.Equals(f.Name, $"{expectedApiName}{MEMBER_NAME_SUFFIX_REQUEST_MODEL}.cs", StringComparison.OrdinalIgnoreCase))
                     .ToArray();
                 if (modelDefinationFiles.Length == 0)
@@ -586,7 +608,7 @@ namespace SKIT.FlurlHttpClient.Tools.CodeAnalyzer
             void AnalyzeApiRelatedResponse(string expectedApiName, string expectedApiVerb, string expectedApiRoute)
             {
                 FileInfo[] modelDefinationFiles = new DirectoryInfo(_dirSourceCode)
-                    .GetAllFiles($"Models/*{expectedApiName}{MEMBER_NAME_SUFFIX_RESPONSE_MODEL}.cs")
+                    .GetAllFiles($"{_dirSourceCodeForApiModels}/*{expectedApiName}{MEMBER_NAME_SUFFIX_RESPONSE_MODEL}.cs")
                     .Where(f => string.Equals(f.Name, $"{expectedApiName}{MEMBER_NAME_SUFFIX_RESPONSE_MODEL}.cs", StringComparison.OrdinalIgnoreCase))
                     .ToArray();
                 if (modelDefinationFiles.Length == 0)
@@ -641,13 +663,13 @@ namespace SKIT.FlurlHttpClient.Tools.CodeAnalyzer
                         foreach (VariableDeclarationSyntax variableDeclarationSyntax in variableDeclarationSyntaxes)
                         {
                             VariableDeclaratorSyntax variableDeclaratorSyntax = variableDeclarationSyntax.Variables
-                                .Where(v => v.Initializer.ToFullString().Contains($".{_keywordForApiMethodInnerFlurlRequestInitializerIdentifier}("))
+                                .Where(v => v.Initializer.ToFullString().Contains($".{_targetSdkApiMethodInnerFlurlRequestInitializerIdentifier}("))
                                 .SingleOrDefault();
                             if (variableDeclaratorSyntax == null)
                                 continue;
 
                             string variableBindingExpression = variableDeclaratorSyntax.ToFullString()
-                                .Split(new string[] { $".{_keywordForApiMethodInnerFlurlRequestInitializerIdentifier}(" }, StringSplitOptions.RemoveEmptyEntries)[1]
+                                .Split(new string[] { $".{_targetSdkApiMethodInnerFlurlRequestInitializerIdentifier}(" }, StringSplitOptions.RemoveEmptyEntries)[1]
                                 .Split('\n')[0]
                                 .Trim()
                                 .TrimEnd(')', ';')
@@ -785,10 +807,10 @@ namespace SKIT.FlurlHttpClient.Tools.CodeAnalyzer
             DirectoryInfo dir = new DirectoryInfo(_dirTestSample);
             Trace.Assert(dir.Exists, $"工作目录 \"{dir.FullName}\" 不存在。");
 
-            FileInfo[] modelSampleFiles = dir.GetAllFiles("ModelSamples/*");
-            FileInfo[] eventSampleFiles = dir.GetAllFiles("EventSamples/*");
-            Trace.Assert(modelSampleFiles.Any() || _allowNotFoundModelSamples, $"工作目录下不存在 API 模型示例文件，请检查 \"ModelSamples\" 目录是否为空。");
-            Trace.Assert(eventSampleFiles.Any() || _allowNotFoundEventSamples, $"工作目录下不存在 API 事件示例文件，请检查 \"EventSamples\" 目录是否为空。");
+            FileInfo[] modelSampleFiles = dir.GetAllFiles($"{_dirTestSampleForApiModels}/*");
+            FileInfo[] eventSampleFiles = dir.GetAllFiles($"{_dirTestSampleForApiEvents}/*");
+            Trace.Assert(modelSampleFiles.Any() || _allowNotFoundModelSamples, $"工作目录下不存在 API 模型示例文件，请检查 \"{_dirTestSampleForApiModels}\" 目录是否为空。");
+            Trace.Assert(eventSampleFiles.Any() || _allowNotFoundEventSamples, $"工作目录下不存在 API 事件示例文件，请检查 \"{_dirTestSampleForApiEvents}\" 目录是否为空。");
 
             /* 校验 API 模型示例文件 */
             Parallel.ForEach(modelSampleFiles, AnalyzeTestSample_ModelSampleFile);
@@ -802,7 +824,7 @@ namespace SKIT.FlurlHttpClient.Tools.CodeAnalyzer
             WrapExceptionalAction(() =>
             {
                 string fileName = Path.GetFileNameWithoutExtension(file.Name).Split('.').First();
-                string typeName = $"{TargetAssembly.GetName().Name}.Models.{fileName}";
+                string typeName = $"{TargetAssemblyNamespaceForApiModels}.{fileName}";
                 Type? targetType = TargetAssembly.GetType(typeName, throwOnError: false);
 
                 if (targetType == null)
@@ -839,7 +861,7 @@ namespace SKIT.FlurlHttpClient.Tools.CodeAnalyzer
             WrapExceptionalAction(() =>
             {
                 string fileName = Path.GetFileNameWithoutExtension(file.Name).Split('.').First();
-                string typeName = $"{TargetAssembly.GetName().Name}.Events.{fileName}";
+                string typeName = $"{TargetAssemblyNamespaceForApiEvents}.{fileName}";
                 Type? targetType = TargetAssembly.GetType(typeName, throwOnError: false);
 
                 if (targetType == null)
