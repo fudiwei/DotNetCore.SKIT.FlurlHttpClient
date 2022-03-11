@@ -1,5 +1,13 @@
 ﻿# CHANGELOG
 
+-   Release 2.4.2
+
+    -   **变更**：重命名命名空间 `Contants` 为 `Constants`。
+
+-   Release 2.4.1
+
+    -   ****：修复 `UnixTimestampDateTimeOffsetConverter` / `UnixMillisecondsDateTimeOffsetConverter` 不能正确处理字符串形式的数值的问题。
+
 -   Release 2.4.0
 
     -   **新增**：使 `UnixTimestampDateTimeOffsetConverter` / `UnixMillisecondsDateTimeOffsetConverter` 支持字符串形式的数值。
@@ -20,7 +28,7 @@
 
     -   **变更**：升级依赖库。
 
-    -   **变更**：重命名 `DynamicObjectReadOnlyConverter` 为 `DynamicObjectConverter`，并实现其 Write 方法。
+    -   **变更**：重命名类型 `DynamicObjectReadOnlyConverter` 为 `DynamicObjectConverter`，并实现其 Write 方法。
 
 -   Release 2.2.0
 
@@ -44,7 +52,7 @@
 
     -   **新增**：补充若干自定义 JSON 转换器。
 
-    -   **变更**：重命名 `CommonClientSettings` 的属性 `Timeout` 为 `ConnectionRequestTimeout`。
+    -   **变更**：重命名属性 `CommonClientSettings.Timeout` 为 `ConnectionRequestTimeout`。
 
     -   **修复**：修复部分自定义 JSON 转换器在处理空字符串值时抛出异常的问题。
 
