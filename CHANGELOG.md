@@ -2,7 +2,7 @@
 
 -   Release 2.4.0
 
-    -   **修复**：使 `UnixTimestampDateTimeOffsetConverter` / `UnixMillisecondsDateTimeOffsetConverter` 支持字符串形式的数值。
+    -   **新增**：使 `UnixTimestampDateTimeOffsetConverter` / `UnixMillisecondsDateTimeOffsetConverter` 支持字符串形式的数值。
 
 -   Release 2.3.3
 

@@ -21,3 +21,11 @@ SKIT.FlurlHttpClient 系列现有以下开发工具包：
     -   抖音开放平台 API 模块：[SKIT.FlurlHttpClient.ByteDance.TikTok](https://www.nuget.org/packages/SKIT.FlurlHttpClient.ByteDance.TikTok)
     -   抖店开放平台 API 模块：[SKIT.FlurlHttpClient.ByteDance.TikTokShop](https://www.nuget.org/packages/SKIT.FlurlHttpClient.ByteDance.TikTokShop)
 
+---
+
+-  [SKIT.FlurlHttpClient.Upyun](https://www.nuget.org/packages/SKIT.FlurlHttpClient.Upyun)：又拍云 API SDK，完整、完善、完全地封装全部又拍云 API。
+
+    -   云存储服务 API 模块：[SKIT.FlurlHttpClient.Upyun.Uss](https://www.nuget.org/packages/SKIT.FlurlHttpClient.Upyun.Uss)
+    -   短信服务 API 模块：[SKIT.FlurlHttpClient.Upyun.Sms](https://www.nuget.org/packages/SKIT.FlurlHttpClient.Upyun.Sms)
+    -   一键登录服务 API 模块：[SKIT.FlurlHttpClient.Upyun.Sim](https://www.nuget.org/packages/SKIT.FlurlHttpClient.Upyun.Sim)
+    -   服务管理后台 API 模块：[SKIT.FlurlHttpClient.Upyun.Console](https://www.nuget.org/packages/SKIT.FlurlHttpClient.Upyun.Console)
