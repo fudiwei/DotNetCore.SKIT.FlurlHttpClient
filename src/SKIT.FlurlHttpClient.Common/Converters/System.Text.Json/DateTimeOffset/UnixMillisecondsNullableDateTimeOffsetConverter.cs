@@ -24,7 +24,7 @@ namespace System.Text.Json.Converters
                         return null;
 
                     if (long.TryParse(value, out long l))
-                        DateTimeOffset.FromUnixTimeMilliseconds(l);
+                        return DateTimeOffset.FromUnixTimeMilliseconds(l);
 
                     throw new JsonException($"Could not parse String '{value}' to Long.");
                 }

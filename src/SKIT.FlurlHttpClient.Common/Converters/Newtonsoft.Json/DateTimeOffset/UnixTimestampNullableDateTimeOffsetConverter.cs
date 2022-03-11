@@ -32,7 +32,7 @@ namespace Newtonsoft.Json.Converters
                     return existingValue;
 
                 if (long.TryParse(value, out long l))
-                    DateTimeOffset.FromUnixTimeSeconds(l);
+                    return DateTimeOffset.FromUnixTimeSeconds(l);
 
                 throw new JsonSerializationException($"Could not parse String '{value}' to Long.");
             }
