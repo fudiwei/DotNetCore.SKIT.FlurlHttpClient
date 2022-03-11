@@ -114,9 +114,9 @@ namespace SKIT.FlurlHttpClient
 
             if (data != null)
             {
-                if (!flurlRequest.Headers.GetAll(Contants.HttpHeaders.ContentType).Any())
+                if (!flurlRequest.Headers.GetAll(Constants.HttpHeaders.ContentType).Any())
                 {
-                    flurlRequest.WithHeader(Contants.HttpHeaders.ContentType, "application/json");
+                    flurlRequest.WithHeader(Constants.HttpHeaders.ContentType, "application/json");
                 }
             }
 
@@ -171,7 +171,7 @@ namespace SKIT.FlurlHttpClient
             TResponse result;
             if (jsonable)
             {
-                string? contentType = flurlResponse.Headers.GetAll(Contants.HttpHeaders.ContentType).FirstOrDefault();
+                string? contentType = flurlResponse.Headers.GetAll(Constants.HttpHeaders.ContentType).FirstOrDefault();
                 string? charset = MediaTypeHeaderValue.TryParse(contentType, out var mediaType) ? mediaType.CharSet : null;
                 string json = (string.IsNullOrEmpty(charset) ? Encoding.UTF8 : Encoding.GetEncoding(charset)).GetString(tmp.RawBytes);
 
