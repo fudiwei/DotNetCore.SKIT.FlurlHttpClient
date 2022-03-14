@@ -135,7 +135,7 @@ namespace SKIT.FlurlHttpClient
         {
             Task<byte[]> taskReadBytes = flurlResponse.GetBytesAsync();
             Task taskCancellationToken = Task.Run(async () => { while (!cancellationToken.IsCancellationRequested && !taskReadBytes.IsCompleted) await Task.Yield(); });
-            
+
             await Task.WhenAny(taskReadBytes, taskCancellationToken);
             cancellationToken.ThrowIfCancellationRequested();
 
@@ -147,7 +147,7 @@ namespace SKIT.FlurlHttpClient
                     .GroupBy(e => e.Name)
                     .ToDictionary(
                         k => k.Key,
-                        v => string.Join(", ", v.Select(e => e.Value))
+                        v => string.Join(",", v.Select(e => e.Value))
                     )
             );
             return result;
