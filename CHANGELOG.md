@@ -1,12 +1,16 @@
 ﻿# CHANGELOG
 
+-   Release 2.5.0
+
+    -   **新增**：新增 `IFlurlHttpRequest.WithUrl` 的链式扩展方法。
+
 -   Release 2.4.2
 
     -   **变更**：重命名命名空间 `Contants` 为 `Constants`。
 
 -   Release 2.4.1
 
-    -   ****：修复 `UnixTimestampDateTimeOffsetConverter` / `UnixMillisecondsDateTimeOffsetConverter` 不能正确处理字符串形式的数值的问题。
+    -   **修复**：修复 `UnixTimestampDateTimeOffsetConverter` / `UnixMillisecondsDateTimeOffsetConverter` 不能正确处理字符串形式的数值的问题。
 
 -   Release 2.4.0
 
