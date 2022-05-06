@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using NUnit.Framework;
 
 namespace SKIT.FlurlHttpClient.UnitTests
 {
@@ -141,7 +140,7 @@ namespace SKIT.FlurlHttpClient.UnitTests
             public dynamic DynamicObjectConverter_AnonymousObject { get; set; } = new { k1 = true, k2 = 1, k3 = "a" };
         }
 
-        [Test(Description = "²âÊÔÓÃÀý£º×Ô¶¨Òå Newtosoft.Json ÐòÁÐ»¯×ª»»Æ÷")]
+        [Test(Description = "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô¶ï¿½ï¿½ï¿½ Newtosoft.Json ï¿½ï¿½ï¿½Ð»ï¿½×ªï¿½ï¿½ï¿½ï¿½")]
         public void TestCustomNewtosoftJsonConverters()
         {
             var serializerSettings = FlurlNewtonsoftJsonSerializer.GetDefaultSerializerSettings();
@@ -182,7 +181,7 @@ namespace SKIT.FlurlHttpClient.UnitTests
             CollectionAssert.AreEqual(rawObj.TextualStringListWithCommaSplitProperty, parsedObj.TextualStringListWithCommaSplitProperty);
         }
 
-        [Test(Description = "²âÊÔÓÃÀý£º×Ô¶¨Òå System.Text.Json ÐòÁÐ»¯×ª»»Æ÷")]
+        [Test(Description = "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô¶ï¿½ï¿½ï¿½ System.Text.Json ï¿½ï¿½ï¿½Ð»ï¿½×ªï¿½ï¿½ï¿½ï¿½")]
         public void TestCustomSystemTextJsonConverters()
         {
             var serializerOptions = FlurlSystemTextJsonSerializer.GetDefaultSerializerOptions();

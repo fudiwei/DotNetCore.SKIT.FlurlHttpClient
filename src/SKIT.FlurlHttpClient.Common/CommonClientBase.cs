@@ -35,7 +35,7 @@ namespace SKIT.FlurlHttpClient
         protected IFlurlClient FlurlClient { get; }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         protected CommonClientBase()
         {
@@ -124,7 +124,7 @@ namespace SKIT.FlurlHttpClient
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <typeparam name="TResponse"></typeparam>
         /// <param name="flurlResponse"></param>
@@ -154,7 +154,7 @@ namespace SKIT.FlurlHttpClient
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <typeparam name="TResponse"></typeparam>
         /// <param name="flurlResponse"></param>

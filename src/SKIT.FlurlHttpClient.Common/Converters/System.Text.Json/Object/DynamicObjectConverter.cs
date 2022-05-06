@@ -123,7 +123,7 @@ namespace System.Text.Json.Converters
             private void WriteValue(ref Utf8JsonWriter writer, object? value, JsonSerializerOptions options)
             {
                 bool requireWriteJsonNumberAsString = (options.NumberHandling & JsonNumberHandling.WriteAsString) != 0;
-            
+
                 if (value == null || Convert.IsDBNull(value))
                 {
                     writer.WriteNullValue();
@@ -450,8 +450,8 @@ namespace System.Text.Json.Converters
 
         public override bool CanConvert(Type typeToConvert)
         {
-            return 
-                typeof(object) == typeToConvert || 
+            return
+                typeof(object) == typeToConvert ||
                 typeof(ExpandoObject) == typeToConvert ||
                 typeof(IDynamicMetaObjectProvider).IsAssignableFrom(typeToConvert);
         }

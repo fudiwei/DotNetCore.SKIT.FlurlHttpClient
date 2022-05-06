@@ -27,7 +27,7 @@ namespace Newtonsoft.Json.Converters
                 string? value = serializer.Deserialize<string>(reader);
                 if (value == null)
                     return existingValue;
-                
+
 #pragma warning disable CS8603
                 return JsonConvert.DeserializeObject<T>(value);
 #pragma warning restore CS8603

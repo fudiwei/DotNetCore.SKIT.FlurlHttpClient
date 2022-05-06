@@ -7,10 +7,6 @@ using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Microsoft.CodeAnalysis.Text;
 
 namespace SKIT.FlurlHttpClient.Tools.CodeAnalyzer
 {
@@ -46,7 +42,7 @@ namespace SKIT.FlurlHttpClient.Tools.CodeAnalyzer
         protected Assembly TargetAssembly { get; }
 
         protected string TargetAssemblyNamespaceForApiModels { get { return $"{TargetAssembly.GetName().Name}.{_targetSdkApiModelNamespaceUnderAssemblyIdentifier}".TrimEnd('.'); } }
-        
+
         protected string TargetAssemblyNamespaceForApiEvents { get { return $"{TargetAssembly.GetName().Name}.{_targetSdkApiEventNamespaceUnderAssemblyIdentifier}".TrimEnd('.'); } }
 
         protected string TargetAssemblyNamespaceForApiMethods { get { return $"{TargetAssembly.GetName().Name}.{_targetSdkApiMethodNamespaceUnderAssemblyIdentifier}".TrimEnd('.'); } }

@@ -8,7 +8,7 @@ namespace SKIT.FlurlHttpClient.Tools.CodeAnalyzer
 
         public CodeAnalyzerException(string issue)
             : base(PREFIX_MESSAGE + issue)
-        { 
+        {
         }
 
         public CodeAnalyzerException(string issue, Exception innerException)
