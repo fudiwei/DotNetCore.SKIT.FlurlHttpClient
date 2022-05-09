@@ -12,7 +12,8 @@ SKIT.FlurlHttpClient 系列现有以下开发工具包：
     -   企业微信 API 模块：[SKIT.FlurlHttpClient.Wechat.Work](https://www.nuget.org/packages/SKIT.FlurlHttpClient.Wechat.Work)
     -   微信广告平台 API 模块：[SKIT.FlurlHttpClient.Wechat.Ads](https://www.nuget.org/packages/SKIT.FlurlHttpClient.Wechat.Ads)
     -   微信对话开放平台 API 模块：[SKIT.FlurlHttpClient.Wechat.Ads](https://www.nuget.org/packages/SKIT.FlurlHttpClient.Wechat.OpenAI)
-
+    -   腾讯微企付 API 模块：[SKIT.FlurlHttpClient.Wechat.TenpayBusiness](https://www.nuget.org/packages/SKIT.FlurlHttpClient.Wechat.TenpayBusiness)
+    
 ---
 
 -   [SKIT.FlurlHttpClient.ByteDance](https://www.nuget.org/packages/SKIT.FlurlHttpClient.ByteDance)：字节跳动 API SDK，完整、完善、完全地封装全部字节跳动 API。
