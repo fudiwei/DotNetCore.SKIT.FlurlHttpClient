@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net.Http;
@@ -147,7 +147,8 @@ namespace SKIT.FlurlHttpClient
                     .GroupBy(e => e.Name)
                     .ToDictionary(
                         k => k.Key,
-                        v => string.Join(",", v.Select(e => e.Value))
+                        v => string.Join(",", v.Select(e => e.Value)),
+                        StringComparer.OrdinalIgnoreCase
                     )
             );
             return result;
