@@ -1,20 +1,28 @@
 ﻿# CHANGELOG
 
+-   Release 2.6.0
+
+    -   **新增**：`ICommonResponse.RawHeaders` 调整为不区分标头名的大小写。
+
+    -   **变更**：升级依赖库。
+
+    -   **变更**：移除已被废弃的部分类型。
+
 -   Release 2.5.0
 
     -   **新增**：新增 `IFlurlHttpRequest.WithUrl` 的链式扩展方法。
 
 -   Release 2.4.2
 
-    -   **变更**：重命名命名空间 `Contants` 为 `Constants`。
+    -   **修复**：修复命名空间拼写错误，将 `Contants` 修正为 `Constants`。
 
 -   Release 2.4.1
 
-    -   **修复**：修复 `UnixTimestampDateTimeOffsetConverter` / `UnixMillisecondsDateTimeOffsetConverter` 不能正确处理字符串形式的数值的问题。
+    -   **修复**：修复 `UnixTimestampDateTimeOffsetConverter`、`UnixMillisecondsDateTimeOffsetConverter` 不能正确处理字符串形式的数值的问题。
 
 -   Release 2.4.0
 
-    -   **新增**：使 `UnixTimestampDateTimeOffsetConverter` / `UnixMillisecondsDateTimeOffsetConverter` 支持字符串形式的数值。
+    -   **新增**：使 `UnixTimestampDateTimeOffsetConverter`、`UnixMillisecondsDateTimeOffsetConverter` 支持字符串形式的数值。
 
 -   Release 2.3.3
 
@@ -40,7 +48,7 @@
 
 -   Release 2.1.1
 
-    -   **修复**：修复 `ICommonResponse` 接口属性定义问题。
+    -   **修复**：修复 `ICommonResponse` 接口属性可访问性定义问题。
 
 -   Release 2.1.0
 
@@ -56,7 +64,7 @@
 
     -   **新增**：补充若干自定义 JSON 转换器。
 
-    -   **变更**：重命名属性 `CommonClientSettings.Timeout` 为 `ConnectionRequestTimeout`。
+    -   **变更**：重命名 `CommonClientSettings` 类型的属性 `Timeout` 为 `ConnectionRequestTimeout`。
 
     -   **修复**：修复部分自定义 JSON 转换器在处理空字符串值时抛出异常的问题。
 
