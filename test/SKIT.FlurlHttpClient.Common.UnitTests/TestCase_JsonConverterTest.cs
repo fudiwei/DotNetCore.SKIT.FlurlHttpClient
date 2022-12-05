@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using NUnit.Framework;
 
 namespace SKIT.FlurlHttpClient.UnitTests
 {
@@ -140,7 +141,7 @@ namespace SKIT.FlurlHttpClient.UnitTests
             public dynamic DynamicObjectConverter_AnonymousObject { get; set; } = new { k1 = true, k2 = 1, k3 = "a" };
         }
 
-        [Test(Description = "�����������Զ��� Newtosoft.Json ���л�ת����")]
+        [Test(Description = "??????????????? Newtosoft.Json ???л??????")]
         public void TestCustomNewtosoftJsonConverters()
         {
             var serializerSettings = FlurlNewtonsoftJsonSerializer.GetDefaultSerializerSettings();
@@ -181,7 +182,7 @@ namespace SKIT.FlurlHttpClient.UnitTests
             CollectionAssert.AreEqual(rawObj.TextualStringListWithCommaSplitProperty, parsedObj.TextualStringListWithCommaSplitProperty);
         }
 
-        [Test(Description = "�����������Զ��� System.Text.Json ���л�ת����")]
+        [Test(Description = "??????????????? System.Text.Json ???л??????")]
         public void TestCustomSystemTextJsonConverters()
         {
             var serializerOptions = FlurlSystemTextJsonSerializer.GetDefaultSerializerOptions();

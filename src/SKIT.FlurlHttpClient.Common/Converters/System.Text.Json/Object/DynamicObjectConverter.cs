@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
@@ -299,7 +299,7 @@ namespace System.Text.Json.Converters
                 {
                     foreach (DictionaryEntry entry in dict)
                     {
-                        string entryKey = options.DictionaryKeyPolicy?.ConvertName(entry.Key.ToString()) ?? entry.Key.ToString();
+                        string entryKey = options.DictionaryKeyPolicy?.ConvertName(entry.Key.ToString()!) ?? entry.Key.ToString()!;
                         object? entryValue = entry.Value;
 
                         if (entryValue == null)
@@ -328,7 +328,7 @@ namespace System.Text.Json.Converters
                                         return false;
                                     if (!p.CanWrite && (options.IgnoreReadOnlyProperties || p.GetCustomAttribute<JsonIncludeAttribute>() == null))
                                         return false;
-                                    if (!p.SetMethod.IsPublic && (options.IgnoreReadOnlyProperties || p.GetCustomAttribute<JsonIncludeAttribute>() == null))
+                                    if (!p.SetMethod!.IsPublic && (options.IgnoreReadOnlyProperties || p.GetCustomAttribute<JsonIncludeAttribute>() == null))
                                         return false;
                                     if (p.GetCustomAttribute<JsonIgnoreAttribute>() != null)
                                         return false;
@@ -365,7 +365,7 @@ namespace System.Text.Json.Converters
                             }
                             else
                             {
-                                JsonConverter jsonConverter = jsonConverterAttribute.CreateConverter(property.PropertyType) ?? (JsonConverter)Activator.CreateInstance(jsonConverterAttribute.ConverterType!);
+                                JsonConverter jsonConverter = jsonConverterAttribute.CreateConverter(property.PropertyType) ?? (JsonConverter)Activator.CreateInstance(jsonConverterAttribute.ConverterType!)!;
                                 WriteValueWithJsonConverter(ref writer, value, options, jsonConverter);
                             }
                         }
@@ -417,7 +417,7 @@ namespace System.Text.Json.Converters
                             }
                             else
                             {
-                                JsonConverter jsonConverter = jsonConverterAttribute.CreateConverter(field.FieldType) ?? (JsonConverter)Activator.CreateInstance(jsonConverterAttribute.ConverterType!);
+                                JsonConverter jsonConverter = jsonConverterAttribute.CreateConverter(field.FieldType) ?? (JsonConverter)Activator.CreateInstance(jsonConverterAttribute.ConverterType!)!;
                                 WriteValueWithJsonConverter(ref writer, value, options, jsonConverter);
                             }
                         }

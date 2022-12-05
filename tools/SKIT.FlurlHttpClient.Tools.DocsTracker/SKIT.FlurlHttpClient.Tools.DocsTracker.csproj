@@ -15,7 +15,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="HtmlAgilityPack" Version="1.11.42" />
+		<PackageReference Include="HtmlAgilityPack" Version="1.11.46" />
 		<PackageReference Include="Utility.CommandLine.Arguments" Version="6.0.0" />
 		<PackageReference Include="Utility.CommandLine.Progress" Version="0.0.5" />
 	</ItemGroup>
