@@ -102,7 +102,7 @@ namespace SKIT.FlurlHttpClient
 
         /// <summary>
         /// 异步发起请求。
-        /// <para>指定请求标头 `Content-Type` 为 `application/json`。</para>
+        /// <para>注意：对于非简单请求，如果未指定请求标头 Content-Type，将默认使用 "application/json" 作为其值。</para>
         /// </summary>
         /// <param name="flurlRequest"></param>
         /// <param name="data"></param>
@@ -114,7 +114,7 @@ namespace SKIT.FlurlHttpClient
 
             if (data != null)
             {
-                if (!flurlRequest.Headers.GetAll(Constants.HttpHeaders.ContentType).Any())
+                if (!flurlRequest.Headers.Contains(Constants.HttpHeaders.ContentType))
                 {
                     flurlRequest.WithHeader(Constants.HttpHeaders.ContentType, "application/json");
                 }
