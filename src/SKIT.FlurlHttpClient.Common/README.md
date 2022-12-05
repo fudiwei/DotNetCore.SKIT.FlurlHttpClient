@@ -1,32 +1,3 @@
 SKIT.FlurlHttpClient 系列开发工具包的公共组件，为开发者提供使用体验一致的、可跨平台的第三方 API .NET SDK。
 
-SKIT.FlurlHttpClient 系列现有以下开发工具包：
-
----
-
--   [SKIT.FlurlHttpClient.Wechat](https://www.nuget.org/packages/SKIT.FlurlHttpClient.Wechat)：微信 API SDK，完整、完善、完全地封装全部微信 API。
-
-    -   微信公众平台+开放平台 API 模块：[SKIT.FlurlHttpClient.Wechat.Api](https://www.nuget.org/packages/SKIT.FlurlHttpClient.Wechat.Api)
-    -   微信商户平台 API v3 模块：[SKIT.FlurlHttpClient.Wechat.TenpayV3](https://www.nuget.org/packages/SKIT.FlurlHttpClient.Wechat.TenpayV3)
-    -   微信商户平台 API v2 模块：[SKIT.FlurlHttpClient.Wechat.TenpayV2](https://www.nuget.org/packages/SKIT.FlurlHttpClient.Wechat.TenpayV2)
-    -   企业微信 API 模块：[SKIT.FlurlHttpClient.Wechat.Work](https://www.nuget.org/packages/SKIT.FlurlHttpClient.Wechat.Work)
-    -   微信广告平台 API 模块：[SKIT.FlurlHttpClient.Wechat.Ads](https://www.nuget.org/packages/SKIT.FlurlHttpClient.Wechat.Ads)
-    -   微信对话开放平台 API 模块：[SKIT.FlurlHttpClient.Wechat.Ads](https://www.nuget.org/packages/SKIT.FlurlHttpClient.Wechat.OpenAI)
-    -   腾讯微企付 API 模块：[SKIT.FlurlHttpClient.Wechat.TenpayBusiness](https://www.nuget.org/packages/SKIT.FlurlHttpClient.Wechat.TenpayBusiness)
-    
----
-
--   [SKIT.FlurlHttpClient.ByteDance](https://www.nuget.org/packages/SKIT.FlurlHttpClient.ByteDance)：字节跳动 API SDK，完整、完善、完全地封装全部字节跳动 API。
-
-    -   字节小程序 API 模块：[SKIT.FlurlHttpClient.ByteDance.MicroApp](https://www.nuget.org/packages/SKIT.FlurlHttpClient.ByteDance.MicroApp)
-    -   抖音开放平台 API 模块：[SKIT.FlurlHttpClient.ByteDance.TikTok](https://www.nuget.org/packages/SKIT.FlurlHttpClient.ByteDance.TikTok)
-    -   抖店开放平台 API 模块：[SKIT.FlurlHttpClient.ByteDance.TikTokShop](https://www.nuget.org/packages/SKIT.FlurlHttpClient.ByteDance.TikTokShop)
-
----
-
--   [SKIT.FlurlHttpClient.Upyun](https://www.nuget.org/packages/SKIT.FlurlHttpClient.Upyun)：又拍云 API SDK，完整、完善、完全地封装全部又拍云 API。
-
-    -   云存储服务 API 模块：[SKIT.FlurlHttpClient.Upyun.Uss](https://www.nuget.org/packages/SKIT.FlurlHttpClient.Upyun.Uss)
-    -   短信服务 API 模块：[SKIT.FlurlHttpClient.Upyun.Sms](https://www.nuget.org/packages/SKIT.FlurlHttpClient.Upyun.Sms)
-    -   一键登录服务 API 模块：[SKIT.FlurlHttpClient.Upyun.Sim](https://www.nuget.org/packages/SKIT.FlurlHttpClient.Upyun.Sim)
-    -   服务管理后台 API 模块：[SKIT.FlurlHttpClient.Upyun.Console](https://www.nuget.org/packages/SKIT.FlurlHttpClient.Upyun.Console)
+已支持的 SDK 清单请前往[项目主页](https://github.com/fudiwei/DotNetCore.SKIT.FlurlHttpClient)查看。
