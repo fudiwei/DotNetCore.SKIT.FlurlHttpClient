@@ -133,25 +133,29 @@ namespace SKIT.FlurlHttpClient
         protected async Task<TResponse> WrapResponseAsync<TResponse>(IFlurlResponse flurlResponse, CancellationToken cancellationToken = default)
             where TResponse : ICommonResponse, new()
         {
-            Task<byte[]> taskReadBytes = flurlResponse.GetBytesAsync();
-            Task taskCancellationToken = Task.Run(async () => { while (!cancellationToken.IsCancellationRequested && !taskReadBytes.IsCompleted) await Task.Yield(); });
-
-            await Task.WhenAny(taskReadBytes, taskCancellationToken);
-            cancellationToken.ThrowIfCancellationRequested();
-
-            TResponse result = new TResponse();
-            result.RawBytes = await taskReadBytes;
-            result.RawStatus = flurlResponse.StatusCode;
-            result.RawHeaders = new ReadOnlyDictionary<string, string>(
-                flurlResponse.Headers
-                    .GroupBy(e => e.Name)
-                    .ToDictionary(
-                        k => k.Key,
-                        v => string.Join(",", v.Select(e => e.Value)),
-                        StringComparer.OrdinalIgnoreCase
-                    )
-            );
-            return result;
+            Task<byte[]> task = flurlResponse.GetBytesAsync();
+            Task taskWithCt = await Task.WhenAny(task, Task.Delay(Timeout.Infinite, cancellationToken));
+            if (taskWithCt == task)
+            {
+                TResponse result = new TResponse();
+                result.RawBytes = await task;
+                result.RawStatus = flurlResponse.StatusCode;
+                result.RawHeaders = new ReadOnlyDictionary<string, string>(
+                    flurlResponse.Headers
+                        .GroupBy(e => e.Name)
+                        .ToDictionary(
+                            k => k.Key,
+                            v => string.Join(",", v.Select(e => e.Value)),
+                            StringComparer.OrdinalIgnoreCase
+                        )
+                );
+                return result;
+            }
+            else
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                throw new OperationCanceledException("Infinite delay task completed.");
+            }
         }
 
         /// <summary>
