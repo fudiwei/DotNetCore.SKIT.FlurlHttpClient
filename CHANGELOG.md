@@ -4,7 +4,11 @@
 
     -   **新增**：`ICommonResponse.RawHeaders` 调整为不区分标头名的大小写。
 
-    -   **变更**：升级依赖库。
+    -   **变更**：升级依赖 `Flurl` 至 v3.0.6。
+
+    -   **变更**：升级依赖 `Flurl.Http` 至 v3.2.4。
+
+    -   **变更**：升级依赖 `Newtonsoft.Json` 至 v13.0.2。
 
     -   **变更**：移除已被废弃的部分类型。
 
@@ -38,7 +42,11 @@
 
 -   Release 2.3.0
 
-    -   **变更**：升级依赖库。
+    -   **变更**：升级依赖 `Flurl` 至 v3.0.4。
+
+    -   **变更**：升级依赖 `Flurl.Http` 至 v3.2.2。
+
+    -   **变更**：升级依赖 `Newtonsoft.Json` 至 v13.0.1。
 
     -   **变更**：重命名类型 `DynamicObjectReadOnlyConverter` 为 `DynamicObjectConverter`，并实现其 Write 方法。
 
