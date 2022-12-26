@@ -1,8 +1,9 @@
-﻿using System;
-using Flurl.Http.Configuration;
+using System;
 
 namespace SKIT.FlurlHttpClient
 {
+    using SKIT.FlurlHttpClient.Configuration;
+
     /// <summary>
     /// SKIT.FlurlHttpClient 客户端接口。
     /// </summary>
@@ -16,7 +17,7 @@ namespace SKIT.FlurlHttpClient
         /// <summary>
         /// 获取当前客户端使用的 JSON 序列化器。
         /// </summary>
-        public ISerializer JsonSerializer { get; }
+        public IJsonSerializer JsonSerializer { get; }
 
         /// <summary>
         /// 配置客户端。

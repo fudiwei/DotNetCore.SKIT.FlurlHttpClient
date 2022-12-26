@@ -11,6 +11,8 @@ using Flurl.Http.Configuration;
 
 namespace SKIT.FlurlHttpClient
 {
+    using SKIT.FlurlHttpClient.Configuration;
+    using SKIT.FlurlHttpClient.Configuration.Internal;
     using SKIT.FlurlHttpClient.Exceptions;
 
     /// <summary>
@@ -28,9 +30,9 @@ namespace SKIT.FlurlHttpClient
         /// <summary>
         /// <inheritdoc />
         /// </summary>
-        public ISerializer JsonSerializer
+        public IJsonSerializer JsonSerializer
         {
-            get { return FlurlClient.Settings?.JsonSerializer ?? FlurlHttp.GlobalSettings.JsonSerializer; }
+            get { return ((InternalWrappedJsonSerializer)FlurlClient.Settings.JsonSerializer)!.Serializer; }
         }
 
         /// <summary>
@@ -98,8 +100,7 @@ namespace SKIT.FlurlHttpClient
                 configure.Invoke(settings);
 
                 flurlClientSettings.Timeout = settings.ConnectionRequestTimeout;
-                flurlClientSettings.ConnectionLeaseTimeout = settings.ConnectionLeaseTimeout;
-                flurlClientSettings.JsonSerializer = settings.JsonSerializer;
+                flurlClientSettings.JsonSerializer = new InternalWrappedJsonSerializer(settings.JsonSerializer);
                 flurlClientSettings.UrlEncodedSerializer = settings.UrlEncodedSerializer;
                 flurlClientSettings.HttpClientFactory = settings.FlurlHttpClientFactory;
             });
