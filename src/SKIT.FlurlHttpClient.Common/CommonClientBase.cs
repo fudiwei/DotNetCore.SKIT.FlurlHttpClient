@@ -49,7 +49,7 @@ namespace SKIT.FlurlHttpClient
             FlurlClient = new FlurlClient();
             FlurlClient.Configure(flurlSettings =>
             {
-                flurlSettings.JsonSerializer = new FlurlSystemTextJsonSerializer();
+                flurlSettings.JsonSerializer = new InternalWrappedJsonSerializer(new SystemTextJsonSerializer());
                 flurlSettings.BeforeCallAsync = async (flurlCall) =>
                 {
                     using CancellationTokenSource cts = new CancellationTokenSource();
@@ -115,9 +115,8 @@ namespace SKIT.FlurlHttpClient
                 CommonClientSettings settings = new CommonClientSettings(flurlClientSettings);
                 configure.Invoke(settings);
 
-                flurlClientSettings.Timeout = settings.ConnectionRequestTimeout;
+                flurlClientSettings.Timeout = settings.Timeout;
                 flurlClientSettings.JsonSerializer = new InternalWrappedJsonSerializer(settings.JsonSerializer);
-                flurlClientSettings.UrlEncodedSerializer = settings.UrlEncodedSerializer;
                 flurlClientSettings.HttpClientFactory = settings.FlurlHttpClientFactory;
             });
         }
@@ -139,6 +138,7 @@ namespace SKIT.FlurlHttpClient
         protected virtual async Task<IFlurlResponse> SendRequestAsync(IFlurlRequest flurlRequest, HttpContent? httpContent = null, CancellationToken cancellationToken = default)
         {
             if (flurlRequest == null) throw new ArgumentNullException(nameof(flurlRequest));
+            if (_disposed) throw new ObjectDisposedException(nameof(FlurlClient));
 
             try
             {
@@ -169,6 +169,7 @@ namespace SKIT.FlurlHttpClient
         protected virtual async Task<IFlurlResponse> SendRequestWithJsonAsync(IFlurlRequest flurlRequest, object? data = null, CancellationToken cancellationToken = default)
         {
             if (flurlRequest == null) throw new ArgumentNullException(nameof(flurlRequest));
+            if (_disposed) throw new ObjectDisposedException(nameof(FlurlClient));
 
             if (data != null)
             {
@@ -204,24 +205,18 @@ namespace SKIT.FlurlHttpClient
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         protected async Task<TResponse> WrapResponseAsync<TResponse>(IFlurlResponse flurlResponse, CancellationToken cancellationToken = default)
-            where TResponse : ICommonResponse, new()
+            where TResponse : CommonResponseBase, new()
         {
+            if (flurlResponse == null) throw new ArgumentNullException(nameof(flurlResponse));
+
             Task<byte[]> task = flurlResponse.GetBytesAsync();
             Task taskWithCt = await Task.WhenAny(task, Task.Delay(Timeout.Infinite, cancellationToken));
             if (taskWithCt == task)
             {
                 TResponse result = new TResponse();
-                result.RawBytes = await task;
                 result.RawStatus = flurlResponse.StatusCode;
-                result.RawHeaders = new ReadOnlyDictionary<string, string>(
-                    flurlResponse.Headers
-                        .GroupBy(e => e.Name)
-                        .ToDictionary(
-                            k => k.Key,
-                            v => string.Join(",", v.Select(e => e.Value)),
-                            StringComparer.OrdinalIgnoreCase
-                        )
-                );
+                result.RawHeaders = new HttpHeaderCollection(flurlResponse.Headers);
+                result.RawBytes = await task;
                 return result;
             }
             else
@@ -239,8 +234,10 @@ namespace SKIT.FlurlHttpClient
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         protected async Task<TResponse> WrapResponseWithJsonAsync<TResponse>(IFlurlResponse flurlResponse, CancellationToken cancellationToken = default)
-            where TResponse : ICommonResponse, new()
+            where TResponse : CommonResponseBase, new()
         {
+            if (flurlResponse == null) throw new ArgumentNullException(nameof(flurlResponse));
+
             TResponse tmp = await WrapResponseAsync<TResponse>(flurlResponse, cancellationToken);
             byte tb1 = byte.MinValue,
                  tb2 = byte.MinValue;
