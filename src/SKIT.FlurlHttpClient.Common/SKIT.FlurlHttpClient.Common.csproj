@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFrameworks>net461; netstandard2.0; net5.0; net6.0</TargetFrameworks>
+        <TargetFrameworks>net462; netstandard2.0; net6.0</TargetFrameworks>
         <LangVersion>8.0</LangVersion>
         <Nullable>enable</Nullable>
         <NullableReferenceTypes>true</NullableReferenceTypes>
@@ -15,7 +15,7 @@
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <PackageProjectUrl>https://github.com/fudiwei/DotNetCore.SKIT.FlurlHttpClient</PackageProjectUrl>
         <PackageTags>Flurl.Http</PackageTags>
-        <Version>2.6.0</Version>
+        <Version>3.0.0-alpha.1</Version>
         <Description>SKIT.FlurlHttpClient 系列开发工具包的公共组件。</Description>
         <Authors>Fu Diwei</Authors>
         <RepositoryType>git</RepositoryType>
@@ -37,17 +37,17 @@
     </ItemGroup>
 
 	<ItemGroup>
-		<Reference Include="Microsoft.CSharp" Condition="'$(TargetFramework)' == 'net461'" />
+		<Reference Include="Microsoft.CSharp" Condition="'$(TargetFramework)' == 'net462'" />
 	</ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Flurl" Version="3.0.6" />
-        <PackageReference Include="Flurl.Http" Version="3.2.4" />
+        <PackageReference Include="Flurl" Version="3.0.7" />
+        <PackageReference Include="Flurl.Http" Version="4.0.0-pre3" />
         <PackageReference Include="Microsoft.CSharp" Version="4.7.0" Condition="'$(TargetFramework)' == 'netstandard2.0'" />
         <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
         <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
-        <PackageReference Include="System.Text.Encodings.Web" Version="6.0.0" />
-        <PackageReference Include="System.Text.Json" Version="6.0.7" />
+        <PackageReference Include="System.Text.Encodings.Web" Version="7.0.0" />
+        <PackageReference Include="System.Text.Json" Version="7.0.1" />
     </ItemGroup>
 
 </Project>
