@@ -1,8 +1,11 @@
-﻿using System;
+using System;
 using Flurl.Http.Configuration;
 
 namespace SKIT.FlurlHttpClient
 {
+    using SKIT.FlurlHttpClient.Configuration;
+    using SKIT.FlurlHttpClient.Configuration.Internal;
+
     /// <summary>
     /// SKIT.FlurlHttpClient 客户端配置项。
     /// </summary>
@@ -21,7 +24,7 @@ namespace SKIT.FlurlHttpClient
         /// <summary>
         ///
         /// </summary>
-        public ISerializer JsonSerializer { get; set; } = default!;
+        public IJsonSerializer JsonSerializer { get; set; } = default!;
 
         /// <summary>
         ///
@@ -42,7 +45,7 @@ namespace SKIT.FlurlHttpClient
         {
             ConnectionRequestTimeout = flurlClientSettings.Timeout;
             ConnectionLeaseTimeout = flurlClientSettings.ConnectionLeaseTimeout;
-            JsonSerializer = flurlClientSettings.JsonSerializer;
+            JsonSerializer = ((InternalWrappedJsonSerializer)flurlClientSettings.JsonSerializer)!.Serializer;
             UrlEncodedSerializer = flurlClientSettings.UrlEncodedSerializer;
             FlurlHttpClientFactory = flurlClientSettings.HttpClientFactory;
         }
