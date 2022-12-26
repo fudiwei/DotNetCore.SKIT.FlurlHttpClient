@@ -1,10 +1,10 @@
-﻿using System;
+using System;
 
-namespace Newtonsoft.Json.Converters
+namespace Newtonsoft.Json.Converters.Common
 {
-    public class NumericalBooleanReadOnlyConverter : JsonConverter<bool>
+    public sealed class NumericalBooleanReadOnlyConverter : JsonConverter
     {
-        private readonly JsonConverter<bool> _converter = new NumericalBooleanConverter();
+        private readonly JsonConverter _converter = new NumericalBooleanConverter();
 
         public override bool CanRead
         {
@@ -16,13 +16,19 @@ namespace Newtonsoft.Json.Converters
             get { return false; }
         }
 
-        public override bool ReadJson(JsonReader reader, Type objectType, bool existingValue, bool hasExistingValue, JsonSerializer serializer)
+        public override bool CanConvert(Type objectType)
         {
-            return _converter.ReadJson(reader, objectType, existingValue, hasExistingValue, serializer);
+            return _converter.CanConvert(objectType);
         }
 
-        public override void WriteJson(JsonWriter writer, bool value, JsonSerializer serializer)
+        public override object? ReadJson(JsonReader reader, Type objectType, object? existingValue, JsonSerializer serializer)
         {
+            return _converter.ReadJson(reader, objectType, existingValue, serializer);
+        }
+
+        public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer)
+        {
+            throw new NotImplementedException();
         }
     }
 }

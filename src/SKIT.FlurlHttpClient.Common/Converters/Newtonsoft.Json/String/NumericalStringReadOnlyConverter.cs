@@ -1,8 +1,8 @@
-﻿using System;
+using System;
 
-namespace Newtonsoft.Json.Converters
+namespace Newtonsoft.Json.Converters.Common
 {
-    public class NumericalStringReadOnlyConverter : JsonConverter<string?>
+    public sealed class NumericalStringReadOnlyConverter : JsonConverter<string?>
     {
         private readonly JsonConverter<string?> _converter = new NumericalStringConverter();
 
@@ -23,6 +23,7 @@ namespace Newtonsoft.Json.Converters
 
         public override void WriteJson(JsonWriter writer, string? value, JsonSerializer serializer)
         {
+            throw new NotImplementedException();
         }
     }
 }

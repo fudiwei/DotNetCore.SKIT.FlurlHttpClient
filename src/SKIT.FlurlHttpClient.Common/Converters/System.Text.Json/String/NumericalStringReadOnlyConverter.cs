@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace System.Text.Json.Converters
+namespace System.Text.Json.Converters.Common
 {
     public class NumericalStringReadOnlyConverter : JsonConverter<string?>
     {
