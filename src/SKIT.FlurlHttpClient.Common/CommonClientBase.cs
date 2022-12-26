@@ -25,7 +25,7 @@ namespace SKIT.FlurlHttpClient
         /// <summary>
         /// <inheritdoc />
         /// </summary>
-        public FlurlHttpCallInterceptorCollection Interceptors { get; }
+        public HttpInterceptorCollection Interceptors { get; }
 
         /// <summary>
         /// <inheritdoc />
@@ -45,18 +45,25 @@ namespace SKIT.FlurlHttpClient
         /// </summary>
         protected CommonClientBase()
         {
-            Interceptors = new FlurlHttpCallInterceptorCollection();
+            Interceptors = new HttpInterceptorCollection();
             FlurlClient = new FlurlClient();
             FlurlClient.Configure(flurlSettings =>
             {
                 flurlSettings.JsonSerializer = new FlurlSystemTextJsonSerializer();
                 flurlSettings.BeforeCallAsync = async (flurlCall) =>
                 {
+                    using CancellationTokenSource cts = new CancellationTokenSource();
+                    if (flurlSettings.Timeout.HasValue)
+                        cts.CancelAfter(flurlSettings.Timeout.Value);
+
+                    HttpInterceptorContext context = flurlCall.GetHttpInterceptorContext();
                     for (int i = 0, len = Interceptors.Count; i < len; i++)
                     {
+                        cts.Token.ThrowIfCancellationRequested();
+
                         try
                         {
-                            await Interceptors[i].BeforeCallAsync(flurlCall);
+                            await Interceptors[i].BeforeCallAsync(context, cancellationToken: cts.Token);
                         }
                         catch (OperationCanceledException)
                         {
@@ -70,11 +77,18 @@ namespace SKIT.FlurlHttpClient
                 };
                 flurlSettings.AfterCallAsync = async (flurlCall) =>
                 {
+                    using CancellationTokenSource cts = new CancellationTokenSource();
+                    if (flurlSettings.Timeout.HasValue)
+                        cts.CancelAfter(flurlSettings.Timeout.Value);
+
+                    HttpInterceptorContext context = flurlCall.GetHttpInterceptorContext();
                     for (int i = Interceptors.Count - 1; i >= 0; i--)
                     {
+                        cts.Token.ThrowIfCancellationRequested();
+
                         try
                         {
-                            await Interceptors[i].AfterCallAsync(flurlCall);
+                            await Interceptors[i].AfterCallAsync(context, cancellationToken: cts.Token);
                         }
                         catch (OperationCanceledException)
                         {
@@ -85,6 +99,8 @@ namespace SKIT.FlurlHttpClient
                             throw new CommonInterceptorCallException(flurlCall, ex.Message, ex);
                         }
                     }
+
+                    context.Items.Clear();
                 };
             });
         }
