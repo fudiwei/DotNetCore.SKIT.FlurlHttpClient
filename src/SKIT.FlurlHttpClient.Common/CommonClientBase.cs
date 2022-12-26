@@ -292,7 +292,7 @@ namespace SKIT.FlurlHttpClient
                 }
                 catch (Exception ex)
                 {
-                    throw new CommonResponseSerializationException(ex.Message, ex);
+                    throw new CommonSerializationException(ex.Message, ex);
                 }
             }
             else
