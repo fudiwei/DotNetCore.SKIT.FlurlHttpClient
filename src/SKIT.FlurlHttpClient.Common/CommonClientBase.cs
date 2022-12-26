@@ -1,5 +1,4 @@
 using System;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -7,7 +6,6 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Flurl.Http;
-using Flurl.Http.Configuration;
 
 namespace SKIT.FlurlHttpClient
 {
@@ -105,7 +103,10 @@ namespace SKIT.FlurlHttpClient
             });
         }
 
+        /// <summary>
         /// <inheritdoc/>
+        /// </summary>
+        /// <param name="configure"></param>
         public void Configure(Action<CommonClientSettings> configure)
         {
             if (configure == null) throw new ArgumentNullException(nameof(configure));
@@ -121,28 +122,44 @@ namespace SKIT.FlurlHttpClient
             });
         }
 
-        private IFlurlRequest WrapRequest(IFlurlRequest flurlRequest)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        protected virtual IFlurlRequest CreateFlurlRequest(CommonRequestBase request, HttpMethod method, params object[] urlSegments)
         {
-            return flurlRequest
-                .WithClient(FlurlClient)
-                .AllowAnyHttpStatus();
+            if (request == null) throw new ArgumentNullException(nameof(request));
+
+            IFlurlRequest flurlRequest = FlurlClient.Request(urlSegments).WithVerb(method);
+
+            if (request.Timeout != null)
+            {
+                flurlRequest.WithTimeout(request.Timeout.Value);
+            }
+
+            return flurlRequest;
         }
 
         /// <summary>
-        /// 异步发起请求。
+        /// 
         /// </summary>
         /// <param name="flurlRequest"></param>
         /// <param name="httpContent"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        protected virtual async Task<IFlurlResponse> SendRequestAsync(IFlurlRequest flurlRequest, HttpContent? httpContent = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="CommonRequestTimeoutException"></exception>
+        /// <exception cref="CommonException"></exception>
+        protected virtual async Task<IFlurlResponse> SendFlurlRequestAsync(IFlurlRequest flurlRequest, HttpContent? httpContent = null, CancellationToken cancellationToken = default)
         {
             if (flurlRequest == null) throw new ArgumentNullException(nameof(flurlRequest));
             if (_disposed) throw new ObjectDisposedException(nameof(FlurlClient));
 
             try
             {
-                return await WrapRequest(flurlRequest).SendAsync(flurlRequest.Verb, content: httpContent, cancellationToken: cancellationToken);
+                return await flurlRequest
+                    .AllowAnyHttpStatus()
+                    .SendAsync(flurlRequest.Verb, httpContent, cancellationToken: cancellationToken);
             }
             catch (FlurlHttpTimeoutException ex)
             {
@@ -159,14 +176,17 @@ namespace SKIT.FlurlHttpClient
         }
 
         /// <summary>
-        /// 异步发起请求。
-        /// <para>注意：对于非简单请求，如果未指定请求标头 Content-Type，将默认使用 "application/json" 作为其值。</para>
+        /// 
         /// </summary>
         /// <param name="flurlRequest"></param>
         /// <param name="data"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        protected virtual async Task<IFlurlResponse> SendRequestWithJsonAsync(IFlurlRequest flurlRequest, object? data = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="CommonRequestTimeoutException"></exception>
+        /// <exception cref="CommonRequestSerializationException"></exception>
+        /// <exception cref="CommonException"></exception>
+        protected virtual async Task<IFlurlResponse> SendFlurlRequestAsJsonAsync(IFlurlRequest flurlRequest, object? data = null, CancellationToken cancellationToken = default)
         {
             if (flurlRequest == null) throw new ArgumentNullException(nameof(flurlRequest));
             if (_disposed) throw new ObjectDisposedException(nameof(FlurlClient));
@@ -181,7 +201,9 @@ namespace SKIT.FlurlHttpClient
 
             try
             {
-                return await WrapRequest(flurlRequest).SendJsonAsync(flurlRequest.Verb, body: data, cancellationToken: cancellationToken);
+                return await flurlRequest
+                    .AllowAnyHttpStatus()
+                    .SendJsonAsync(flurlRequest.Verb, data, cancellationToken: cancellationToken);
             }
             catch (FlurlHttpTimeoutException ex)
             {
@@ -204,7 +226,7 @@ namespace SKIT.FlurlHttpClient
         /// <param name="flurlResponse"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        protected async Task<TResponse> WrapResponseAsync<TResponse>(IFlurlResponse flurlResponse, CancellationToken cancellationToken = default)
+        protected async Task<TResponse> WrapFlurlResponseAsync<TResponse>(IFlurlResponse flurlResponse, CancellationToken cancellationToken = default)
             where TResponse : CommonResponseBase, new()
         {
             if (flurlResponse == null) throw new ArgumentNullException(nameof(flurlResponse));
@@ -233,12 +255,12 @@ namespace SKIT.FlurlHttpClient
         /// <param name="flurlResponse"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        protected async Task<TResponse> WrapResponseWithJsonAsync<TResponse>(IFlurlResponse flurlResponse, CancellationToken cancellationToken = default)
+        protected async Task<TResponse> WrapFlurlResponseAsJsonAsync<TResponse>(IFlurlResponse flurlResponse, CancellationToken cancellationToken = default)
             where TResponse : CommonResponseBase, new()
         {
             if (flurlResponse == null) throw new ArgumentNullException(nameof(flurlResponse));
 
-            TResponse tmp = await WrapResponseAsync<TResponse>(flurlResponse, cancellationToken);
+            TResponse tmp = await WrapFlurlResponseAsync<TResponse>(flurlResponse, cancellationToken);
             byte tb1 = byte.MinValue,
                  tb2 = byte.MinValue;
             for (long i = 0; i < tmp.RawBytes.LongLength; i++)
@@ -270,7 +292,7 @@ namespace SKIT.FlurlHttpClient
                 }
                 catch (Exception ex)
                 {
-                    throw new CommonSerializationException(ex.Message, ex);
+                    throw new CommonResponseSerializationException(ex.Message, ex);
                 }
             }
             else
