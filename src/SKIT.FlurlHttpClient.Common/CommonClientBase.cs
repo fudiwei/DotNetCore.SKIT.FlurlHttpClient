@@ -11,11 +11,15 @@ using Flurl.Http.Configuration;
 
 namespace SKIT.FlurlHttpClient
 {
+    using SKIT.FlurlHttpClient.Exceptions;
+
     /// <summary>
     /// SKIT.FlurlHttpClient 客户端基类。
     /// </summary>
     public abstract class CommonClientBase : ICommonClient
     {
+        private bool _disposed;
+
         /// <summary>
         /// <inheritdoc />
         /// </summary>
@@ -48,14 +52,36 @@ namespace SKIT.FlurlHttpClient
                 {
                     for (int i = 0, len = Interceptors.Count; i < len; i++)
                     {
-                        await Interceptors[i].BeforeCallAsync(flurlCall);
+                        try
+                        {
+                            await Interceptors[i].BeforeCallAsync(flurlCall);
+                        }
+                        catch (OperationCanceledException)
+                        {
+                            throw;
+                        }
+                        catch (Exception ex)
+                        {
+                            throw new CommonInterceptorCallException(flurlCall, ex.Message, ex);
+                        }
                     }
                 };
                 flurlSettings.AfterCallAsync = async (flurlCall) =>
                 {
                     for (int i = Interceptors.Count - 1; i >= 0; i--)
                     {
-                        await Interceptors[i].AfterCallAsync(flurlCall);
+                        try
+                        {
+                            await Interceptors[i].AfterCallAsync(flurlCall);
+                        }
+                        catch (OperationCanceledException)
+                        {
+                            throw;
+                        }
+                        catch (Exception ex)
+                        {
+                            throw new CommonInterceptorCallException(flurlCall, ex.Message, ex);
+                        }
                     }
                 };
             });
@@ -97,7 +123,22 @@ namespace SKIT.FlurlHttpClient
         {
             if (flurlRequest == null) throw new ArgumentNullException(nameof(flurlRequest));
 
-            return await WrapRequest(flurlRequest).SendAsync(flurlRequest.Verb, httpContent, cancellationToken);
+            try
+            {
+                return await WrapRequest(flurlRequest).SendAsync(flurlRequest.Verb, content: httpContent, cancellationToken: cancellationToken);
+            }
+            catch (FlurlHttpTimeoutException ex)
+            {
+                throw new CommonTimeoutException(ex.Message, ex);
+            }
+            catch (FlurlParsingException ex)
+            {
+                throw new CommonSerializationException(ex.Message, ex);
+            }
+            catch (FlurlHttpException ex)
+            {
+                throw new CommonException(ex.Message, ex);
+            }
         }
 
         /// <summary>
@@ -120,7 +161,22 @@ namespace SKIT.FlurlHttpClient
                 }
             }
 
-            return await WrapRequest(flurlRequest).SendJsonAsync(flurlRequest.Verb, data: data, cancellationToken: cancellationToken);
+            try
+            {
+                return await WrapRequest(flurlRequest).SendJsonAsync(flurlRequest.Verb, body: data, cancellationToken: cancellationToken);
+            }
+            catch (FlurlHttpTimeoutException ex)
+            {
+                throw new CommonTimeoutException(ex.Message, ex);
+            }
+            catch (FlurlParsingException ex)
+            {
+                throw new CommonSerializationException(ex.Message, ex);
+            }
+            catch (FlurlHttpException ex)
+            {
+                throw new CommonException(ex.Message, ex);
+            }
         }
 
         /// <summary>
@@ -169,21 +225,39 @@ namespace SKIT.FlurlHttpClient
             where TResponse : ICommonResponse, new()
         {
             TResponse tmp = await WrapResponseAsync<TResponse>(flurlResponse, cancellationToken);
-            byte tmpb1 = tmp.RawBytes.SkipWhile(b => b <= 32).FirstOrDefault(),
-                 tmpb2 = tmp.RawBytes.Reverse().SkipWhile(b => b <= 32).FirstOrDefault();
-            bool jsonable = (tmpb1 == 91 && tmpb2 == 93) || (tmpb1 == 123 && tmpb2 == 125); // "[...]" or "{...}"
+            byte tb1 = byte.MinValue,
+                 tb2 = byte.MinValue;
+            for (long i = 0; i < tmp.RawBytes.LongLength; i++)
+            {
+                tb1 = tmp.RawBytes[i];
+                if (tb1 > 32)
+                    break;
+            }
+            for (long i = tmp.RawBytes.LongLength - 1; i >= 0; i--)
+            {
+                tb2 = tmp.RawBytes[i];
+                if (tb2 > 32)
+                    break;
+            }
 
             TResponse result;
-            if (jsonable)
+            if ((tb1 == 91 && tb2 == 93) || (tb1 == 123 && tb2 == 125)) // "[...]" or "{...}"
             {
-                string? contentType = flurlResponse.Headers.GetAll(Constants.HttpHeaders.ContentType).FirstOrDefault();
-                string? charset = MediaTypeHeaderValue.TryParse(contentType, out var mediaType) ? mediaType.CharSet : null;
-                string json = (string.IsNullOrEmpty(charset) ? Encoding.UTF8 : Encoding.GetEncoding(charset)).GetString(tmp.RawBytes);
+                try
+                {
+                    string? contentType = flurlResponse.Headers.GetAll(Constants.HttpHeaders.ContentType).FirstOrDefault();
+                    string? charset = MediaTypeHeaderValue.TryParse(contentType, out var mediaType) ? mediaType.CharSet : null;
+                    string json = (string.IsNullOrEmpty(charset) ? Encoding.UTF8 : Encoding.GetEncoding(charset)).GetString(tmp.RawBytes);
 
-                result = JsonSerializer.Deserialize<TResponse>(json);
-                result.RawStatus = tmp.RawStatus;
-                result.RawHeaders = tmp.RawHeaders;
-                result.RawBytes = tmp.RawBytes;
+                    result = JsonSerializer.Deserialize<TResponse>(json);
+                    result.RawStatus = tmp.RawStatus;
+                    result.RawHeaders = tmp.RawHeaders;
+                    result.RawBytes = tmp.RawBytes;
+                }
+                catch (Exception ex)
+                {
+                    throw new CommonSerializationException(ex.Message, ex);
+                }
             }
             else
             {
@@ -194,11 +268,28 @@ namespace SKIT.FlurlHttpClient
         }
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="disposing"></param>
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!_disposed)
+            {
+                if (disposing)
+                {
+                    FlurlClient.Dispose();
+                }
+
+                _disposed = true;
+            }
+        }
+
+        /// <summary>
         /// <inheritdoc/>
         /// </summary>
-        public virtual void Dispose()
+        public void Dispose()
         {
-            FlurlClient?.Dispose();
+            Dispose(true);
             GC.SuppressFinalize(this);
         }
     }
