@@ -1,8 +1,8 @@
-﻿using System;
+using System;
 
-namespace Newtonsoft.Json.Converters
+namespace Newtonsoft.Json.Converters.Common
 {
-    public class NumericalStringConverter : JsonConverter<string?>
+    public sealed class NumericalStringConverter : JsonConverter<string?>
     {
         public override bool CanRead
         {
@@ -22,13 +22,39 @@ namespace Newtonsoft.Json.Converters
             }
             else if (reader.TokenType == JsonToken.Integer)
             {
-                long value = serializer.Deserialize<long>(reader);
-                return value.ToString();
+                try
+                {
+                    long value = serializer.Deserialize<long>(reader);
+                    return value.ToString();
+                }
+                catch { }
+
+                try
+                {
+                    ulong value = serializer.Deserialize<ulong>(reader);
+                    return value.ToString();
+                }
+                catch { }
+
+                return serializer.Deserialize<string>(reader);
             }
             else if (reader.TokenType == JsonToken.Float)
             {
-                double value = serializer.Deserialize<double>(reader);
-                return value.ToString();
+                switch (serializer.FloatParseHandling)
+                {
+                    case FloatParseHandling.Decimal:
+                        {
+                            decimal value = serializer.Deserialize<decimal>(reader);
+                            return value.ToString();
+                        }
+
+                    case FloatParseHandling.Double:
+                    default:
+                        {
+                            double value = serializer.Deserialize<double>(reader);
+                            return value.ToString();
+                        }
+                }
             }
             else if (reader.TokenType == JsonToken.String)
             {
@@ -40,20 +66,24 @@ namespace Newtonsoft.Json.Converters
 
         public override void WriteJson(JsonWriter writer, string? value, JsonSerializer serializer)
         {
-            if (value != null)
+            if (value is null)
             {
-                if (long.TryParse(value, out long valueAsInt64))
-                    writer.WriteValue(valueAsInt64);
-                else if (ulong.TryParse(value, out ulong valueAsUInt64))
-                    writer.WriteValue(valueAsUInt64);
-                else if (double.TryParse(value, out double valueAsDouble))
-                    writer.WriteValue(valueAsDouble);
-                else
-                    writer.WriteValue(value);
+                writer.WriteNull();
             }
             else
             {
-                writer.WriteNull();
+                if (string.IsNullOrEmpty(value))
+                    writer.WriteValue(value);
+                else if (long.TryParse(value, out long valueAsInt64))
+                    writer.WriteValue(valueAsInt64);
+                else if (ulong.TryParse(value, out ulong valueAsUInt64))
+                    writer.WriteValue(valueAsUInt64);
+                else if (decimal.TryParse(value, out decimal valueAsDecimal))
+                    writer.WriteValue(valueAsDecimal);
+                else if (double.TryParse(value, out double valueAsDouble))
+                    writer.WriteValue(valueAsDouble);
+                else
+                    throw new JsonSerializationException($"Could not parse String '{value}' to Number.");
             }
         }
     }

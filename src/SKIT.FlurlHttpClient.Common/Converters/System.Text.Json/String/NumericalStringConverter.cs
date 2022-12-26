@@ -1,6 +1,6 @@
-﻿using System.Text.Json.Serialization;
+using System.Text.Json.Serialization;
 
-namespace System.Text.Json.Converters
+namespace System.Text.Json.Converters.Common
 {
     public class NumericalStringConverter : JsonConverter<string?>
     {
@@ -16,6 +16,8 @@ namespace System.Text.Json.Converters
                     return valueAsInt64.ToString();
                 else if (reader.TryGetUInt64(out ulong valueAsUInt64))
                     return valueAsUInt64.ToString();
+                else if (reader.TryGetDecimal(out decimal valueAsDecimal))
+                    return valueAsDecimal.ToString();
                 else if (reader.TryGetDouble(out double valueAsDouble))
                     return valueAsDouble.ToString();
                 else
@@ -31,20 +33,24 @@ namespace System.Text.Json.Converters
 
         public override void Write(Utf8JsonWriter writer, string? value, JsonSerializerOptions options)
         {
-            if (value != null)
+            if (value is null)
             {
-                if (long.TryParse(value, out long valueAsInt64))
-                    writer.WriteNumberValue(valueAsInt64);
-                else if (ulong.TryParse(value, out ulong valueAsUInt64))
-                    writer.WriteNumberValue(valueAsUInt64);
-                else if (double.TryParse(value, out double valueAsDouble))
-                    writer.WriteNumberValue(valueAsDouble);
-                else
-                    writer.WriteStringValue(value);
+                writer.WriteNullValue();
             }
             else
             {
-                writer.WriteNullValue();
+                if (string.IsNullOrEmpty(value))
+                    writer.WriteStringValue(value);
+                else if (long.TryParse(value, out long valueAsInt64))
+                    writer.WriteNumberValue(valueAsInt64);
+                else if (ulong.TryParse(value, out ulong valueAsUInt64))
+                    writer.WriteNumberValue(valueAsUInt64);
+                else if (decimal.TryParse(value, out decimal valueAsDecimal))
+                    writer.WriteNumberValue(valueAsDecimal);
+                else if (double.TryParse(value, out double valueAsDouble))
+                    writer.WriteNumberValue(valueAsDouble);
+                else
+                    throw new JsonException($"Could not parse String '{value}' to Number.");
             }
         }
     }

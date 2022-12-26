@@ -1,19 +1,10 @@
-﻿using System.Text.Json.Serialization;
-
-namespace System.Text.Json.Converters
+namespace System.Text.Json.Converters.Common
 {
-    public class RFC3339DateTimeOffsetConverter : JsonConverter<DateTimeOffset>
+    public sealed class RFC3339DateTimeOffsetConverter : FormattedDateTimeOffsetConverterBase
     {
-        private readonly JsonConverter<DateTimeOffset?> _converter = new RFC3339NullableDateTimeOffsetConverter();
-
-        public override DateTimeOffset Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        protected override string DateFormat
         {
-            return _converter.Read(ref reader, typeToConvert, options) ?? default;
-        }
-
-        public override void Write(Utf8JsonWriter writer, DateTimeOffset value, JsonSerializerOptions options)
-        {
-            _converter.Write(writer, value, options);
+            get { return "yyyy-MM-dd'T'HH:mm:sszzz"; }
         }
     }
 }
