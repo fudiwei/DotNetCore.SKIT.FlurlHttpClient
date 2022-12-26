@@ -14,12 +14,7 @@ namespace SKIT.FlurlHttpClient
         /// <summary>
         ///
         /// </summary>
-        public TimeSpan? ConnectionRequestTimeout { get; set; }
-
-        /// <summary>
-        ///
-        /// </summary>
-        public TimeSpan? ConnectionLeaseTimeout { get; set; }
+        public TimeSpan? Timeout { get; set; }
 
         /// <summary>
         ///
@@ -29,24 +24,12 @@ namespace SKIT.FlurlHttpClient
         /// <summary>
         ///
         /// </summary>
-        public ISerializer UrlEncodedSerializer { get; set; } = default!;
-
-        /// <summary>
-        ///
-        /// </summary>
         public IHttpClientFactory FlurlHttpClientFactory { get; set; } = default!;
-
-        /// <summary>
-        ///
-        /// </summary>
-        public bool ThrowOnSerializationError { get; set; } = true;
 
         internal CommonClientSettings(ClientFlurlHttpSettings flurlClientSettings)
         {
-            ConnectionRequestTimeout = flurlClientSettings.Timeout;
-            ConnectionLeaseTimeout = flurlClientSettings.ConnectionLeaseTimeout;
+            Timeout = flurlClientSettings.Timeout;
             JsonSerializer = ((InternalWrappedJsonSerializer)flurlClientSettings.JsonSerializer)!.Serializer;
-            UrlEncodedSerializer = flurlClientSettings.UrlEncodedSerializer;
             FlurlHttpClientFactory = flurlClientSettings.HttpClientFactory;
         }
     }
