@@ -1,9 +1,10 @@
+#if NET5_0_OR_GREATER
 using System;
 using System.Globalization;
 
 namespace Newtonsoft.Json.Converters.Common
 {
-    public abstract partial class FormattedDateTimeOffsetConverterBase : JsonConverter
+    public abstract partial class FormattedTimeOnlyConverterBase : JsonConverter
     {
         protected abstract string FormatString { get; }
 
@@ -19,29 +20,29 @@ namespace Newtonsoft.Json.Converters.Common
 
         public override bool CanConvert(Type objectType)
         {
-            return typeof(DateTimeOffset) == objectType ||
-                   typeof(DateTimeOffset?) == objectType;
+            return typeof(TimeOnly) == objectType ||
+                   typeof(TimeOnly?) == objectType;
         }
 
         public override object? ReadJson(JsonReader reader, Type objectType, object? existingValue, JsonSerializer serializer)
         {
-            JsonConverter<DateTimeOffset?> converter = new InternalFormattedDateTimeOffsetConverter(FormatString);
-            DateTimeOffset? result = converter.ReadJson(reader, objectType, (DateTimeOffset?)existingValue, (DateTimeOffset?)existingValue != null, serializer);
-            if (objectType == typeof(DateTimeOffset))
+            JsonConverter<TimeOnly?> converter = new InternalFormattedTimeOnlyConverter(FormatString);
+            TimeOnly? result = converter.ReadJson(reader, objectType, (TimeOnly?)existingValue, (TimeOnly?)existingValue != null, serializer);
+            if (objectType == typeof(TimeOnly))
                 return result.GetValueOrDefault();
             return result;
         }
 
         public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer)
         {
-            JsonConverter<DateTimeOffset?> converter = new InternalFormattedDateTimeOffsetConverter(FormatString);
-            converter.WriteJson(writer, (DateTimeOffset?)value, serializer);
+            JsonConverter<TimeOnly?> converter = new InternalFormattedTimeOnlyConverter(FormatString);
+            converter.WriteJson(writer, (TimeOnly?)value, serializer);
         }
     }
 
-    partial class FormattedDateTimeOffsetConverterBase
+    partial class FormattedTimeOnlyConverterBase
     {
-        private sealed class InternalFormattedDateTimeOffsetConverter : JsonConverter<DateTimeOffset?>
+        private sealed class InternalFormattedTimeOnlyConverter : JsonConverter<TimeOnly?>
         {
             private readonly string _formatString;
 
@@ -55,12 +56,12 @@ namespace Newtonsoft.Json.Converters.Common
                 get { return true; }
             }
 
-            public InternalFormattedDateTimeOffsetConverter(string formatString)
+            public InternalFormattedTimeOnlyConverter(string formatString)
             {
                 _formatString = formatString;
             }
 
-            public override DateTimeOffset? ReadJson(JsonReader reader, Type objectType, DateTimeOffset? existingValue, bool hasExistingValue, JsonSerializer serializer)
+            public override TimeOnly? ReadJson(JsonReader reader, Type objectType, TimeOnly? existingValue, bool hasExistingValue, JsonSerializer serializer)
             {
                 if (reader.TokenType == JsonToken.Null)
                 {
@@ -72,24 +73,19 @@ namespace Newtonsoft.Json.Converters.Common
                     if (string.IsNullOrEmpty(value))
                         return existingValue;
 
-                    DateTimeOffset result;
-                    if (DateTimeOffset.TryParseExact(value, _formatString, DateTimeFormatInfo.InvariantInfo, DateTimeStyles.None, out result))
+                    TimeOnly result;
+                    if (TimeOnly.TryParseExact(value, _formatString, DateTimeFormatInfo.InvariantInfo, DateTimeStyles.None, out result))
                         return result;
-                    if (DateTimeOffset.TryParse(value, out result))
+                    if (TimeOnly.TryParse(value, out result))
                         return result;
 
-                    throw new JsonSerializationException($"Could not parse String '{value}' to DateTimeOffset.");
-                }
-                else if (reader.TokenType == JsonToken.Date)
-                {
-                    reader.DateFormatString = _formatString;
-                    return serializer.Deserialize<DateTimeOffset>(reader);
+                    throw new JsonSerializationException($"Could not parse String '{value}' to TimeOnly.");
                 }
 
                 throw new JsonSerializationException($"Unexpected token type '{reader.TokenType}' when deserializing. Path '{reader.Path}'.");
             }
 
-            public override void WriteJson(JsonWriter writer, DateTimeOffset? value, JsonSerializer serializer)
+            public override void WriteJson(JsonWriter writer, TimeOnly? value, JsonSerializer serializer)
             {
                 if (value is null)
                     writer.WriteNull();
@@ -99,3 +95,4 @@ namespace Newtonsoft.Json.Converters.Common
         }
     }
 }
+#endif

@@ -2,7 +2,7 @@ namespace System.Text.Json.Converters.Common
 {
     public sealed class RFC3339DateTimeOffsetConverter : FormattedDateTimeOffsetConverterBase
     {
-        protected override string DateFormat
+        protected override string FormatString
         {
             get { return "yyyy-MM-dd'T'HH:mm:sszzz"; }
         }

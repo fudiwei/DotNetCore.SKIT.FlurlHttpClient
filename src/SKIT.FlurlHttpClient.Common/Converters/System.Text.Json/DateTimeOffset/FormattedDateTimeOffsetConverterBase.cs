@@ -5,7 +5,7 @@ namespace System.Text.Json.Converters.Common
 {
     public abstract partial class FormattedDateTimeOffsetConverterBase : JsonConverterFactory
     {
-        protected abstract string DateFormat { get; }
+        protected abstract string FormatString { get; }
 
         public override bool CanConvert(Type typeToConvert)
         {
@@ -16,9 +16,9 @@ namespace System.Text.Json.Converters.Common
         public override JsonConverter? CreateConverter(Type typeToConvert, JsonSerializerOptions options)
         {
             if (typeof(DateTimeOffset) == typeToConvert)
-                return new InternalFormattedDateTimeOffsetConverter(DateFormat);
+                return new InternalFormattedDateTimeOffsetConverter(FormatString);
             else if (typeof(DateTimeOffset?) == typeToConvert)
-                return new InternalFormattedNullableDateTimeOffsetConverter(DateFormat);
+                return new InternalFormattedNullableDateTimeOffsetConverter(FormatString);
 
             throw new NotSupportedException();
         }
@@ -28,11 +28,11 @@ namespace System.Text.Json.Converters.Common
     {
         private sealed class InternalFormattedNullableDateTimeOffsetConverter : JsonConverter<DateTimeOffset?>
         {
-            private readonly string _dateFormat;
+            private readonly string _formatString;
 
-            public InternalFormattedNullableDateTimeOffsetConverter(string dateFormat)
+            public InternalFormattedNullableDateTimeOffsetConverter(string formatString)
             {
-                _dateFormat = dateFormat;
+                _formatString = formatString;
             }
 
             public override DateTimeOffset? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
@@ -48,7 +48,7 @@ namespace System.Text.Json.Converters.Common
                         return null;
 
                     DateTimeOffset result;
-                    if (DateTimeOffset.TryParseExact(value, _dateFormat, DateTimeFormatInfo.InvariantInfo, DateTimeStyles.None, out result))
+                    if (DateTimeOffset.TryParseExact(value, _formatString, DateTimeFormatInfo.InvariantInfo, DateTimeStyles.None, out result))
                         return result;
                     if (DateTimeOffset.TryParse(value, out result))
                         return result;
@@ -64,7 +64,7 @@ namespace System.Text.Json.Converters.Common
                 if (value is null)
                     writer.WriteNullValue();
                 else
-                    writer.WriteStringValue(value.Value.ToString(_dateFormat, DateTimeFormatInfo.InvariantInfo));
+                    writer.WriteStringValue(value.Value.ToString(_formatString, DateTimeFormatInfo.InvariantInfo));
             }
         }
 
