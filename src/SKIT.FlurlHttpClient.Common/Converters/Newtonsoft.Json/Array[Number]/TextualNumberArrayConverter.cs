@@ -224,17 +224,77 @@ namespace Newtonsoft.Json.Converters.Common
                         if ((typeof(float) == elementType && float.IsNaN((float)element)) ||
                             (typeof(double) == elementType && double.IsNaN((double)element)))
                         {
-                            writer.WriteValue(VALUE_NAN);
+                            switch (serializer.FloatFormatHandling)
+                            {
+                                case FloatFormatHandling.DefaultValue:
+                                    {
+                                        writer.WriteNull();
+                                    }
+                                    break;
+
+                                case FloatFormatHandling.Symbol:
+                                    {
+                                        writer.WriteRawValue(VALUE_NAN);
+                                    }
+                                    break;
+
+                                case FloatFormatHandling.String:
+                                default:
+                                    {
+                                        writer.WriteValue(VALUE_NAN);
+                                    }
+                                    break;
+                            }
                         }
                         else if ((typeof(float) == elementType && float.IsInfinity((float)element) && !float.IsNegativeInfinity((float)element)) ||
                                  (typeof(double) == elementType && double.IsInfinity((double)element) && !double.IsNegativeInfinity((double)element)))
                         {
-                            writer.WriteValue(VALUE_POSITIVE_INFINITY);
+                            switch (serializer.FloatFormatHandling)
+                            {
+                                case FloatFormatHandling.DefaultValue:
+                                    {
+                                        writer.WriteNull();
+                                    }
+                                    break;
+
+                                case FloatFormatHandling.Symbol:
+                                    {
+                                        writer.WriteRawValue(VALUE_POSITIVE_INFINITY);
+                                    }
+                                    break;
+
+                                case FloatFormatHandling.String:
+                                default:
+                                    {
+                                        writer.WriteValue(VALUE_POSITIVE_INFINITY);
+                                    }
+                                    break;
+                            }
                         }
                         else if ((typeof(float) == elementType && float.IsNegativeInfinity((float)element)) ||
                                  (typeof(double) == elementType && double.IsNegativeInfinity((double)element)))
                         {
-                            writer.WriteValue(VALUE_NEGATIVE_INFINITY);
+                            switch (serializer.FloatFormatHandling)
+                            {
+                                case FloatFormatHandling.DefaultValue:
+                                    {
+                                        writer.WriteNull();
+                                    }
+                                    break;
+
+                                case FloatFormatHandling.Symbol:
+                                    {
+                                        writer.WriteRawValue(VALUE_NEGATIVE_INFINITY);
+                                    }
+                                    break;
+
+                                case FloatFormatHandling.String:
+                                default:
+                                    {
+                                        writer.WriteValue(VALUE_NEGATIVE_INFINITY);
+                                    }
+                                    break;
+                            }
                         }
                         else
                         {

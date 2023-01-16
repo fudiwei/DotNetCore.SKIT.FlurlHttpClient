@@ -28,6 +28,8 @@ namespace SKIT.FlurlHttpClient.Constants
 
         public const string AccessControlRequestHeaders = "Access-Control-Request-Headers";
 
+        public const string Age = "Age";
+
         public const string Authorization = "Authorization";
 
         public const string CacheControl = "Cache-Control";
