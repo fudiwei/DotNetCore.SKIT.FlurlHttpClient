@@ -63,7 +63,9 @@ namespace System.Text.Json.Converters.Common
                         return false;
 
                     case JsonTokenType.Number:
-                        return reader.TryGetInt64(out long valueAsInt64) ? valueAsInt64 : reader.GetDouble();
+                        return reader.TryGetInt64(out long valueAsInt64) ? valueAsInt64 :
+                               reader.TryGetUInt64(out ulong valueAsUInt64) ? valueAsUInt64 :
+                               reader.GetDecimal();
 
                     case JsonTokenType.String:
                         return reader.GetString();
