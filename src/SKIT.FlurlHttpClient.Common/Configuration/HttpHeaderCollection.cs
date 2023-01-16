@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Text;
 using Flurl.Util;
 
 namespace SKIT.FlurlHttpClient.Configuration
@@ -21,22 +22,12 @@ namespace SKIT.FlurlHttpClient.Configuration
             get { return _dict[key]; }
         }
 
-        public ReadOnlyDictionary<string, IEnumerable<string>>.KeyCollection Keys
-        {
-            get { return _dict.Keys; }
-        }
-
-        public ReadOnlyDictionary<string, IEnumerable<string>>.ValueCollection Values
-        {
-            get { return _dict.Values; }
-        }
-
-        public int Count
+        int ICollection<KeyValuePair<string, IEnumerable<string>>>.Count
         {
             get { return _dict.Count; }
         }
 
-        public bool IsReadOnly
+        bool ICollection<KeyValuePair<string, IEnumerable<string>>>.IsReadOnly
         {
             get { return true; }
         }
@@ -51,6 +42,11 @@ namespace SKIT.FlurlHttpClient.Configuration
             get { return this.Values; }
         }
 
+        int IReadOnlyCollection<KeyValuePair<string, IEnumerable<string>>>.Count
+        {
+            get { return _dict.Count; }
+        }
+
         IEnumerable<string> IReadOnlyDictionary<string, IEnumerable<string>>.Keys
         {
             get { return this.Keys; }
@@ -59,6 +55,61 @@ namespace SKIT.FlurlHttpClient.Configuration
         IEnumerable<IEnumerable<string>> IReadOnlyDictionary<string, IEnumerable<string>>.Values
         {
             get { return this.Values; }
+        }
+
+        ReadOnlyDictionary<string, IEnumerable<string>>.KeyCollection Keys
+        {
+            get { return _dict.Keys; }
+        }
+
+        ReadOnlyDictionary<string, IEnumerable<string>>.ValueCollection Values
+        {
+            get { return _dict.Values; }
+        }
+
+        public string? Age
+        {
+            get { return TryGetGroupingValue(Constants.HttpHeaders.Age, out string? value) ? value : default; }
+        }
+
+        public string? CacheControl
+        {
+            get { return TryGetGroupingValue(Constants.HttpHeaders.CacheControl, out string? value) ? value : default; }
+        }
+
+        public string? ContentEncoding
+        {
+            get { return TryGetGroupingValue(Constants.HttpHeaders.ContentEncoding, out string? value) ? value : default; }
+        }
+
+        public string? ContentLength
+        {
+            get { return TryGetGroupingValue(Constants.HttpHeaders.ContentLength, out string? value) ? value : default; }
+        }
+
+        public string? ContentType
+        {
+            get { return TryGetGroupingValue(Constants.HttpHeaders.ContentType, out string? value) ? value : default; }
+        }
+
+        public string? Date
+        {
+            get { return TryGetGroupingValue(Constants.HttpHeaders.Date, out string? value) ? value : default; }
+        }
+
+        public string? Expires
+        {
+            get { return TryGetGroupingValue(Constants.HttpHeaders.Expires, out string? value) ? value : default; }
+        }
+
+        public string? ETag
+        {
+            get { return TryGetGroupingValue(Constants.HttpHeaders.ETag, out string? value) ? value : default; }
+        }
+
+        public string? LastModified
+        {
+            get { return TryGetGroupingValue(Constants.HttpHeaders.LastModified, out string? value) ? value : default; }
         }
 
         IEnumerable<string> IDictionary<string, IEnumerable<string>>.this[string key]
@@ -91,6 +142,11 @@ namespace SKIT.FlurlHttpClient.Configuration
                     StringComparer.OrdinalIgnoreCase
                 )
             );
+        }
+
+        public string[] GetAllKeys()
+        {
+            return _dict.Keys.ToArray();
         }
 
         public bool ContainsKey(string key)
@@ -178,6 +234,23 @@ namespace SKIT.FlurlHttpClient.Configuration
         void ICollection<KeyValuePair<string, IEnumerable<string>>>.Clear()
         {
             throw new NotImplementedException();
+        }
+
+        public override string ToString()
+        {
+            StringBuilder stringBuilder = new StringBuilder();
+            using (IEnumerator<KeyValuePair<string, IEnumerable<string>>> enumerator = GetEnumerator())
+            {
+                while (enumerator.MoveNext())
+                {
+                    KeyValuePair<string, IEnumerable<string>> current = enumerator.Current;
+                    stringBuilder.Append(current.Key);
+                    stringBuilder.Append(": ");
+                    stringBuilder.Append(GetGroupingValueOrEmpty(current.Key));
+                    stringBuilder.Append("\r\n");
+                }
+            }
+            return stringBuilder.ToString();
         }
     }
 }
