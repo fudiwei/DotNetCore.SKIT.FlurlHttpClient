@@ -147,9 +147,6 @@ namespace SKIT.FlurlHttpClient
         /// <param name="httpContent"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        /// <exception cref="ArgumentNullException"></exception>
-        /// <exception cref="CommonRequestTimeoutException"></exception>
-        /// <exception cref="CommonException"></exception>
         protected virtual async Task<IFlurlResponse> SendFlurlRequestAsync(IFlurlRequest flurlRequest, HttpContent? httpContent = null, CancellationToken cancellationToken = default)
         {
             if (flurlRequest == null) throw new ArgumentNullException(nameof(flurlRequest));
@@ -161,16 +158,24 @@ namespace SKIT.FlurlHttpClient
                     .AllowAnyHttpStatus()
                     .SendAsync(flurlRequest.Verb, httpContent, cancellationToken: cancellationToken);
             }
-            catch (FlurlHttpTimeoutException ex)
+            catch (OperationCanceledException)
             {
-                throw new CommonTimeoutException(ex.Message, ex);
-            }
-            catch (FlurlParsingException ex)
-            {
-                throw new CommonSerializationException(ex.Message, ex);
+                throw;
             }
             catch (FlurlHttpException ex)
             {
+                if (ex is FlurlParsingException)
+                    throw new CommonSerializationException(ex.Message, ex);
+                if (ex is FlurlHttpTimeoutException)
+                    throw new CommonTimeoutException(ex.Message, ex);
+
+                throw new CommonHttpException(ex.Message, ex);
+            }
+            catch (Exception ex)
+            {
+                if (ex is CommonException)
+                    throw;
+
                 throw new CommonException(ex.Message, ex);
             }
         }
@@ -182,10 +187,6 @@ namespace SKIT.FlurlHttpClient
         /// <param name="data"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        /// <exception cref="ArgumentNullException"></exception>
-        /// <exception cref="CommonRequestTimeoutException"></exception>
-        /// <exception cref="CommonRequestSerializationException"></exception>
-        /// <exception cref="CommonException"></exception>
         protected virtual async Task<IFlurlResponse> SendFlurlRequestAsJsonAsync(IFlurlRequest flurlRequest, object? data = null, CancellationToken cancellationToken = default)
         {
             if (flurlRequest == null) throw new ArgumentNullException(nameof(flurlRequest));
@@ -195,7 +196,7 @@ namespace SKIT.FlurlHttpClient
             {
                 if (!flurlRequest.Headers.Contains(Constants.HttpHeaders.ContentType))
                 {
-                    flurlRequest.WithHeader(Constants.HttpHeaders.ContentType, "application/json");
+                    flurlRequest.WithHeader(Constants.HttpHeaders.ContentType, "application/json; charset=utf-8");
                 }
             }
 
@@ -205,16 +206,24 @@ namespace SKIT.FlurlHttpClient
                     .AllowAnyHttpStatus()
                     .SendJsonAsync(flurlRequest.Verb, data, cancellationToken: cancellationToken);
             }
-            catch (FlurlHttpTimeoutException ex)
+            catch (OperationCanceledException)
             {
-                throw new CommonTimeoutException(ex.Message, ex);
-            }
-            catch (FlurlParsingException ex)
-            {
-                throw new CommonSerializationException(ex.Message, ex);
+                throw;
             }
             catch (FlurlHttpException ex)
             {
+                if (ex is FlurlParsingException)
+                    throw new CommonSerializationException(ex.Message, ex);
+                if (ex is FlurlHttpTimeoutException)
+                    throw new CommonTimeoutException(ex.Message, ex);
+
+                throw new CommonHttpException(ex.Message, ex);
+            }
+            catch (Exception ex)
+            {
+                if (ex is CommonException)
+                    throw;
+
                 throw new CommonException(ex.Message, ex);
             }
         }

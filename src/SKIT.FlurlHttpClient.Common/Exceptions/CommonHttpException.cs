@@ -3,23 +3,23 @@ using System;
 namespace SKIT.FlurlHttpClient.Exceptions
 {
     /// <summary>
-    /// 表示 SKIT.FlurlHttpClient 超时引发的异常。
+    /// 表示 SKIT.FlurlHttpClient 执行 HTTP 请求时引发的异常。
     /// </summary>
-    public class CommonTimeoutException : CommonException
+    public class CommonHttpException : CommonException
     {
         /// <inheritdoc/>
-        public CommonTimeoutException()
+        public CommonHttpException()
         {
         }
 
         /// <inheritdoc/>
-        public CommonTimeoutException(string message)
+        public CommonHttpException(string message)
             : base(message)
         {
         }
 
         /// <inheritdoc/>
-        public CommonTimeoutException(string message, Exception innerException)
+        public CommonHttpException(string message, Exception innerException)
             : base(message, innerException)
         {
         }

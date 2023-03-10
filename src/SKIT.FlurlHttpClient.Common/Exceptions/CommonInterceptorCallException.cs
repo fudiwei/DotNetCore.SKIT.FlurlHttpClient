@@ -4,7 +4,7 @@ using Flurl.Http;
 namespace SKIT.FlurlHttpClient.Exceptions
 {
     /// <summary>
-    /// 表示 SKIT.FlurlHttpClient 拦截器执行时引发的异常。
+    /// 表示 SKIT.FlurlHttpClient 执行拦截器时引发的异常。
     /// </summary>
     public class CommonInterceptorCallException : CommonException
     {
