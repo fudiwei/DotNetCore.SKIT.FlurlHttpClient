@@ -2,7 +2,7 @@
 
 	<PropertyGroup>
 		<TargetFrameworks>net462; netcoreapp3.1; net6.0</TargetFrameworks>
-		<LangVersion>9.0</LangVersion>
+		<LangVersion>10.0</LangVersion>
 		<Nullable>enable</Nullable>
 		<NullableReferenceTypes>true</NullableReferenceTypes>
 		<IsPackable>false</IsPackable>
