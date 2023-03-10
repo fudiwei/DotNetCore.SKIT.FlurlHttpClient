@@ -1,4 +1,4 @@
-﻿namespace SKIT.FlurlHttpClient.Tools.CodeAnalyzer
+namespace SKIT.FlurlHttpClient.Tools.CodeAnalyzer
 {
     public class CodeAnalyzerOptions
     {

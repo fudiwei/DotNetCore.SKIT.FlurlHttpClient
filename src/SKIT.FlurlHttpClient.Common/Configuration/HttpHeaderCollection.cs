@@ -123,8 +123,8 @@ namespace SKIT.FlurlHttpClient.Configuration
             _dict = new ReadOnlyDictionary<string, IEnumerable<string>>(
                 new Dictionary<string, IEnumerable<string>>(
                     httpHeaders.ToDictionary(
-                        k => k.Key.ToLower(),
-                        v => v.Value
+                        static k => k.Key.ToLower(),
+                        static v => v.Value
                     ),
                     StringComparer.OrdinalIgnoreCase
                 )
@@ -136,7 +136,7 @@ namespace SKIT.FlurlHttpClient.Configuration
             _dict = new ReadOnlyDictionary<string, IEnumerable<string>>(
                 new Dictionary<string, IEnumerable<string>>(
                     httpHeaders.ToDictionary(
-                        k => k.Name.ToLower(),
+                        static k => k.Name.ToLower(),
                         v => httpHeaders.GetAll(v.Name)
                     ),
                     StringComparer.OrdinalIgnoreCase
