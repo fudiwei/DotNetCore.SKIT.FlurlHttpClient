@@ -8,91 +8,91 @@ namespace SKIT.FlurlHttpClient.UnitTests.TestCases.JsonConverter
     {
         private sealed class MockObject
         {
-            [Newtonsoft.Json.JsonProperty(nameof(PropertyAsByte), Order = 101)]
+            [Newtonsoft.Json.JsonProperty(Order = 101)]
             [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.Common.TextualNumberArrayConverter))]
             public byte[]? PropertyAsByte { get; set; }
 
-            [Newtonsoft.Json.JsonProperty(nameof(PropertyAsSByte), Order = 102)]
+            [Newtonsoft.Json.JsonProperty(Order = 102)]
             [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.Common.TextualNumberArrayConverter))]
             public sbyte[]? PropertyAsSByte { get; set; }
 
-            [Newtonsoft.Json.JsonProperty(nameof(PropertyAsInt16), Order = 103)]
+            [Newtonsoft.Json.JsonProperty(Order = 103)]
             [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.Common.TextualNumberArrayConverter))]
             public short[]? PropertyAsInt16 { get; set; }
 
-            [Newtonsoft.Json.JsonProperty(nameof(PropertyAsUInt16), Order = 104)]
+            [Newtonsoft.Json.JsonProperty(Order = 104)]
             [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.Common.TextualNumberArrayConverter))]
             public ushort[]? PropertyAsUInt16 { get; set; }
 
-            [Newtonsoft.Json.JsonProperty(nameof(PropertyAsInt32), Order = 105)]
+            [Newtonsoft.Json.JsonProperty(Order = 105)]
             [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.Common.TextualNumberArrayConverter))]
             public int[]? PropertyAsInt32 { get; set; }
 
-            [Newtonsoft.Json.JsonProperty(nameof(PropertyAsUInt32), Order = 106)]
+            [Newtonsoft.Json.JsonProperty(Order = 106)]
             [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.Common.TextualNumberArrayConverter))]
             public uint[]? PropertyAsUInt32 { get; set; }
 
-            [Newtonsoft.Json.JsonProperty(nameof(PropertyAsInt64), Order = 107)]
+            [Newtonsoft.Json.JsonProperty(Order = 107)]
             [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.Common.TextualNumberArrayConverter))]
             public long[]? PropertyAsInt64 { get; set; }
 
-            [Newtonsoft.Json.JsonProperty(nameof(PropertyAsUInt64), Order = 108)]
+            [Newtonsoft.Json.JsonProperty(Order = 108)]
             [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.Common.TextualNumberArrayConverter))]
             public ulong[]? PropertyAsUInt64 { get; set; }
 
-            [Newtonsoft.Json.JsonProperty(nameof(PropertyAsFloat), Order = 109)]
+            [Newtonsoft.Json.JsonProperty(Order = 109)]
             [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.Common.TextualNumberArrayConverter))]
             public float[]? PropertyAsFloat { get; set; }
 
-            [Newtonsoft.Json.JsonProperty(nameof(PropertyAsDouble), Order = 110)]
+            [Newtonsoft.Json.JsonProperty(Order = 110)]
             [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.Common.TextualNumberArrayConverter))]
             public double[]? PropertyAsDouble { get; set; }
 
-            [Newtonsoft.Json.JsonProperty(nameof(PropertyAsDecimal), Order = 111)]
+            [Newtonsoft.Json.JsonProperty(Order = 111)]
             [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.Common.TextualNumberArrayConverter))]
             public decimal[]? PropertyAsDecimal { get; set; }
 
-            [Newtonsoft.Json.JsonProperty(nameof(PropertyAsNullableByte), Order = 201)]
+            [Newtonsoft.Json.JsonProperty(Order = 201)]
             [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.Common.TextualNumberArrayConverter))]
             public byte?[]? PropertyAsNullableByte { get; set; }
 
-            [Newtonsoft.Json.JsonProperty(nameof(PropertyAsNullableSByte), Order = 202)]
+            [Newtonsoft.Json.JsonProperty(Order = 202)]
             [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.Common.TextualNumberArrayConverter))]
             public sbyte?[]? PropertyAsNullableSByte { get; set; }
 
-            [Newtonsoft.Json.JsonProperty(nameof(PropertyAsNullableInt16), Order = 203)]
+            [Newtonsoft.Json.JsonProperty(Order = 203)]
             [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.Common.TextualNumberArrayConverter))]
             public short?[]? PropertyAsNullableInt16 { get; set; }
 
-            [Newtonsoft.Json.JsonProperty(nameof(PropertyAsNullableUInt16), Order = 204)]
+            [Newtonsoft.Json.JsonProperty(Order = 204)]
             [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.Common.TextualNumberArrayConverter))]
             public ushort?[]? PropertyAsNullableUInt16 { get; set; }
 
-            [Newtonsoft.Json.JsonProperty(nameof(PropertyAsNullableInt32), Order = 205)]
+            [Newtonsoft.Json.JsonProperty(Order = 205)]
             [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.Common.TextualNumberArrayConverter))]
             public int?[]? PropertyAsNullableInt32 { get; set; }
 
-            [Newtonsoft.Json.JsonProperty(nameof(PropertyAsNullableUInt32), Order = 206)]
+            [Newtonsoft.Json.JsonProperty(Order = 206)]
             [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.Common.TextualNumberArrayConverter))]
             public uint?[]? PropertyAsNullableUInt32 { get; set; }
 
-            [Newtonsoft.Json.JsonProperty(nameof(PropertyAsNullableInt64), Order = 207)]
+            [Newtonsoft.Json.JsonProperty(Order = 207)]
             [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.Common.TextualNumberArrayConverter))]
             public long?[]? PropertyAsNullableInt64 { get; set; }
 
-            [Newtonsoft.Json.JsonProperty(nameof(PropertyAsNullableUInt64), Order = 208)]
+            [Newtonsoft.Json.JsonProperty(Order = 208)]
             [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.Common.TextualNumberArrayConverter))]
             public ulong?[]? PropertyAsNullableUInt64 { get; set; }
 
-            [Newtonsoft.Json.JsonProperty(nameof(PropertyAsNullableFloat), Order = 209)]
+            [Newtonsoft.Json.JsonProperty(Order = 209)]
             [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.Common.TextualNumberArrayConverter))]
             public float?[]? PropertyAsNullableFloat { get; set; }
 
-            [Newtonsoft.Json.JsonProperty(nameof(PropertyAsNullableDouble), Order = 210)]
+            [Newtonsoft.Json.JsonProperty(Order = 210)]
             [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.Common.TextualNumberArrayConverter))]
             public double?[]? PropertyAsNullableDouble { get; set; }
 
-            [Newtonsoft.Json.JsonProperty(nameof(PropertyAsNullableDecimal), Order = 211)]
+            [Newtonsoft.Json.JsonProperty(Order = 211)]
             [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.Common.TextualNumberArrayConverter))]
             public decimal?[]? PropertyAsNullableDecimal { get; set; }
         }

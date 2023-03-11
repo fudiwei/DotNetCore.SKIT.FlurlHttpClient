@@ -1,6 +1,6 @@
 namespace Newtonsoft.Json.Converters.Common
 {
-    public sealed class RFC3339DateTimeOffsetConverter : FormattedDateTimeOffsetConverterBase
+    public sealed class Rfc3339DateTimeOffsetConverter : FormattedDateTimeOffsetConverterBase
     {
         protected override string FormatString
         {

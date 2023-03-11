@@ -14,7 +14,7 @@ namespace System.Text.Json.Converters.Common
         {
             if (typeof(bool) == typeToConvert)
                 return new InternalTextualBooleanReadOnlyConverter();
-            else if (typeof(bool?) == typeToConvert)
+            if (typeof(bool?) == typeToConvert)
                 return new InternalTextualNullableBooleanReadOnlyConverter();
 
             throw new NotSupportedException();

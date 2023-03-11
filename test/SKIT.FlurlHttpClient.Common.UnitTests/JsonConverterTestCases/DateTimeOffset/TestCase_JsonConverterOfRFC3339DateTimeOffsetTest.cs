@@ -5,20 +5,20 @@ namespace SKIT.FlurlHttpClient.UnitTests.TestCases.JsonConverter
 {
     using SKIT.FlurlHttpClient.Configuration;
 
-    public class TestCase_JsonConverterOfRFC3339DateTimeOffsetTest
+    public class TestCase_JsonConverterOfRfc3339DateTimeOffsetTest
     {
         private sealed class MockObject
         {
-            [Newtonsoft.Json.JsonProperty(nameof(Property), Order = 1)]
-            [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.Common.RFC3339DateTimeOffsetConverter))]
+            [Newtonsoft.Json.JsonProperty(Order = 1)]
+            [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.Common.Rfc3339DateTimeOffsetConverter))]
             [System.Text.Json.Serialization.JsonPropertyOrder(1)]
-            [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Converters.Common.RFC3339DateTimeOffsetConverter))]
+            [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Converters.Common.Rfc3339DateTimeOffsetConverter))]
             public DateTimeOffset Property { get; set; }
 
-            [Newtonsoft.Json.JsonProperty(nameof(NullableProperty), Order = 2)]
-            [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.Common.RFC3339DateTimeOffsetConverter))]
+            [Newtonsoft.Json.JsonProperty(Order = 2)]
+            [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.Common.Rfc3339DateTimeOffsetConverter))]
             [System.Text.Json.Serialization.JsonPropertyOrder(2)]
-            [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Converters.Common.RFC3339DateTimeOffsetConverter))]
+            [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Converters.Common.Rfc3339DateTimeOffsetConverter))]
             public DateTimeOffset? NullableProperty { get; set; }
         }
 

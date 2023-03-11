@@ -18,7 +18,7 @@ namespace System.Text.Json.Converters.Common
         {
             if (typeof(TimeOnly) == typeToConvert)
                 return new InternalFormattedTimeOnlyConverter(FormatString);
-            else if (typeof(TimeOnly?) == typeToConvert)
+            if (typeof(TimeOnly?) == typeToConvert)
                 return new InternalFormattedNullableTimeOnlyConverter(FormatString);
 
             throw new NotSupportedException();
