@@ -7,18 +7,27 @@ namespace SKIT.FlurlHttpClient.Exceptions
     /// </summary>
     public class CommonSerializationException : CommonException
     {
+        /// <summary>
         /// <inheritdoc/>
+        /// </summary>
         public CommonSerializationException()
         {
         }
 
+        /// <summary>
         /// <inheritdoc/>
+        /// </summary>
+        /// <param name="message"></param>
         public CommonSerializationException(string message)
             : base(message)
         {
         }
 
+        /// <summary>
         /// <inheritdoc/>
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="innerException"></param>
         public CommonSerializationException(string message, Exception innerException)
             : base(message, innerException)
         {
