@@ -6,6 +6,10 @@ namespace SKIT.FlurlHttpClient
         [System.Text.Json.Serialization.JsonPropertyName("ret")]
         public bool ReturnValue { get; set; }
 
+        [Newtonsoft.Json.JsonProperty("req_data")]
+        [System.Text.Json.Serialization.JsonPropertyName("req_data")]
+        public string EncodingRequestData { get; set; } = default!;
+
         public MockTestResponse()
         {
         }

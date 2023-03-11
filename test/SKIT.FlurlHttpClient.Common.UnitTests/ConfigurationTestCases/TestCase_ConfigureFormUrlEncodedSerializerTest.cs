@@ -23,55 +23,48 @@ namespace SKIT.FlurlHttpClient.UnitTests.TestCases.Configuration
             public DateTimeOffset PropertyAsDateTimeOffset { get; set; }
         }
 
-        [Test(Description = "测试用例：配置项之 FormUrlEncoded 序列化器")]
-        public void TestClientConfigure_FormUrlEncodedSerializer()
+        private static void TestConfigureFormUrlEncodedSerializer(JsonifiedFormUrlEncodedSerializer formUrlEncodedSerializer)
         {
             using var client = new MockTestClient();
             Assert.IsNotNull(client.FormUrlEncodedSerializer);
 
-            var newtonsoftJsonFormUrlEncodedSerializer = new JsonifiedFormUrlEncodedSerializer(new NewtonsoftJsonSerializer());
-            client.Configure(settings =>
-            {
-                settings.FormUrlEncodedSerializer = newtonsoftJsonFormUrlEncodedSerializer;
-            });
-            Assert.AreSame(client.FormUrlEncodedSerializer, newtonsoftJsonFormUrlEncodedSerializer);
+            client.Configure(settings => settings.FormUrlEncodedSerializer = formUrlEncodedSerializer);
+            Assert.AreSame(client.FormUrlEncodedSerializer, formUrlEncodedSerializer);
 
-            var systemTextJsonFormUrlEncodedSerializer = new JsonifiedFormUrlEncodedSerializer(new SystemTextJsonSerializer());
-            client.Configure(settings =>
+            // 模拟请求：复杂字典
             {
-                settings.FormUrlEncodedSerializer = systemTextJsonFormUrlEncodedSerializer;
-            });
-            Assert.AreSame(client.FormUrlEncodedSerializer, systemTextJsonFormUrlEncodedSerializer);
+                var mockObj = new SortedDictionary<string, object?>(new Dictionary<string, object?>()
+                {
+                    { "integer", 12345 },
+                    { "string", "abcdef"  },
+                    { "boolean", true  },
+                    { "guid", Guid.Parse("12345678-ffff-ffff-ffff-123456789abc")  },
+                    { "array", new string[] { "你好", "世界" } },
+                    { "object", new { key = "value" } }
+                }, StringComparer.Ordinal);
+
+                const string EXPECTED = "array[0]=%E4%BD%A0%E5%A5%BD&array[1]=%E4%B8%96%E7%95%8C&boolean=true&guid=12345678-ffff-ffff-ffff-123456789abc&integer=12345&object.key=value&string=abcdef";
+                StringAssert.AreEqualIgnoringCase(EXPECTED, client.FormUrlEncodedSerializer.Serialize(mockObj));
+            }
+
+            // 模拟请求：带有自定义 JsonConverter 的对象
+            {
+                var mockObj = new MockObject()
+                {
+                    PropertyAsStringArray = new string[] { "你好", "世界" },
+                    PropertyAsDateTimeOffset = new DateTimeOffset(2006, 1, 2, 15, 4, 5, TimeSpan.FromHours(8))
+                };
+
+                const string EXPECTED = "PropertyAsStringArray=%E4%BD%A0%E5%A5%BD%2C%E4%B8%96%E7%95%8C&PropertyAsDateTimeOffset=2006-01-02+15%3A04%3A05";
+                StringAssert.AreEqualIgnoringCase(EXPECTED, client.FormUrlEncodedSerializer.Serialize(mockObj));
+            }
         }
 
-        [Test(Description = "测试用例：配置项之 FormUrlEncoded 序列化器序列化")]
-        public void TestClientConfigure_FormUrlEncodedSerializer_Serialize()
+        [Test(Description = "测试用例：配置项之 FormUrlEncoded 序列化器")]
+        public void TestClientConfigure_FormUrlEncodedSerializer_JsonifiedFormUrlEncodedSerializer()
         {
-            var mockObj = new SortedDictionary<string, object?>(new Dictionary<string, object?>()
-            {
-                { "integer", 12345 },
-                { "string", "abcdef"  },
-                { "boolean", true  },
-                { "guid", Guid.Parse("12345678-ffff-ffff-ffff-123456789abc")  },
-                { "array", new string[] { "你好", "世界" } },
-                { "object", new { key = "value" } }
-            }, StringComparer.Ordinal);
-
-            const string expected = "array[0]=%E4%BD%A0%E5%A5%BD&array[1]=%E4%B8%96%E7%95%8C&boolean=true&guid=12345678-ffff-ffff-ffff-123456789abc&integer=12345&object.key=value&string=abcdef";
-            StringAssert.AreEqualIgnoringCase(expected, new JsonifiedFormUrlEncodedSerializer(new NewtonsoftJsonSerializer()).Serialize(mockObj));
-            StringAssert.AreEqualIgnoringCase(expected, new JsonifiedFormUrlEncodedSerializer(new SystemTextJsonSerializer()).Serialize(mockObj));
-
-
-
-            var mockObjWithCustomConverters = new MockObject()
-            {
-                PropertyAsStringArray = new string[] { "你好", "世界" },
-                PropertyAsDateTimeOffset = new DateTimeOffset(2006, 1, 2, 15, 4, 5, TimeSpan.FromHours(8))
-            };
-
-            const string expectedWithCustomConverters = "PropertyAsStringArray=%E4%BD%A0%E5%A5%BD%2C%E4%B8%96%E7%95%8C&PropertyAsDateTimeOffset=2006-01-02+15%3A04%3A05";
-            StringAssert.AreEqualIgnoringCase(expectedWithCustomConverters, new JsonifiedFormUrlEncodedSerializer(new NewtonsoftJsonSerializer()).Serialize(mockObjWithCustomConverters));
-            StringAssert.AreEqualIgnoringCase(expectedWithCustomConverters, new JsonifiedFormUrlEncodedSerializer(new SystemTextJsonSerializer()).Serialize(mockObjWithCustomConverters));
+            TestConfigureFormUrlEncodedSerializer(new JsonifiedFormUrlEncodedSerializer(new NewtonsoftJsonSerializer()));
+            TestConfigureFormUrlEncodedSerializer(new JsonifiedFormUrlEncodedSerializer(new SystemTextJsonSerializer()));
         }
     }
 }
