@@ -8,92 +8,136 @@ namespace SKIT.FlurlHttpClient.UnitTests.TestCases.JsonConverter
     {
         private sealed class MockObject
         {
-            [Newtonsoft.Json.JsonProperty(nameof(PropertyAsByte), Order = 101)]
+            [Newtonsoft.Json.JsonProperty(Order = 101)]
             [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.Common.TextualNumberReadOnlyConverter))]
+            [System.Text.Json.Serialization.JsonPropertyOrder(101)]
+            [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Converters.Common.TextualNumberReadOnlyConverter))]
             public byte PropertyAsByte { get; set; }
 
-            [Newtonsoft.Json.JsonProperty(nameof(PropertyAsSByte), Order = 102)]
+            [Newtonsoft.Json.JsonProperty(Order = 102)]
             [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.Common.TextualNumberReadOnlyConverter))]
+            [System.Text.Json.Serialization.JsonPropertyOrder(102)]
+            [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Converters.Common.TextualNumberReadOnlyConverter))]
             public sbyte PropertyAsSByte { get; set; }
 
-            [Newtonsoft.Json.JsonProperty(nameof(PropertyAsInt16), Order = 103)]
+            [Newtonsoft.Json.JsonProperty(Order = 103)]
             [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.Common.TextualNumberReadOnlyConverter))]
+            [System.Text.Json.Serialization.JsonPropertyOrder(103)]
+            [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Converters.Common.TextualNumberReadOnlyConverter))]
             public short PropertyAsInt16 { get; set; }
 
-            [Newtonsoft.Json.JsonProperty(nameof(PropertyAsUInt16), Order = 104)]
+            [Newtonsoft.Json.JsonProperty(Order = 104)]
             [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.Common.TextualNumberReadOnlyConverter))]
+            [System.Text.Json.Serialization.JsonPropertyOrder(104)]
+            [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Converters.Common.TextualNumberReadOnlyConverter))]
             public ushort PropertyAsUInt16 { get; set; }
 
-            [Newtonsoft.Json.JsonProperty(nameof(PropertyAsInt32), Order = 105)]
+            [Newtonsoft.Json.JsonProperty(Order = 105)]
             [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.Common.TextualNumberReadOnlyConverter))]
+            [System.Text.Json.Serialization.JsonPropertyOrder(105)]
+            [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Converters.Common.TextualNumberReadOnlyConverter))]
             public int PropertyAsInt32 { get; set; }
 
-            [Newtonsoft.Json.JsonProperty(nameof(PropertyAsUInt32), Order = 106)]
+            [Newtonsoft.Json.JsonProperty(Order = 106)]
             [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.Common.TextualNumberReadOnlyConverter))]
+            [System.Text.Json.Serialization.JsonPropertyOrder(106)]
+            [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Converters.Common.TextualNumberReadOnlyConverter))]
             public uint PropertyAsUInt32 { get; set; }
 
-            [Newtonsoft.Json.JsonProperty(nameof(PropertyAsInt64), Order = 107)]
+            [Newtonsoft.Json.JsonProperty(Order = 107)]
             [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.Common.TextualNumberReadOnlyConverter))]
+            [System.Text.Json.Serialization.JsonPropertyOrder(107)]
+            [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Converters.Common.TextualNumberReadOnlyConverter))]
             public long PropertyAsInt64 { get; set; }
 
-            [Newtonsoft.Json.JsonProperty(nameof(PropertyAsUInt64), Order = 108)]
+            [Newtonsoft.Json.JsonProperty(Order = 108)]
             [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.Common.TextualNumberReadOnlyConverter))]
+            [System.Text.Json.Serialization.JsonPropertyOrder(108)]
+            [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Converters.Common.TextualNumberReadOnlyConverter))]
             public ulong PropertyAsUInt64 { get; set; }
 
-            [Newtonsoft.Json.JsonProperty(nameof(PropertyAsFloat), Order = 109)]
+            [Newtonsoft.Json.JsonProperty(Order = 109)]
             [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.Common.TextualNumberReadOnlyConverter))]
+            [System.Text.Json.Serialization.JsonPropertyOrder(109)]
+            [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Converters.Common.TextualNumberReadOnlyConverter))]
             public float PropertyAsFloat { get; set; }
 
-            [Newtonsoft.Json.JsonProperty(nameof(PropertyAsDouble), Order = 110)]
+            [Newtonsoft.Json.JsonProperty(Order = 110)]
             [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.Common.TextualNumberReadOnlyConverter))]
+            [System.Text.Json.Serialization.JsonPropertyOrder(110)]
+            [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Converters.Common.TextualNumberReadOnlyConverter))]
             public double PropertyAsDouble { get; set; }
 
-            [Newtonsoft.Json.JsonProperty(nameof(PropertyAsDecimal), Order = 111)]
+            [Newtonsoft.Json.JsonProperty(Order = 111)]
             [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.Common.TextualNumberReadOnlyConverter))]
+            [System.Text.Json.Serialization.JsonPropertyOrder(111)]
+            [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Converters.Common.TextualNumberReadOnlyConverter))]
             public decimal PropertyAsDecimal { get; set; }
 
-            [Newtonsoft.Json.JsonProperty(nameof(PropertyAsNullableByte), Order = 201)]
+            [Newtonsoft.Json.JsonProperty(Order = 201)]
             [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.Common.TextualNumberReadOnlyConverter))]
+            [System.Text.Json.Serialization.JsonPropertyOrder(201)]
+            [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Converters.Common.TextualNumberReadOnlyConverter))]
             public byte? PropertyAsNullableByte { get; set; }
 
-            [Newtonsoft.Json.JsonProperty(nameof(PropertyAsNullableSByte), Order = 202)]
+            [Newtonsoft.Json.JsonProperty(Order = 202)]
             [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.Common.TextualNumberReadOnlyConverter))]
+            [System.Text.Json.Serialization.JsonPropertyOrder(202)]
+            [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Converters.Common.TextualNumberReadOnlyConverter))]
             public sbyte? PropertyAsNullableSByte { get; set; }
 
-            [Newtonsoft.Json.JsonProperty(nameof(PropertyAsNullableInt16), Order = 203)]
+            [Newtonsoft.Json.JsonProperty(Order = 203)]
             [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.Common.TextualNumberReadOnlyConverter))]
+            [System.Text.Json.Serialization.JsonPropertyOrder(203)]
+            [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Converters.Common.TextualNumberReadOnlyConverter))]
             public short? PropertyAsNullableInt16 { get; set; }
 
-            [Newtonsoft.Json.JsonProperty(nameof(PropertyAsNullableUInt16), Order = 204)]
+            [Newtonsoft.Json.JsonProperty(Order = 204)]
             [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.Common.TextualNumberReadOnlyConverter))]
+            [System.Text.Json.Serialization.JsonPropertyOrder(204)]
+            [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Converters.Common.TextualNumberReadOnlyConverter))]
             public ushort? PropertyAsNullableUInt16 { get; set; }
 
-            [Newtonsoft.Json.JsonProperty(nameof(PropertyAsNullableInt32), Order = 205)]
+            [Newtonsoft.Json.JsonProperty(Order = 205)]
             [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.Common.TextualNumberReadOnlyConverter))]
+            [System.Text.Json.Serialization.JsonPropertyOrder(205)]
+            [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Converters.Common.TextualNumberReadOnlyConverter))]
             public int? PropertyAsNullableInt32 { get; set; }
 
-            [Newtonsoft.Json.JsonProperty(nameof(PropertyAsNullableUInt32), Order = 206)]
+            [Newtonsoft.Json.JsonProperty(Order = 206)]
             [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.Common.TextualNumberReadOnlyConverter))]
+            [System.Text.Json.Serialization.JsonPropertyOrder(206)]
+            [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Converters.Common.TextualNumberReadOnlyConverter))]
             public uint? PropertyAsNullableUInt32 { get; set; }
 
-            [Newtonsoft.Json.JsonProperty(nameof(PropertyAsNullableInt64), Order = 207)]
+            [Newtonsoft.Json.JsonProperty(Order = 207)]
             [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.Common.TextualNumberReadOnlyConverter))]
+            [System.Text.Json.Serialization.JsonPropertyOrder(207)]
+            [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Converters.Common.TextualNumberReadOnlyConverter))]
             public long? PropertyAsNullableInt64 { get; set; }
 
-            [Newtonsoft.Json.JsonProperty(nameof(PropertyAsNullableUInt64), Order = 208)]
+            [Newtonsoft.Json.JsonProperty(Order = 208)]
             [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.Common.TextualNumberReadOnlyConverter))]
+            [System.Text.Json.Serialization.JsonPropertyOrder(208)]
+            [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Converters.Common.TextualNumberReadOnlyConverter))]
             public ulong? PropertyAsNullableUInt64 { get; set; }
 
-            [Newtonsoft.Json.JsonProperty(nameof(PropertyAsNullableFloat), Order = 209)]
+            [Newtonsoft.Json.JsonProperty(Order = 209)]
             [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.Common.TextualNumberReadOnlyConverter))]
+            [System.Text.Json.Serialization.JsonPropertyOrder(209)]
+            [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Converters.Common.TextualNumberReadOnlyConverter))]
             public float? PropertyAsNullableFloat { get; set; }
 
-            [Newtonsoft.Json.JsonProperty(nameof(PropertyAsNullableDouble), Order = 210)]
+            [Newtonsoft.Json.JsonProperty(Order = 210)]
             [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.Common.TextualNumberReadOnlyConverter))]
+            [System.Text.Json.Serialization.JsonPropertyOrder(210)]
+            [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Converters.Common.TextualNumberReadOnlyConverter))]
             public double? PropertyAsNullableDouble { get; set; }
 
-            [Newtonsoft.Json.JsonProperty(nameof(PropertyAsNullableDecimal), Order = 211)]
+            [Newtonsoft.Json.JsonProperty(Order = 211)]
             [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.Common.TextualNumberReadOnlyConverter))]
+            [System.Text.Json.Serialization.JsonPropertyOrder(211)]
+            [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Converters.Common.TextualNumberReadOnlyConverter))]
             public decimal? PropertyAsNullableDecimal { get; set; }
         }
 
@@ -292,6 +336,16 @@ namespace SKIT.FlurlHttpClient.UnitTests.TestCases.JsonConverter
             jsonSettings.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore;
 
             TestCustomJsonConverter(new NewtonsoftJsonSerializer(jsonSettings));
+        }
+
+        [Test(Description = "测试用例：自定义 System.Text.Json.JsonConverter 之 TextualNumberReadOnlyConverter")]
+        public void TestSystemTextJsonConverter()
+        {
+            var jsonOptions = SystemTextJsonSerializer.GetDefaultSerializerOptions();
+            jsonOptions.WriteIndented = false;
+            jsonOptions.DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull;
+
+            TestCustomJsonConverter(new SystemTextJsonSerializer(jsonOptions));
         }
     }
 }

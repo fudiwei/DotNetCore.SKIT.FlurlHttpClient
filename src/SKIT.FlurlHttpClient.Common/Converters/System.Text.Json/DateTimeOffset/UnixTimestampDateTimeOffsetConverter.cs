@@ -14,7 +14,7 @@ namespace System.Text.Json.Converters.Common
         {
             if (typeof(DateTimeOffset) == typeToConvert)
                 return new InternalUnixTimestampDateTimeOffsetConverter();
-            else if (typeof(DateTimeOffset?) == typeToConvert)
+            if (typeof(DateTimeOffset?) == typeToConvert)
                 return new InternalUnixTimestampNullableDateTimeOffsetConverter();
 
             throw new NotSupportedException();

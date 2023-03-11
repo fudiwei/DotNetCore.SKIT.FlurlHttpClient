@@ -14,7 +14,7 @@ namespace System.Text.Json.Converters.Common
         {
             if (typeof(bool) == typeToConvert)
                 return new InternalNumericalBooleanConverter();
-            else if (typeof(bool?) == typeToConvert)
+            if (typeof(bool?) == typeToConvert)
                 return new InternalNumericalNullableBooleanConverter();
 
             throw new NotSupportedException();
@@ -68,9 +68,36 @@ namespace System.Text.Json.Converters.Common
             public override void Write(Utf8JsonWriter writer, bool? value, JsonSerializerOptions options)
             {
                 if (value is null)
+                {
                     writer.WriteNullValue();
+                }
                 else
-                    writer.WriteNumberValue(value.Value ? TRUE_VALUE : FALSE_VALUE);
+                {
+                    if ((options.NumberHandling & JsonNumberHandling.WriteAsString) > 0)
+                        writer.WriteStringValue(value.Value ? TRUE_VALUE.ToString() : FALSE_VALUE.ToString());
+                    else
+                        writer.WriteNumberValue(value.Value ? TRUE_VALUE : FALSE_VALUE);
+                }
+            }
+
+            public override bool? ReadAsPropertyName(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                string propName = reader.GetString()!;
+                if (string.IsNullOrEmpty(propName))
+                    return null;
+
+                if (int.TryParse(propName, out int result))
+                    return Convert.ToBoolean(result);
+
+                throw new JsonException($"Could not parse String '{propName}' to Int32.");
+            }
+
+            public override void WriteAsPropertyName(Utf8JsonWriter writer, bool? value, JsonSerializerOptions options)
+            {
+                if (value is null)
+                    writer.WritePropertyName(string.Empty);
+                else
+                    writer.WritePropertyName(value.Value ? TRUE_VALUE.ToString() : FALSE_VALUE.ToString());
             }
         }
 
@@ -87,6 +114,17 @@ namespace System.Text.Json.Converters.Common
             public override void Write(Utf8JsonWriter writer, bool value, JsonSerializerOptions options)
             {
                 _converter.Write(writer, value, options);
+            }
+
+            public override bool ReadAsPropertyName(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                bool? result = _converter.ReadAsPropertyName(ref reader, typeToConvert, options);
+                return result.GetValueOrDefault();
+            }
+
+            public override void WriteAsPropertyName(Utf8JsonWriter writer, bool value, JsonSerializerOptions options)
+            {
+                _converter.WriteAsPropertyName(writer, value, options);
             }
         }
     }

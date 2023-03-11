@@ -7,7 +7,7 @@ namespace SKIT.FlurlHttpClient.UnitTests.TestCases.Configuration
     public class TestCase_ConfigureJsonSerializerTest
     {
         [Test(Description = "测试用例：配置项之 JSON 序列化器")]
-        public void TestClientConfigureJsonSerializer()
+        public void TestClientConfigure_JsonSerializer()
         {
             using var client = new MockTestClient();
             Assert.IsNotNull(client.JsonSerializer);

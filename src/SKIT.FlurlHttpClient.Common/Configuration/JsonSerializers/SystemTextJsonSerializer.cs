@@ -5,7 +5,7 @@ using System.Text.Json.Serialization;
 
 namespace SKIT.FlurlHttpClient.Configuration
 {
-    public class SystemTextJsonSerializer : IJsonSerializer
+    public sealed class SystemTextJsonSerializer : IJsonSerializer
     {
         private readonly JsonSerializerOptions _jsonOptions;
 

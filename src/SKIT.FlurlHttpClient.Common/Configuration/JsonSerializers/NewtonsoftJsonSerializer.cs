@@ -4,7 +4,7 @@ using Newtonsoft.Json.Serialization;
 
 namespace SKIT.FlurlHttpClient.Configuration
 {
-    public class NewtonsoftJsonSerializer : IJsonSerializer
+    public sealed class NewtonsoftJsonSerializer : IJsonSerializer
     {
         private readonly JsonSerializerSettings _jsonSettings;
 

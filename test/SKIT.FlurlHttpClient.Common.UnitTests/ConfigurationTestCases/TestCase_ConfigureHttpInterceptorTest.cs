@@ -47,7 +47,7 @@ namespace SKIT.FlurlHttpClient.UnitTests.TestCases.Configuration
         }
 
         [Test(Description = "测试用例：配置项之拦截器")]
-        public async Task TestClientConfigureJsonSerializer()
+        public async Task TestClientConfigure_HttpInterceptor()
         {
             using var client = new MockTestClient();
             client.Configure(settings => settings.FlurlHttpClientFactory = new MockTestHttpClientFactory());

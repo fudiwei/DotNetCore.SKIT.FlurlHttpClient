@@ -115,7 +115,7 @@ namespace SKIT.FlurlHttpClient.Configuration
         IEnumerable<string> IDictionary<string, IEnumerable<string>>.this[string key]
         {
             get { return this[key]; }
-            set { throw new NotImplementedException(); }
+            set { throw new NotSupportedException(); }
         }
 
         internal HttpHeaderCollection(IDictionary<string, IEnumerable<string>> httpHeaders)
@@ -203,17 +203,17 @@ namespace SKIT.FlurlHttpClient.Configuration
 
         void IDictionary<string, IEnumerable<string>>.Add(string key, IEnumerable<string> value)
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException();
         }
 
         bool IDictionary<string, IEnumerable<string>>.Remove(string key)
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException();
         }
 
         void ICollection<KeyValuePair<string, IEnumerable<string>>>.Add(KeyValuePair<string, IEnumerable<string>> item)
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException();
         }
 
         bool ICollection<KeyValuePair<string, IEnumerable<string>>>.Contains(KeyValuePair<string, IEnumerable<string>> item)
@@ -228,12 +228,12 @@ namespace SKIT.FlurlHttpClient.Configuration
 
         bool ICollection<KeyValuePair<string, IEnumerable<string>>>.Remove(KeyValuePair<string, IEnumerable<string>> item)
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException();
         }
 
         void ICollection<KeyValuePair<string, IEnumerable<string>>>.Clear()
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException();
         }
 
         public override string ToString()

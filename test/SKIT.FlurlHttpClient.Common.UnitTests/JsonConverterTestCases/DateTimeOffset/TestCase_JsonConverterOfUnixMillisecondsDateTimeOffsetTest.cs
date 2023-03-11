@@ -9,13 +9,13 @@ namespace SKIT.FlurlHttpClient.UnitTests.TestCases.JsonConverter
     {
         private sealed class MockObject
         {
-            [Newtonsoft.Json.JsonProperty(nameof(Property), Order = 1)]
+            [Newtonsoft.Json.JsonProperty(Order = 1)]
             [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.Common.UnixMillisecondsDateTimeOffsetConverter))]
             [System.Text.Json.Serialization.JsonPropertyOrder(1)]
             [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Converters.Common.UnixMillisecondsDateTimeOffsetConverter))]
             public DateTimeOffset Property { get; set; }
 
-            [Newtonsoft.Json.JsonProperty(nameof(NullableProperty), Order = 2)]
+            [Newtonsoft.Json.JsonProperty(Order = 2)]
             [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.Common.UnixMillisecondsDateTimeOffsetConverter))]
             [System.Text.Json.Serialization.JsonPropertyOrder(2)]
             [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Converters.Common.UnixMillisecondsDateTimeOffsetConverter))]

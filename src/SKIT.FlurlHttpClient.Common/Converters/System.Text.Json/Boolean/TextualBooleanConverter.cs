@@ -14,7 +14,7 @@ namespace System.Text.Json.Converters.Common
         {
             if (typeof(bool) == typeToConvert)
                 return new InternalTextualBooleanConverter();
-            else if (typeof(bool?) == typeToConvert)
+            if (typeof(bool?) == typeToConvert)
                 return new InternalTextualNullableBooleanConverter();
 
             throw new NotSupportedException();
@@ -66,6 +66,28 @@ namespace System.Text.Json.Converters.Common
                 else
                     writer.WriteStringValue(value.Value ? TRUE_VALUE : FALSE_VALUE);
             }
+
+            public override bool? ReadAsPropertyName(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                string propName = reader.GetString()!;
+                if (string.IsNullOrEmpty(propName))
+                    return null;
+
+                if (TRUE_VALUE.Equals(propName, StringComparison.OrdinalIgnoreCase))
+                    return true;
+                else if (FALSE_VALUE.Equals(propName, StringComparison.OrdinalIgnoreCase))
+                    return false;
+
+                throw new JsonException($"Could not parse String '{propName}' to Boolean.");
+            }
+
+            public override void WriteAsPropertyName(Utf8JsonWriter writer, bool? value, JsonSerializerOptions options)
+            {
+                if (value is null)
+                    writer.WritePropertyName(string.Empty);
+                else
+                    writer.WritePropertyName(value.Value ? TRUE_VALUE.ToString() : FALSE_VALUE.ToString());
+            }
         }
 
         private sealed class InternalTextualBooleanConverter : JsonConverter<bool>
@@ -81,6 +103,17 @@ namespace System.Text.Json.Converters.Common
             public override void Write(Utf8JsonWriter writer, bool value, JsonSerializerOptions options)
             {
                 _converter.Write(writer, value, options);
+            }
+
+            public override bool ReadAsPropertyName(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                bool? result = _converter.ReadAsPropertyName(ref reader, typeToConvert, options);
+                return result.GetValueOrDefault();
+            }
+
+            public override void WriteAsPropertyName(Utf8JsonWriter writer, bool value, JsonSerializerOptions options)
+            {
+                _converter.WriteAsPropertyName(writer, value, options);
             }
         }
     }
