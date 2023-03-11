@@ -24,12 +24,18 @@ namespace SKIT.FlurlHttpClient
         /// <summary>
         ///
         /// </summary>
+        public IFormUrlEncodedSerializer FormUrlEncodedSerializer { get; set; } = default!;
+
+        /// <summary>
+        ///
+        /// </summary>
         public IHttpClientFactory FlurlHttpClientFactory { get; set; } = default!;
 
         internal CommonClientSettings(ClientFlurlHttpSettings flurlClientSettings)
         {
             Timeout = flurlClientSettings.Timeout;
             JsonSerializer = ((InternalWrappedJsonSerializer)flurlClientSettings.JsonSerializer)!.Serializer;
+            FormUrlEncodedSerializer = ((InternalWrappedFormUrlEncodedSerializer)flurlClientSettings.UrlEncodedSerializer)!.Serializer;
             FlurlHttpClientFactory = flurlClientSettings.HttpClientFactory;
         }
     }

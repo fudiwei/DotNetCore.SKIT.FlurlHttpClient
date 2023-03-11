@@ -11,6 +11,7 @@ namespace SKIT.FlurlHttpClient
 {
     using SKIT.FlurlHttpClient.Configuration;
     using SKIT.FlurlHttpClient.Configuration.Internal;
+    using SKIT.FlurlHttpClient.Constants;
     using SKIT.FlurlHttpClient.Exceptions;
 
     /// <summary>
@@ -34,6 +35,14 @@ namespace SKIT.FlurlHttpClient
         }
 
         /// <summary>
+        /// <inheritdoc />
+        /// </summary>
+        public IFormUrlEncodedSerializer FormUrlEncodedSerializer
+        {
+            get { return ((InternalWrappedFormUrlEncodedSerializer)FlurlClient.Settings.UrlEncodedSerializer)!.Serializer; }
+        }
+
+        /// <summary>
         /// 获取当前客户端使用的 <see cref="IFlurlClient"/> 对象。
         /// </summary>
         protected IFlurlClient FlurlClient { get; }
@@ -47,7 +56,10 @@ namespace SKIT.FlurlHttpClient
             FlurlClient = new FlurlClient();
             FlurlClient.Configure(flurlSettings =>
             {
-                flurlSettings.JsonSerializer = new InternalWrappedJsonSerializer(new SystemTextJsonSerializer());
+                IJsonSerializer jsonSerializer = new SystemTextJsonSerializer();
+                IFormUrlEncodedSerializer formUrlEncodedSerializer = new JsonifiedFormUrlEncodedSerializer(jsonSerializer);
+                flurlSettings.JsonSerializer = new InternalWrappedJsonSerializer(jsonSerializer);
+                flurlSettings.UrlEncodedSerializer = new InternalWrappedFormUrlEncodedSerializer(formUrlEncodedSerializer);
                 flurlSettings.BeforeCallAsync = async (flurlCall) =>
                 {
                     using CancellationTokenSource cts = new CancellationTokenSource();
@@ -118,6 +130,7 @@ namespace SKIT.FlurlHttpClient
 
                 flurlClientSettings.Timeout = settings.Timeout;
                 flurlClientSettings.JsonSerializer = new InternalWrappedJsonSerializer(settings.JsonSerializer);
+                flurlClientSettings.UrlEncodedSerializer = new InternalWrappedFormUrlEncodedSerializer(settings.FormUrlEncodedSerializer);
                 flurlClientSettings.HttpClientFactory = settings.FlurlHttpClientFactory;
             });
         }
@@ -192,19 +205,23 @@ namespace SKIT.FlurlHttpClient
             if (flurlRequest == null) throw new ArgumentNullException(nameof(flurlRequest));
             if (_disposed) throw new ObjectDisposedException(nameof(FlurlClient));
 
+            HttpContent? httpContent = null;
             if (data != null)
             {
-                if (!flurlRequest.Headers.Contains(Constants.HttpHeaders.ContentType))
+                try
                 {
-                    flurlRequest.WithHeader(Constants.HttpHeaders.ContentType, "application/json; charset=utf-8");
+                    string content = JsonSerializer.Serialize(data, data.GetType());
+                    httpContent = new StringContent(content, encoding: null, mediaType: MimeTypes.Json);
+                }
+                catch (Exception ex)
+                {
+                    throw new CommonSerializationException(ex.Message, ex);
                 }
             }
 
             try
             {
-                return await flurlRequest
-                    .AllowAnyHttpStatus()
-                    .SendJsonAsync(flurlRequest.Verb, data, cancellationToken: cancellationToken);
+                return await SendFlurlRequestAsync(flurlRequest, httpContent, cancellationToken);
             }
             catch (OperationCanceledException)
             {
@@ -225,6 +242,66 @@ namespace SKIT.FlurlHttpClient
                     throw;
 
                 throw new CommonException(ex.Message, ex);
+            }
+            finally
+            {
+                httpContent?.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="flurlRequest"></param>
+        /// <param name="data"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        protected virtual async Task<IFlurlResponse> SendFlurlRequestAsFormUrlEncodedAsync(IFlurlRequest flurlRequest, object? data = null, CancellationToken cancellationToken = default)
+        {
+            if (flurlRequest == null) throw new ArgumentNullException(nameof(flurlRequest));
+            if (_disposed) throw new ObjectDisposedException(nameof(FlurlClient));
+
+            HttpContent? httpContent = null;
+            if (data != null)
+            {
+                try
+                {
+                    string content = FormUrlEncodedSerializer.Serialize(data, data.GetType());
+                    httpContent = new StringContent(content, encoding: null, mediaType: MimeTypes.FormUrlEncoded);
+                }
+                catch (Exception ex)
+                {
+                    throw new CommonSerializationException(ex.Message, ex);
+                }
+            }
+
+            try
+            {
+                return await SendFlurlRequestAsync(flurlRequest, httpContent, cancellationToken);
+            }
+            catch (OperationCanceledException)
+            {
+                throw;
+            }
+            catch (FlurlHttpException ex)
+            {
+                if (ex is FlurlParsingException)
+                    throw new CommonSerializationException(ex.Message, ex);
+                if (ex is FlurlHttpTimeoutException)
+                    throw new CommonTimeoutException(ex.Message, ex);
+
+                throw new CommonHttpException(ex.Message, ex);
+            }
+            catch (Exception ex)
+            {
+                if (ex is CommonException)
+                    throw;
+
+                throw new CommonException(ex.Message, ex);
+            }
+            finally
+            {
+                httpContent?.Dispose();
             }
         }
 
@@ -290,8 +367,8 @@ namespace SKIT.FlurlHttpClient
             {
                 try
                 {
-                    string? contentType = flurlResponse.Headers.GetAll(Constants.HttpHeaders.ContentType).FirstOrDefault();
-                    string? charset = MediaTypeHeaderValue.TryParse(contentType, out var mediaType) ? mediaType.CharSet : null;
+                    string? contentType = flurlResponse.Headers.GetAll(HttpHeaders.ContentType).FirstOrDefault();
+                    string? charset = MediaTypeHeaderValue.TryParse(contentType, out MediaTypeHeaderValue? mediaType) ? mediaType.CharSet : null;
                     string json = (string.IsNullOrEmpty(charset) ? Encoding.UTF8 : Encoding.GetEncoding(charset)).GetString(tmp.RawBytes);
 
                     result = JsonSerializer.Deserialize<TResponse>(json);
