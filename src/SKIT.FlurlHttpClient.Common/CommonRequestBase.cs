@@ -11,9 +11,7 @@ namespace SKIT.FlurlHttpClient
         [System.Text.Json.Serialization.JsonIgnore]
         internal TimeSpan? Timeout { get; private set; }
 
-        /// <summary>
         /// <inheritdoc/>
-        /// </summary>
         public void WithTimeout(TimeSpan? timeout)
         {
             Timeout = timeout;
