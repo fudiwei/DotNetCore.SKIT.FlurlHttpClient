@@ -9,36 +9,24 @@ namespace SKIT.FlurlHttpClient.Exceptions
     public class CommonInterceptorCallException : CommonException
     {
         /// <summary>
-        /// 
+        /// 获取本次请求的上下文。
         /// </summary>
         public FlurlCall FlurlCall { get; }
 
-        /// <summary>
         /// <inheritdoc/>
-        /// </summary>
-        /// <param name="flurlCall"></param>
         public CommonInterceptorCallException(FlurlCall flurlCall)
         {
             FlurlCall = flurlCall;
         }
 
-        /// <summary>
         /// <inheritdoc/>
-        /// </summary>
-        /// <param name="flurlCall"></param>
-        /// <param name="message"></param>
         public CommonInterceptorCallException(FlurlCall flurlCall, string message)
             : base(message)
         {
             FlurlCall = flurlCall;
         }
 
-        /// <summary>
         /// <inheritdoc/>
-        /// </summary>
-        /// <param name="flurlCall"></param>
-        /// <param name="message"></param>
-        /// <param name="innerException"></param>
         public CommonInterceptorCallException(FlurlCall flurlCall, string message, Exception innerException)
             : base(message, innerException)
         {

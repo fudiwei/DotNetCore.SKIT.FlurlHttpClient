@@ -81,6 +81,9 @@ namespace SKIT.FlurlHttpClient
                         }
                         catch (Exception ex)
                         {
+                            if (ex is CommonException)
+                                throw;
+
                             throw new CommonInterceptorCallException(flurlCall, ex.Message, ex);
                         }
                     }
@@ -106,6 +109,9 @@ namespace SKIT.FlurlHttpClient
                         }
                         catch (Exception ex)
                         {
+                            if (ex is CommonException)
+                                throw;
+
                             throw new CommonInterceptorCallException(flurlCall, ex.Message, ex);
                         }
                     }
@@ -115,10 +121,7 @@ namespace SKIT.FlurlHttpClient
             });
         }
 
-        /// <summary>
         /// <inheritdoc/>
-        /// </summary>
-        /// <param name="configure"></param>
         public void Configure(Action<CommonClientSettings> configure)
         {
             if (configure == null) throw new ArgumentNullException(nameof(configure));
@@ -406,9 +409,7 @@ namespace SKIT.FlurlHttpClient
             }
         }
 
-        /// <summary>
         /// <inheritdoc/>
-        /// </summary>
         public void Dispose()
         {
             Dispose(true);
