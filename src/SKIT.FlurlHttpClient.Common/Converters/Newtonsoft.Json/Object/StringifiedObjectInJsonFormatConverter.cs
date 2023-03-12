@@ -2,6 +2,16 @@ using System;
 
 namespace Newtonsoft.Json.Converters.Common
 {
+    /// <summary>
+    /// 一个 JSON 转换器，可针对指定适配类型做如下形式的对象转换。
+    /// <code>
+    ///   .NET → object Foo { get; } = new { Bar = "baz" };
+    ///   JSON → { "Foo": "{\"Bar\":\"baz\"}" }
+    /// </code>
+    /// 
+    /// 适配类型：
+    /// <code>  任意类型。</code>
+    /// </summary>
     public sealed class StringifiedObjectInJsonFormatConverter : JsonConverter
     {
         public override bool CanRead

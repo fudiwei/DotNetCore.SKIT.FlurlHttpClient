@@ -1,7 +1,18 @@
-﻿using System.Text.Json.Serialization;
+using System.Text.Json.Serialization;
 
 namespace System.Text.Json.Converters.Common
 {
+    /// <summary>
+    /// 一个 JSON 转换器，可针对指定适配类型做如下形式的对象转换。与 <seealso cref="NumericalStringConverter"/> 类似，但转换过程是单向只读的。
+    /// <para>与通过 System.Text.Json.Serialization.<see cref="JsonNumberHandling.WriteAsString"/> 参数转换相比，可支持空字符串等特殊形式。</para>
+    /// <code>
+    ///   .NET → string Foo { get; } = "1";
+    ///   JSON → { "Foo": 1 }
+    /// </code>
+    /// 
+    /// 适配类型：
+    /// <code>  <see cref="string"/></code>
+    /// </summary>
     public class NumericalStringReadOnlyConverter : JsonConverter<string?>
     {
         private readonly JsonConverter<string?> _converter = new NumericalStringConverter();

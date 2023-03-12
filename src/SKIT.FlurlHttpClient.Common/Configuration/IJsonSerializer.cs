@@ -2,6 +2,9 @@ using System;
 
 namespace SKIT.FlurlHttpClient.Configuration
 {
+    /// <summary>
+    /// 用于序列化 "application/json" 内容的序列化器。
+    /// </summary>
     public interface IJsonSerializer
     {
         public string Serialize(object? obj, Type type);

@@ -5,13 +5,11 @@ namespace SKIT.FlurlHttpClient
     using SKIT.FlurlHttpClient.Configuration;
 
     /// <summary>
-    /// SKIT.FlurlHttpClient 响应基类。
+    /// SKIT.FlurlHttpClient 通用响应基类。
     /// </summary>
     public abstract class CommonResponseBase : ICommonResponse
     {
-#pragma warning disable CS8618
         internal protected CommonResponseBase()
-#pragma warning restore CS8618
         {
             RawHeaders = HttpHeaderCollection.Empty;
             RawBytes = Array.Empty<byte>();

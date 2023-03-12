@@ -3,7 +3,7 @@ using System;
 namespace SKIT.FlurlHttpClient
 {
     /// <summary>
-    /// SKIT.FlurlHttpClient 请求基类。
+    /// SKIT.FlurlHttpClient 通用请求基类。
     /// </summary>
     public abstract class CommonRequestBase : ICommonRequest
     {

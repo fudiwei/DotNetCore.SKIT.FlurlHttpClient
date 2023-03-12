@@ -7,6 +7,10 @@ using Newtonsoft.Json.Linq;
 
 namespace SKIT.FlurlHttpClient.Configuration
 {
+    /// <summary>
+    /// <para>用于序列化 "application/x-www-form-urlencoded" 内容的序列化器。</para>
+    /// <para>基于 SKIT.FlurlHttpClient.Configuration.<see cref="IJsonSerializer"/> 实现。</para>
+    /// </summary>
     public class JsonifiedFormUrlEncodedSerializer : IFormUrlEncodedSerializer
     {
         private const string TRUE_VALUE = "true";

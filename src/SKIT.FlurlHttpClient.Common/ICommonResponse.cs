@@ -3,7 +3,7 @@ namespace SKIT.FlurlHttpClient
     using SKIT.FlurlHttpClient.Configuration;
 
     /// <summary>
-    /// SKIT.FlurlHttpClient 响应接口。
+    /// SKIT.FlurlHttpClient 通用响应接口。
     /// </summary>
     public interface ICommonResponse
     {

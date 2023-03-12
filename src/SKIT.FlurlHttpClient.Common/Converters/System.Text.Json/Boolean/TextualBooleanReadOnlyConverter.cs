@@ -2,6 +2,16 @@ using System.Text.Json.Serialization;
 
 namespace System.Text.Json.Converters.Common
 {
+    /// <summary>
+    /// 一个 JSON 转换器，可针对指定适配类型做如下形式的对象转换。与 <seealso cref="TextualBooleanConverter"/> 类似，但转换过程是单向只读的。
+    /// <code>
+    ///   .NET → bool Foo { get; } = true;
+    ///   JSON → { "Foo": "true" }
+    /// </code>
+    /// 
+    /// 适配类型：
+    /// <code>  <see cref="bool"/> <see cref="bool"/>?</code>
+    /// </summary>
     public sealed partial class TextualBooleanReadOnlyConverter : JsonConverterFactory
     {
         public override bool CanConvert(Type typeToConvert)

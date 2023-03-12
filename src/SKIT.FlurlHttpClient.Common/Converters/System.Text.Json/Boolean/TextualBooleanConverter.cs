@@ -1,7 +1,19 @@
 using System.Text.Json.Serialization;
+using System.Text.RegularExpressions;
+using Newtonsoft.Json.Linq;
 
 namespace System.Text.Json.Converters.Common
 {
+    /// <summary>
+    /// 一个 JSON 转换器，可针对指定适配类型做如下形式的对象转换。
+    /// <code>
+    ///   .NET → bool Foo { get; } = true;
+    ///   JSON → { "Foo": "true" }
+    /// </code>
+    /// 
+    /// 适配类型：
+    /// <code>  <see cref="bool"/> <see cref="bool"/>?</code>
+    /// </summary>
     public sealed partial class TextualBooleanConverter : JsonConverterFactory
     {
         public override bool CanConvert(Type typeToConvert)
@@ -28,6 +40,9 @@ namespace System.Text.Json.Converters.Common
             private const string TRUE_VALUE = "true";
             private const string FALSE_VALUE = "false";
 
+            private static readonly Regex TRUE_REGEX = new Regex("^([T|t]rue|TRUE)$", RegexOptions.Compiled);
+            private static readonly Regex FALSE_REGEX = new Regex("^([F|f]alse|FALSE)$", RegexOptions.Compiled);
+
             public override bool? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 if (reader.TokenType == JsonTokenType.Null)
@@ -48,9 +63,9 @@ namespace System.Text.Json.Converters.Common
                     if (string.IsNullOrEmpty(value))
                         return null;
 
-                    if (TRUE_VALUE.Equals(value, StringComparison.OrdinalIgnoreCase))
+                    if (TRUE_REGEX.IsMatch(value))
                         return true;
-                    else if (FALSE_VALUE.Equals(value, StringComparison.OrdinalIgnoreCase))
+                    else if (FALSE_REGEX.IsMatch(value))
                         return false;
 
                     throw new JsonException($"Could not parse String '{value}' to Boolean.");
@@ -73,9 +88,9 @@ namespace System.Text.Json.Converters.Common
                 if (string.IsNullOrEmpty(propName))
                     return null;
 
-                if (TRUE_VALUE.Equals(propName, StringComparison.OrdinalIgnoreCase))
+                if (TRUE_REGEX.IsMatch(propName))
                     return true;
-                else if (FALSE_VALUE.Equals(propName, StringComparison.OrdinalIgnoreCase))
+                else if (FALSE_REGEX.IsMatch(propName))
                     return false;
 
                 throw new JsonException($"Could not parse String '{propName}' to Boolean.");

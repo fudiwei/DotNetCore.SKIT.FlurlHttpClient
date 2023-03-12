@@ -5,6 +5,10 @@ using System.Text.Json.Serialization;
 
 namespace SKIT.FlurlHttpClient.Configuration
 {
+    /// <summary>
+    /// <para>用于序列化 "application/json" 内容的序列化器。</para>
+    /// <para>基于 System.Text.Json.<see cref="JsonSerializer"/> 实现。</para>
+    /// </summary>
     public sealed class SystemTextJsonSerializer : IJsonSerializer
     {
         private readonly JsonSerializerOptions _jsonOptions;

@@ -171,7 +171,7 @@ namespace System.Text.Json.Converters.Common
                                     else
                                     {
                                         if (!float.TryParse(str, out n))
-                                            throw new JsonException($"Could not parse String '{str}' to Single.");
+                                            throw new JsonException($"Could not parse String '{str}' to Float.");
                                     }
 
                                     result.SetValue(n, i);
