@@ -1,5 +1,8 @@
 namespace SKIT.FlurlHttpClient.Constants
 {
+    /// <summary>
+    /// SKIT.FlurlHttpClient 常量集之 HTTP 标头。
+    /// </summary>
     public static class HttpHeaders
     {
         public const string Accept = "Accept";

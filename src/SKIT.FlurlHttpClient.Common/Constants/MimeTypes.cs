@@ -1,5 +1,8 @@
 namespace SKIT.FlurlHttpClient.Constants
 {
+    /// <summary>
+    /// SKIT.FlurlHttpClient 常量集之 MIME 类型。
+    /// </summary>
     public static class MimeTypes
     {
         public const string Text = "text/plain";

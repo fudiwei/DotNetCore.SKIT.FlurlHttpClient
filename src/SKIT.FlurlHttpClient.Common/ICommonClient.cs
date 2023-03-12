@@ -5,7 +5,7 @@ namespace SKIT.FlurlHttpClient
     using SKIT.FlurlHttpClient.Configuration;
 
     /// <summary>
-    /// SKIT.FlurlHttpClient 客户端接口。
+    /// SKIT.FlurlHttpClient 通用客户端接口。
     /// </summary>
     public interface ICommonClient : IDisposable
     {

@@ -15,7 +15,7 @@ namespace SKIT.FlurlHttpClient
     using SKIT.FlurlHttpClient.Exceptions;
 
     /// <summary>
-    /// SKIT.FlurlHttpClient 客户端基类。
+    /// SKIT.FlurlHttpClient 通用客户端基类。
     /// </summary>
     public abstract class CommonClientBase : ICommonClient
     {

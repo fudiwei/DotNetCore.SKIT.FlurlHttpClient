@@ -4,6 +4,27 @@ namespace System.Text.Json.Converters.Common
 {
     using SKIT.FlurlHttpClient.Converters.Internal;
 
+    /// <summary>
+    /// 一个 JSON 转换器，可针对指定适配类型做如下形式的对象转换。与 <seealso cref="TextualNumberConverter"/> 类似，但转换过程是单向只读的。
+    /// <para>与通过 System.Text.Json.Serialization.<see cref="JsonNumberHandling.AllowReadingFromString"/> 参数转换相比，可支持空字符串等特殊形式。</para>
+    /// <code>
+    ///   .NET → int Foo { get; } = 1;
+    ///   JSON → { "Foo": "1" }
+    /// </code>
+    /// 
+    /// 适配类型：
+    /// <code>  <see cref="sbyte"/> <see cref="sbyte"/>?</code>
+    /// <code>  <see cref="byte"/> <see cref="byte"/></code>
+    /// <code>  <see cref="ushort"/> <see cref="ushort"/>?</code>
+    /// <code>  <see cref="short"/> <see cref="short"/>?</code>
+    /// <code>  <see cref="uint"/> <see cref="uint"/>?</code>
+    /// <code>  <see cref="int"/> <see cref="int"/>?</code>
+    /// <code>  <see cref="ulong"/> <see cref="ulong"/>?</code>
+    /// <code>  <see cref="long"/> <see cref="long"/>?</code>
+    /// <code>  <see cref="float"/> <see cref="float"/>?</code>
+    /// <code>  <see cref="double"/> <see cref="double"/>?</code>
+    /// <code>  <see cref="decimal"/> <see cref="decimal"/>?</code>
+    /// </summary>
     public partial class TextualNumberReadOnlyConverter : JsonConverterFactory
     {
         public override bool CanConvert(Type typeToConvert)
@@ -43,7 +64,7 @@ namespace System.Text.Json.Converters.Common
                     return convertTypeIsNullable ? new InternalTextualNullableUInt64ReadOnlyConverter() : new InternalTextualUInt64ReadOnlyConverter();
 
                 case TypeCode.Single:
-                    return convertTypeIsNullable ? new InternalTextualNullableSingleReadOnlyConverter() : new InternalTextualSingleReadOnlyConverter();
+                    return convertTypeIsNullable ? new InternalTextualNullableFloatReadOnlyConverter() : new InternalTextualFloatReadOnlyConverter();
 
                 case TypeCode.Double:
                     return convertTypeIsNullable ? new InternalTextualNullableDoubleReadOnlyConverter() : new InternalTextualDoubleReadOnlyConverter();
@@ -62,7 +83,7 @@ namespace System.Text.Json.Converters.Common
         #region SByte
         private sealed class InternalTextualNullableSByteReadOnlyConverter : JsonConverter<sbyte?>
         {
-            private readonly JsonConverter<sbyte?> _converter = new TextualNumberConverter.InternalTextualNullableSByteConverter();
+            private readonly JsonConverter<sbyte?> _converter = new Internal.TextualNullableSByteConverter();
 
             public override sbyte? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
@@ -90,7 +111,7 @@ namespace System.Text.Json.Converters.Common
 
         private sealed class InternalTextualSByteReadOnlyConverter : JsonConverter<sbyte>
         {
-            private readonly JsonConverter<sbyte> _converter = new TextualNumberConverter.InternalTextualSByteConverter();
+            private readonly JsonConverter<sbyte> _converter = new Internal.TextualSByteConverter();
 
             public override sbyte Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
@@ -117,7 +138,7 @@ namespace System.Text.Json.Converters.Common
         #region Byte
         private sealed class InternalTextualNullableByteReadOnlyConverter : JsonConverter<byte?>
         {
-            private readonly JsonConverter<byte?> _converter = new TextualNumberConverter.InternalTextualNullableByteConverter();
+            private readonly JsonConverter<byte?> _converter = new Internal.TextualNullableByteConverter();
 
             public override byte? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
@@ -145,7 +166,7 @@ namespace System.Text.Json.Converters.Common
 
         private sealed class InternalTextualByteReadOnlyConverter : JsonConverter<byte>
         {
-            private readonly JsonConverter<byte> _converter = new TextualNumberConverter.InternalTextualByteConverter();
+            private readonly JsonConverter<byte> _converter = new Internal.TextualByteConverter();
 
             public override byte Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
@@ -172,7 +193,7 @@ namespace System.Text.Json.Converters.Common
         #region Int16
         private sealed class InternalTextualNullableInt16ReadOnlyConverter : JsonConverter<short?>
         {
-            private readonly JsonConverter<short?> _converter = new TextualNumberConverter.InternalTextualNullableInt16Converter();
+            private readonly JsonConverter<short?> _converter = new Internal.TextualNullableInt16Converter();
 
             public override short? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
@@ -200,7 +221,7 @@ namespace System.Text.Json.Converters.Common
 
         private sealed class InternalTextualInt16ReadOnlyConverter : JsonConverter<short>
         {
-            private readonly JsonConverter<short> _converter = new TextualNumberConverter.InternalTextualInt16Converter();
+            private readonly JsonConverter<short> _converter = new Internal.TextualInt16Converter();
 
             public override short Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
@@ -227,7 +248,7 @@ namespace System.Text.Json.Converters.Common
         #region UInt16
         private sealed class InternalTextualNullableUInt16ReadOnlyConverter : JsonConverter<ushort?>
         {
-            private readonly JsonConverter<ushort?> _converter = new TextualNumberConverter.InternalTextualNullableUInt16Converter();
+            private readonly JsonConverter<ushort?> _converter = new Internal.TextualNullableUInt16Converter();
 
             public override ushort? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
@@ -255,7 +276,7 @@ namespace System.Text.Json.Converters.Common
 
         private sealed class InternalTextualUInt16ReadOnlyConverter : JsonConverter<ushort>
         {
-            private readonly JsonConverter<ushort> _converter = new TextualNumberConverter.InternalTextualUInt16Converter();
+            private readonly JsonConverter<ushort> _converter = new Internal.TextualUInt16Converter();
 
             public override ushort Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
@@ -282,7 +303,7 @@ namespace System.Text.Json.Converters.Common
         #region Int32
         private sealed class InternalTextualNullableInt32ReadOnlyConverter : JsonConverter<int?>
         {
-            private readonly JsonConverter<int?> _converter = new TextualNumberConverter.InternalTextualNullableInt32Converter();
+            private readonly JsonConverter<int?> _converter = new Internal.TextualNullableInt32Converter();
 
             public override int? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
@@ -310,7 +331,7 @@ namespace System.Text.Json.Converters.Common
 
         private sealed class InternalTextualInt32ReadOnlyConverter : JsonConverter<int>
         {
-            private readonly JsonConverter<int> _converter = new TextualNumberConverter.InternalTextualInt32Converter();
+            private readonly JsonConverter<int> _converter = new Internal.TextualInt32Converter();
 
             public override int Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
@@ -337,7 +358,7 @@ namespace System.Text.Json.Converters.Common
         #region UInt32
         private sealed class InternalTextualNullableUInt32ReadOnlyConverter : JsonConverter<uint?>
         {
-            private readonly JsonConverter<uint?> _converter = new TextualNumberConverter.InternalTextualNullableUInt32Converter();
+            private readonly JsonConverter<uint?> _converter = new Internal.TextualNullableUInt32Converter();
 
             public override uint? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
@@ -365,7 +386,7 @@ namespace System.Text.Json.Converters.Common
 
         private sealed class InternalTextualUInt32ReadOnlyConverter : JsonConverter<uint>
         {
-            private readonly JsonConverter<uint> _converter = new TextualNumberConverter.InternalTextualUInt32Converter();
+            private readonly JsonConverter<uint> _converter = new Internal.TextualUInt32Converter();
 
             public override uint Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
@@ -392,7 +413,7 @@ namespace System.Text.Json.Converters.Common
         #region Int64
         private sealed class InternalTextualNullableInt64ReadOnlyConverter : JsonConverter<long?>
         {
-            private readonly JsonConverter<long?> _converter = new TextualNumberConverter.InternalTextualNullableInt64Converter();
+            private readonly JsonConverter<long?> _converter = new Internal.TextualNullableInt64Converter();
 
             public override long? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
@@ -420,7 +441,7 @@ namespace System.Text.Json.Converters.Common
 
         private sealed class InternalTextualInt64ReadOnlyConverter : JsonConverter<long>
         {
-            private readonly JsonConverter<long> _converter = new TextualNumberConverter.InternalTextualInt64Converter();
+            private readonly JsonConverter<long> _converter = new Internal.TextualInt64Converter();
 
             public override long Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
@@ -447,7 +468,7 @@ namespace System.Text.Json.Converters.Common
         #region UInt64
         private sealed class InternalTextualNullableUInt64ReadOnlyConverter : JsonConverter<ulong?>
         {
-            private readonly JsonConverter<ulong?> _converter = new TextualNumberConverter.InternalTextualNullableUInt64Converter();
+            private readonly JsonConverter<ulong?> _converter = new Internal.TextualNullableUInt64Converter();
 
             public override ulong? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
@@ -475,7 +496,7 @@ namespace System.Text.Json.Converters.Common
 
         private sealed class InternalTextualUInt64ReadOnlyConverter : JsonConverter<ulong>
         {
-            private readonly JsonConverter<ulong> _converter = new TextualNumberConverter.InternalTextualUInt64Converter();
+            private readonly JsonConverter<ulong> _converter = new Internal.TextualUInt64Converter();
 
             public override ulong Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
@@ -499,10 +520,10 @@ namespace System.Text.Json.Converters.Common
         }
         #endregion
 
-        #region Single
-        private sealed class InternalTextualNullableSingleReadOnlyConverter : JsonConverter<float?>
+        #region Float
+        private sealed class InternalTextualNullableFloatReadOnlyConverter : JsonConverter<float?>
         {
-            private readonly JsonConverter<float?> _converter = new TextualNumberConverter.InternalTextualNullableSingleConverter();
+            private readonly JsonConverter<float?> _converter = new Internal.TextualNullableFloatConverter();
 
             public override float? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
@@ -528,9 +549,9 @@ namespace System.Text.Json.Converters.Common
             }
         }
 
-        private sealed class InternalTextualSingleReadOnlyConverter : JsonConverter<float>
+        private sealed class InternalTextualFloatReadOnlyConverter : JsonConverter<float>
         {
-            private readonly JsonConverter<float> _converter = new TextualNumberConverter.InternalTextualSingleConverter();
+            private readonly JsonConverter<float> _converter = new Internal.TextualFloatConverter();
 
             public override float Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
@@ -557,7 +578,7 @@ namespace System.Text.Json.Converters.Common
         #region Double
         private sealed class InternalTextualNullableDoubleReadOnlyConverter : JsonConverter<double?>
         {
-            private readonly JsonConverter<double?> _converter = new TextualNumberConverter.InternalTextualNullableDoubleConverter();
+            private readonly JsonConverter<double?> _converter = new Internal.TextualNullableDoubleConverter();
 
             public override double? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
@@ -585,7 +606,7 @@ namespace System.Text.Json.Converters.Common
 
         private sealed class InternalTextualDoubleReadOnlyConverter : JsonConverter<double>
         {
-            private readonly JsonConverter<double> _converter = new TextualNumberConverter.InternalTextualDoubleConverter();
+            private readonly JsonConverter<double> _converter = new Internal.TextualDoubleConverter();
 
             public override double Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
@@ -612,7 +633,7 @@ namespace System.Text.Json.Converters.Common
         #region Decimal
         private sealed class InternalTextualNullableDecimalReadOnlyConverter : JsonConverter<decimal?>
         {
-            private readonly JsonConverter<decimal?> _converter = new TextualNumberConverter.InternalTextualNullableDecimalConverter();
+            private readonly JsonConverter<decimal?> _converter = new Internal.TextualNullableDecimalConverter();
 
             public override decimal? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
@@ -640,7 +661,7 @@ namespace System.Text.Json.Converters.Common
 
         private sealed class InternalTextualDecimalReadOnlyConverter : JsonConverter<decimal>
         {
-            private readonly JsonConverter<decimal> _converter = new TextualNumberConverter.InternalTextualDecimalConverter();
+            private readonly JsonConverter<decimal> _converter = new Internal.TextualDecimalConverter();
 
             public override decimal Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

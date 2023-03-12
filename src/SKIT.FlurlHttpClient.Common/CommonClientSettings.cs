@@ -7,7 +7,7 @@ namespace SKIT.FlurlHttpClient
     using SKIT.FlurlHttpClient.Configuration.Internal;
 
     /// <summary>
-    /// SKIT.FlurlHttpClient 客户端配置项。
+    /// SKIT.FlurlHttpClient 通用客户端配置项。
     /// </summary>
     public sealed class CommonClientSettings
     {
