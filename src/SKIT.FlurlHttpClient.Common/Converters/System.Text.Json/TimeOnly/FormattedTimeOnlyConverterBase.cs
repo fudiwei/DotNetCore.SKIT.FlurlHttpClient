@@ -2,7 +2,7 @@
 using System.Globalization;
 using System.Text.Json.Serialization;
 
-namespace System.Text.Json.Converters.Common
+namespace System.Text.Json.Serialization.Common
 {
     public abstract partial class FormattedTimeOnlyConverterBase : JsonConverterFactory
     {

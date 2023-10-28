@@ -12,133 +12,133 @@ namespace SKIT.FlurlHttpClient.UnitTests.TestCases.JsonConverter
             [Newtonsoft.Json.JsonProperty(Order = 101)]
             [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.Common.StringifiedNumberListWithSemicolonSplitConverter))]
             [System.Text.Json.Serialization.JsonPropertyOrder(101)]
-            [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Converters.Common.StringifiedNumberListWithSemicolonSplitConverter))]
+            [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.Common.StringifiedNumberListWithSemicolonSplitConverter))]
             public IList<byte>? PropertyAsByte { get; set; }
 
             [Newtonsoft.Json.JsonProperty(Order = 102)]
             [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.Common.StringifiedNumberListWithSemicolonSplitConverter))]
             [System.Text.Json.Serialization.JsonPropertyOrder(102)]
-            [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Converters.Common.StringifiedNumberListWithSemicolonSplitConverter))]
+            [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.Common.StringifiedNumberListWithSemicolonSplitConverter))]
             public IList<sbyte>? PropertyAsSByte { get; set; }
 
             [Newtonsoft.Json.JsonProperty(Order = 103)]
             [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.Common.StringifiedNumberListWithSemicolonSplitConverter))]
             [System.Text.Json.Serialization.JsonPropertyOrder(103)]
-            [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Converters.Common.StringifiedNumberListWithSemicolonSplitConverter))]
+            [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.Common.StringifiedNumberListWithSemicolonSplitConverter))]
             public IList<short>? PropertyAsInt16 { get; set; }
 
             [Newtonsoft.Json.JsonProperty(Order = 104)]
             [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.Common.StringifiedNumberListWithSemicolonSplitConverter))]
             [System.Text.Json.Serialization.JsonPropertyOrder(104)]
-            [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Converters.Common.StringifiedNumberListWithSemicolonSplitConverter))]
+            [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.Common.StringifiedNumberListWithSemicolonSplitConverter))]
             public IList<ushort>? PropertyAsUInt16 { get; set; }
 
             [Newtonsoft.Json.JsonProperty(Order = 105)]
             [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.Common.StringifiedNumberListWithSemicolonSplitConverter))]
             [System.Text.Json.Serialization.JsonPropertyOrder(105)]
-            [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Converters.Common.StringifiedNumberListWithSemicolonSplitConverter))]
+            [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.Common.StringifiedNumberListWithSemicolonSplitConverter))]
             public IList<int>? PropertyAsInt32 { get; set; }
 
             [Newtonsoft.Json.JsonProperty(Order = 106)]
             [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.Common.StringifiedNumberListWithSemicolonSplitConverter))]
             [System.Text.Json.Serialization.JsonPropertyOrder(106)]
-            [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Converters.Common.StringifiedNumberListWithSemicolonSplitConverter))]
+            [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.Common.StringifiedNumberListWithSemicolonSplitConverter))]
             public IList<uint>? PropertyAsUInt32 { get; set; }
 
             [Newtonsoft.Json.JsonProperty(Order = 107)]
             [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.Common.StringifiedNumberListWithSemicolonSplitConverter))]
             [System.Text.Json.Serialization.JsonPropertyOrder(107)]
-            [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Converters.Common.StringifiedNumberListWithSemicolonSplitConverter))]
+            [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.Common.StringifiedNumberListWithSemicolonSplitConverter))]
             public IList<long>? PropertyAsInt64 { get; set; }
 
             [Newtonsoft.Json.JsonProperty(Order = 108)]
             [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.Common.StringifiedNumberListWithSemicolonSplitConverter))]
             [System.Text.Json.Serialization.JsonPropertyOrder(108)]
-            [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Converters.Common.StringifiedNumberListWithSemicolonSplitConverter))]
+            [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.Common.StringifiedNumberListWithSemicolonSplitConverter))]
             public IList<ulong>? PropertyAsUInt64 { get; set; }
 
             [Newtonsoft.Json.JsonProperty(Order = 109)]
             [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.Common.StringifiedNumberListWithSemicolonSplitConverter))]
             [System.Text.Json.Serialization.JsonPropertyOrder(109)]
-            [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Converters.Common.StringifiedNumberListWithSemicolonSplitConverter))]
+            [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.Common.StringifiedNumberListWithSemicolonSplitConverter))]
             public IList<float>? PropertyAsFloat { get; set; }
 
             [Newtonsoft.Json.JsonProperty(Order = 110)]
             [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.Common.StringifiedNumberListWithSemicolonSplitConverter))]
             [System.Text.Json.Serialization.JsonPropertyOrder(110)]
-            [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Converters.Common.StringifiedNumberListWithSemicolonSplitConverter))]
+            [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.Common.StringifiedNumberListWithSemicolonSplitConverter))]
             public IList<double>? PropertyAsDouble { get; set; }
 
             [Newtonsoft.Json.JsonProperty(Order = 111)]
             [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.Common.StringifiedNumberListWithSemicolonSplitConverter))]
             [System.Text.Json.Serialization.JsonPropertyOrder(111)]
-            [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Converters.Common.StringifiedNumberListWithSemicolonSplitConverter))]
+            [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.Common.StringifiedNumberListWithSemicolonSplitConverter))]
             public IList<decimal>? PropertyAsDecimal { get; set; }
 
             [Newtonsoft.Json.JsonProperty(Order = 201)]
             [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.Common.StringifiedNumberListWithSemicolonSplitConverter))]
             [System.Text.Json.Serialization.JsonPropertyOrder(201)]
-            [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Converters.Common.StringifiedNumberListWithSemicolonSplitConverter))]
+            [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.Common.StringifiedNumberListWithSemicolonSplitConverter))]
             public IList<byte?>? PropertyAsNullableByte { get; set; }
 
             [Newtonsoft.Json.JsonProperty(Order = 202)]
             [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.Common.StringifiedNumberListWithSemicolonSplitConverter))]
             [System.Text.Json.Serialization.JsonPropertyOrder(202)]
-            [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Converters.Common.StringifiedNumberListWithSemicolonSplitConverter))]
+            [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.Common.StringifiedNumberListWithSemicolonSplitConverter))]
             public IList<sbyte?>? PropertyAsNullableSByte { get; set; }
 
             [Newtonsoft.Json.JsonProperty(Order = 203)]
             [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.Common.StringifiedNumberListWithSemicolonSplitConverter))]
             [System.Text.Json.Serialization.JsonPropertyOrder(203)]
-            [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Converters.Common.StringifiedNumberListWithSemicolonSplitConverter))]
+            [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.Common.StringifiedNumberListWithSemicolonSplitConverter))]
             public IList<short?>? PropertyAsNullableInt16 { get; set; }
 
             [Newtonsoft.Json.JsonProperty(Order = 204)]
             [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.Common.StringifiedNumberListWithSemicolonSplitConverter))]
             [System.Text.Json.Serialization.JsonPropertyOrder(204)]
-            [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Converters.Common.StringifiedNumberListWithSemicolonSplitConverter))]
+            [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.Common.StringifiedNumberListWithSemicolonSplitConverter))]
             public IList<ushort?>? PropertyAsNullableUInt16 { get; set; }
 
             [Newtonsoft.Json.JsonProperty(Order = 205)]
             [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.Common.StringifiedNumberListWithSemicolonSplitConverter))]
             [System.Text.Json.Serialization.JsonPropertyOrder(205)]
-            [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Converters.Common.StringifiedNumberListWithSemicolonSplitConverter))]
+            [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.Common.StringifiedNumberListWithSemicolonSplitConverter))]
             public IList<int?>? PropertyAsNullableInt32 { get; set; }
 
             [Newtonsoft.Json.JsonProperty(Order = 206)]
             [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.Common.StringifiedNumberListWithSemicolonSplitConverter))]
             [System.Text.Json.Serialization.JsonPropertyOrder(206)]
-            [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Converters.Common.StringifiedNumberListWithSemicolonSplitConverter))]
+            [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.Common.StringifiedNumberListWithSemicolonSplitConverter))]
             public IList<uint?>? PropertyAsNullableUInt32 { get; set; }
 
             [Newtonsoft.Json.JsonProperty(Order = 207)]
             [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.Common.StringifiedNumberListWithSemicolonSplitConverter))]
             [System.Text.Json.Serialization.JsonPropertyOrder(207)]
-            [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Converters.Common.StringifiedNumberListWithSemicolonSplitConverter))]
+            [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.Common.StringifiedNumberListWithSemicolonSplitConverter))]
             public IList<long?>? PropertyAsNullableInt64 { get; set; }
 
             [Newtonsoft.Json.JsonProperty(Order = 208)]
             [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.Common.StringifiedNumberListWithSemicolonSplitConverter))]
             [System.Text.Json.Serialization.JsonPropertyOrder(208)]
-            [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Converters.Common.StringifiedNumberListWithSemicolonSplitConverter))]
+            [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.Common.StringifiedNumberListWithSemicolonSplitConverter))]
             public IList<ulong?>? PropertyAsNullableUInt64 { get; set; }
 
             [Newtonsoft.Json.JsonProperty(Order = 209)]
             [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.Common.StringifiedNumberListWithSemicolonSplitConverter))]
             [System.Text.Json.Serialization.JsonPropertyOrder(209)]
-            [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Converters.Common.StringifiedNumberListWithSemicolonSplitConverter))]
+            [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.Common.StringifiedNumberListWithSemicolonSplitConverter))]
             public IList<float?>? PropertyAsNullableFloat { get; set; }
 
             [Newtonsoft.Json.JsonProperty(Order = 210)]
             [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.Common.StringifiedNumberListWithSemicolonSplitConverter))]
             [System.Text.Json.Serialization.JsonPropertyOrder(210)]
-            [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Converters.Common.StringifiedNumberListWithSemicolonSplitConverter))]
+            [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.Common.StringifiedNumberListWithSemicolonSplitConverter))]
             public IList<double?>? PropertyAsNullableDouble { get; set; }
 
             [Newtonsoft.Json.JsonProperty(Order = 211)]
             [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.Common.StringifiedNumberListWithSemicolonSplitConverter))]
             [System.Text.Json.Serialization.JsonPropertyOrder(211)]
-            [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Converters.Common.StringifiedNumberListWithSemicolonSplitConverter))]
+            [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.Common.StringifiedNumberListWithSemicolonSplitConverter))]
             public IList<decimal?>? PropertyAsNullableDecimal { get; set; }
         }
 

@@ -12,13 +12,13 @@ namespace SKIT.FlurlHttpClient.UnitTests.TestCases.JsonConverter
             [Newtonsoft.Json.JsonProperty(nameof(PlainObject), Order = 1)]
             [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.Common.StringifiedObjectInJsonFormatConverter))]
             [System.Text.Json.Serialization.JsonPropertyOrder(1)]
-            [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Converters.Common.StringifiedObjectInJsonFormatConverter))]
+            [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.Common.StringifiedObjectInJsonFormatConverter))]
             public MockNestedObject? PlainObject { get; set; }
 
             [Newtonsoft.Json.JsonProperty(nameof(CollectionObject), Order = 2)]
             [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.Common.StringifiedObjectInJsonFormatConverter))]
             [System.Text.Json.Serialization.JsonPropertyOrder(2)]
-            [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Converters.Common.StringifiedObjectInJsonFormatConverter))]
+            [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.Common.StringifiedObjectInJsonFormatConverter))]
             public IList<string>? CollectionObject { get; set; }
         }
 
@@ -31,7 +31,7 @@ namespace SKIT.FlurlHttpClient.UnitTests.TestCases.JsonConverter
             [Newtonsoft.Json.JsonProperty(nameof(BooleanPropertyWithConverter), Order = 1)]
             [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.Common.NumericalBooleanConverter))]
             [System.Text.Json.Serialization.JsonPropertyOrder(1)]
-            [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Converters.Common.NumericalBooleanConverter))]
+            [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.Common.NumericalBooleanConverter))]
             public bool BooleanPropertyWithConverter { get; set; }
         }
 

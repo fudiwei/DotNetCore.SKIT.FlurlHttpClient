@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Threading;
 using Flurl.Http;
 
 namespace SKIT.FlurlHttpClient.Configuration

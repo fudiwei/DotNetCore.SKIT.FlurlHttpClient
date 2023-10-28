@@ -1,9 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text.Json.Serialization;
 
-namespace System.Text.Json.Converters.Common
+namespace System.Text.Json.Serialization.Common
 {
     using SKIT.FlurlHttpClient.Converters.Internal;
 

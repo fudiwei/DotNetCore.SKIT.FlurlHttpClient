@@ -1,6 +1,4 @@
-using System.Text.Json.Serialization;
-
-namespace System.Text.Json.Converters.Common
+namespace System.Text.Json.Serialization.Common
 {
     /// <summary>
     /// 一个 JSON 转换器，可针对指定适配类型做如下形式的对象转换。
@@ -23,16 +21,11 @@ namespace System.Text.Json.Converters.Common
             }
             else if (reader.TokenType == JsonTokenType.Number)
             {
-                if (reader.TryGetInt64(out long valueAsInt64))
-                    return valueAsInt64.ToString();
-                else if (reader.TryGetUInt64(out ulong valueAsUInt64))
-                    return valueAsUInt64.ToString();
-                else if (reader.TryGetDecimal(out decimal valueAsDecimal))
-                    return valueAsDecimal.ToString();
-                else if (reader.TryGetDouble(out double valueAsDouble))
-                    return valueAsDouble.ToString();
-                else
-                    return reader.GetDecimal().ToString();
+                return reader.TryGetInt32(out int valueAsInt32) ? valueAsInt32.ToString() :
+                       reader.TryGetInt64(out long valueAsInt64) ? valueAsInt64.ToString() :
+                       reader.TryGetUInt64(out ulong valueAsUInt64) ? valueAsUInt64.ToString() :
+                       reader.TryGetDouble(out double valueAsDouble) ? valueAsDouble.ToString() :
+                       reader.GetDecimal().ToString();
             }
             else if (reader.TokenType == JsonTokenType.String)
             {
