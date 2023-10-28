@@ -10,7 +10,7 @@ namespace SKIT.FlurlHttpClient.UnitTests.TestCases.JsonConverter
         private sealed class MockObject
         {
             [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.Common.StringifiedStringListWithPipeSplitConverter))]
-            [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Converters.Common.StringifiedStringListWithPipeSplitConverter))]
+            [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.Common.StringifiedStringListWithPipeSplitConverter))]
             public IList<string>? Property { get; set; }
         }
 

@@ -9,7 +9,7 @@ namespace SKIT.FlurlHttpClient.UnitTests.TestCases.JsonConverter
         private sealed class MockObject
         {
             [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.Common.NumericalStringReadOnlyConverter))]
-            [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Converters.Common.NumericalStringReadOnlyConverter))]
+            [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.Common.NumericalStringReadOnlyConverter))]
             public string? Property { get; set; }
         }
 

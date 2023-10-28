@@ -10,34 +10,34 @@ namespace SKIT.FlurlHttpClient.UnitTests.TestCases.JsonConverter
     {
         private sealed class MockObject
         {
-            [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Converters.Common.DynamicObjectConverter))]
+            [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.Common.DynamicObjectConverter))]
             public dynamic? NullProperty { get; set; }
 
-            [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Converters.Common.DynamicObjectConverter))]
+            [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.Common.DynamicObjectConverter))]
             public dynamic? BooleanProperty { get; set; }
 
-            [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Converters.Common.DynamicObjectConverter))]
+            [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.Common.DynamicObjectConverter))]
             public dynamic? NumberProperty { get; set; }
 
-            [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Converters.Common.DynamicObjectConverter))]
+            [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.Common.DynamicObjectConverter))]
             public dynamic? StringProperty { get; set; }
 
-            [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Converters.Common.DynamicObjectConverter))]
+            [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.Common.DynamicObjectConverter))]
             public dynamic? GuidProperty { get; set; }
 
-            [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Converters.Common.DynamicObjectConverter))]
+            [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.Common.DynamicObjectConverter))]
             public dynamic? ArrayProperty { get; set; }
 
-            [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Converters.Common.DynamicObjectConverter))]
+            [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.Common.DynamicObjectConverter))]
             public dynamic? ListProperty { get; set; }
 
-            [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Converters.Common.DynamicObjectConverter))]
+            [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.Common.DynamicObjectConverter))]
             public dynamic? DictionaryProperty { get; set; }
 
-            [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Converters.Common.DynamicObjectConverter))]
+            [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.Common.DynamicObjectConverter))]
             public dynamic? AnonymousObjectProperty { get; set; }
 
-            [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Converters.Common.DynamicObjectConverter))]
+            [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.Common.DynamicObjectConverter))]
             public dynamic? ObjectWithCustomConverterProperty { get; set; }
         }
 
@@ -50,7 +50,7 @@ namespace SKIT.FlurlHttpClient.UnitTests.TestCases.JsonConverter
             [Newtonsoft.Json.JsonProperty(nameof(BooleanPropertyWithConverter), Order = 1)]
             [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.Common.NumericalBooleanConverter))]
             [System.Text.Json.Serialization.JsonPropertyOrder(1)]
-            [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Converters.Common.NumericalBooleanConverter))]
+            [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.Common.NumericalBooleanConverter))]
             public bool BooleanPropertyWithConverter { get; set; }
         }
 

@@ -1,6 +1,4 @@
-using System.Text.Json.Serialization;
-
-namespace System.Text.Json.Converters.Common
+namespace System.Text.Json.Serialization.Common
 {
     /// <summary>
     /// 一个 JSON 转换器，可针对指定适配类型做如下形式的对象转换。与 <seealso cref="NumericalBooleanConverter"/> 类似，但转换过程是单向只读的。

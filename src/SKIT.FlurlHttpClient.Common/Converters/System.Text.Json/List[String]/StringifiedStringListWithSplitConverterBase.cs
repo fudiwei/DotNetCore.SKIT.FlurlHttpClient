@@ -1,8 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.Json.Serialization;
 
-namespace System.Text.Json.Converters.Common
+namespace System.Text.Json.Serialization.Common
 {
     public abstract partial class StringifiedStringListWithSplitConverterBase : JsonConverterFactory
     {

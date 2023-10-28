@@ -13,13 +13,13 @@ namespace SKIT.FlurlHttpClient.UnitTests.TestCases.Configuration
             [Newtonsoft.Json.JsonProperty(Order = 1)]
             [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.Common.StringifiedStringArrayWithCommaSplitConverter))]
             [System.Text.Json.Serialization.JsonPropertyOrder(1)]
-            [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Converters.Common.StringifiedStringArrayWithCommaSplitConverter))]
+            [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.Common.StringifiedStringArrayWithCommaSplitConverter))]
             public string[]? PropertyAsStringArray { get; set; }
 
             [Newtonsoft.Json.JsonProperty(Order = 2)]
             [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.Common.BasicDateTimeOffsetConverter))]
             [System.Text.Json.Serialization.JsonPropertyOrder(2)]
-            [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Converters.Common.BasicDateTimeOffsetConverter))]
+            [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.Common.BasicDateTimeOffsetConverter))]
             public DateTimeOffset PropertyAsDateTimeOffset { get; set; }
         }
 

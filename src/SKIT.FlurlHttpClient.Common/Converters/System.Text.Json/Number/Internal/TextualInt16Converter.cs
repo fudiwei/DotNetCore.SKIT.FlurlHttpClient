@@ -1,6 +1,4 @@
-using System.Text.Json.Serialization;
-
-namespace System.Text.Json.Converters.Common.Internal
+namespace System.Text.Json.Serialization.Common.Internal
 {
     internal sealed class TextualNullableInt16Converter : JsonConverter<short?>
     {

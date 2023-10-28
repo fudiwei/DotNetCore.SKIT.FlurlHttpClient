@@ -2,9 +2,8 @@ using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
 using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
 
-namespace System.Text.Json.Converters.Common
+namespace System.Text.Json.Serialization.Common
 {
     /// <summary>
     /// 一个 JSON 转换器，可针对指定适配类型做如下形式的对象转换。
@@ -61,7 +60,7 @@ namespace System.Text.Json.Converters.Common
                 WriteValue(ref writer, value, options);
             }
 
-            private object? ReadValue(ref Utf8JsonReader reader, JsonSerializerOptions options)
+            private static object? ReadValue(ref Utf8JsonReader reader, JsonSerializerOptions options)
             {
                 switch (reader.TokenType)
                 {
@@ -75,8 +74,10 @@ namespace System.Text.Json.Converters.Common
                         return false;
 
                     case JsonTokenType.Number:
-                        return reader.TryGetInt64(out long valueAsInt64) ? valueAsInt64 :
+                        return reader.TryGetInt32(out int valueAsInt32) ? valueAsInt32 :
+                               reader.TryGetInt64(out long valueAsInt64) ? valueAsInt64 :
                                reader.TryGetUInt64(out ulong valueAsUInt64) ? valueAsUInt64 :
+                               reader.TryGetDouble(out double valueAsDouble) ? valueAsDouble :
                                reader.GetDecimal();
 
                     case JsonTokenType.String:
@@ -100,7 +101,7 @@ namespace System.Text.Json.Converters.Common
                 }
             }
 
-            private object? ReadObject(ref Utf8JsonReader reader, JsonSerializerOptions options)
+            private static object? ReadObject(ref Utf8JsonReader reader, JsonSerializerOptions options)
             {
                 IDictionary<string, object?> expandoObject = new ExpandoObject();
 
@@ -136,7 +137,7 @@ namespace System.Text.Json.Converters.Common
                 throw new JsonException("Unexpected end when reading ExpandoObject.");
             }
 
-            private object? ReadArray(ref Utf8JsonReader reader, JsonSerializerOptions options)
+            private static object? ReadArray(ref Utf8JsonReader reader, JsonSerializerOptions options)
             {
                 IList<object?> list = new List<object?>();
 
@@ -166,7 +167,7 @@ namespace System.Text.Json.Converters.Common
                 throw new JsonException("Unexpected end when reading ExpandoObject.");
             }
 
-            private void WriteValue(ref Utf8JsonWriter writer, object? value, JsonSerializerOptions options)
+            private static void WriteValue(ref Utf8JsonWriter writer, object? value, JsonSerializerOptions options)
             {
                 if (value is null || Convert.IsDBNull(value))
                 {
