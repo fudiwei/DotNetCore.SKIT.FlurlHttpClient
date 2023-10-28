@@ -54,7 +54,7 @@ namespace SKIT.FlurlHttpClient
         {
             Interceptors = new HttpInterceptorCollection();
             FlurlClient = new FlurlClient();
-            FlurlClient.Configure(flurlSettings =>
+            FlurlClient.WithSettings(flurlSettings =>
             {
                 IJsonSerializer jsonSerializer = new SystemTextJsonSerializer();
                 IFormUrlEncodedSerializer formUrlEncodedSerializer = new JsonifiedFormUrlEncodedSerializer(jsonSerializer);
@@ -126,15 +126,16 @@ namespace SKIT.FlurlHttpClient
         {
             if (configure == null) throw new ArgumentNullException(nameof(configure));
 
-            FlurlClient.Configure(flurlClientSettings =>
+            FlurlClient.WithSettings(flurlSettings =>
             {
-                CommonClientSettings settings = new CommonClientSettings(flurlClientSettings);
+                CommonClientSettings settings = new CommonClientSettings(flurlSettings);
                 configure.Invoke(settings);
 
-                flurlClientSettings.Timeout = settings.Timeout;
-                flurlClientSettings.JsonSerializer = new InternalWrappedJsonSerializer(settings.JsonSerializer);
-                flurlClientSettings.UrlEncodedSerializer = new InternalWrappedFormUrlEncodedSerializer(settings.FormUrlEncodedSerializer);
-                flurlClientSettings.HttpClientFactory = settings.FlurlHttpClientFactory;
+                flurlSettings.Timeout = settings.Timeout;
+                flurlSettings.HttpVersion = settings.HttpVersion.ToString();
+                flurlSettings.JsonSerializer = new InternalWrappedJsonSerializer(settings.JsonSerializer);
+                flurlSettings.UrlEncodedSerializer = new InternalWrappedFormUrlEncodedSerializer(settings.FormUrlEncodedSerializer);
+                flurlSettings.HttpClientFactory = settings.FlurlHttpClientFactory;
             });
         }
 
@@ -350,8 +351,8 @@ namespace SKIT.FlurlHttpClient
             if (flurlResponse == null) throw new ArgumentNullException(nameof(flurlResponse));
 
             TResponse tmp = await WrapFlurlResponseAsync<TResponse>(flurlResponse, cancellationToken);
-            byte tb1 = byte.MinValue,
-                 tb2 = byte.MinValue;
+            byte tb1 = default(byte),
+                 tb2 = default(byte);
             for (long i = 0; i < tmp.RawBytes.LongLength; i++)
             {
                 tb1 = tmp.RawBytes[i];
