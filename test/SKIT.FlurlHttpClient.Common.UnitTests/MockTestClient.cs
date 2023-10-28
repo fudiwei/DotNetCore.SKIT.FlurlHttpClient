@@ -14,7 +14,7 @@ namespace SKIT.FlurlHttpClient
             FlurlClient.BaseUrl = "http://localhost:5050/";
         }
 
-        public IFlurlRequest BuildFlurlRequest(MockTestRequest request, HttpMethod method, params object[] urlSegments)
+        public IFlurlRequest CreateFlurlRequest(MockTestRequest request, HttpMethod method, params object[] urlSegments)
         {
             return base.CreateFlurlRequest(request, method, urlSegments);
         }

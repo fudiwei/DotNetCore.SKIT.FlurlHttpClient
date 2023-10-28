@@ -13,6 +13,7 @@ namespace SKIT.FlurlHttpClient
     using SKIT.FlurlHttpClient.Configuration.Internal;
     using SKIT.FlurlHttpClient.Constants;
     using SKIT.FlurlHttpClient.Exceptions;
+    using SKIT.FlurlHttpClient.Utilities.Internal;
 
     /// <summary>
     /// SKIT.FlurlHttpClient 通用客户端基类。
@@ -321,21 +322,11 @@ namespace SKIT.FlurlHttpClient
         {
             if (flurlResponse == null) throw new ArgumentNullException(nameof(flurlResponse));
 
-            Task<byte[]> task = flurlResponse.GetBytesAsync();
-            Task taskWithCt = await Task.WhenAny(task, Task.Delay(Timeout.Infinite, cancellationToken));
-            if (taskWithCt == task)
-            {
-                TResponse result = new TResponse();
-                result.RawStatus = flurlResponse.StatusCode;
-                result.RawHeaders = new HttpHeaderCollection(flurlResponse.Headers);
-                result.RawBytes = await task;
-                return result;
-            }
-            else
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-                throw new OperationCanceledException("Infinite delay task completed.");
-            }
+            TResponse result = new TResponse();
+            result.RawStatus = flurlResponse.StatusCode;
+            result.RawHeaders = new HttpHeaderCollection(flurlResponse.Headers);
+            result.RawBytes = await AsyncUtility.RunTaskWithCancellationTokenAsync(flurlResponse.GetBytesAsync(), cancellationToken);
+            return result;
         }
 
         /// <summary>
@@ -350,24 +341,10 @@ namespace SKIT.FlurlHttpClient
         {
             if (flurlResponse == null) throw new ArgumentNullException(nameof(flurlResponse));
 
-            TResponse tmp = await WrapFlurlResponseAsync<TResponse>(flurlResponse, cancellationToken);
-            byte tb1 = default(byte),
-                 tb2 = default(byte);
-            for (long i = 0; i < tmp.RawBytes.LongLength; i++)
-            {
-                tb1 = tmp.RawBytes[i];
-                if (tb1 > 32)
-                    break;
-            }
-            for (long i = tmp.RawBytes.LongLength - 1; i >= 0; i--)
-            {
-                tb2 = tmp.RawBytes[i];
-                if (tb2 > 32)
-                    break;
-            }
-
             TResponse result;
-            if ((tb1 == 91 && tb2 == 93) || (tb1 == 123 && tb2 == 125)) // "[...]" or "{...}"
+
+            TResponse tmp = await WrapFlurlResponseAsync<TResponse>(flurlResponse, cancellationToken);
+            if (FormatUtility.MaybeJson(tmp.RawBytes))
             {
                 try
                 {

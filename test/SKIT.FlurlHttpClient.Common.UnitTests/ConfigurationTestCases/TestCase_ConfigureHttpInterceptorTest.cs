@@ -55,7 +55,7 @@ namespace SKIT.FlurlHttpClient.UnitTests.TestCases.Configuration
             client.Interceptors.Add(new MockInterceptor2());
             Assert.IsNotNull(client.Interceptors);
 
-            IFlurlRequest flurlRequest = client.BuildFlurlRequest(new MockTestRequest(), HttpMethod.Post, "mock_url");
+            IFlurlRequest flurlRequest = client.CreateFlurlRequest(new MockTestRequest(), HttpMethod.Post, "mock_url");
             var response = await client.SendFlurlRequestAsJsonAsync<MockTestResponse>(flurlRequest);
             Assert.IsTrue(response.IsSuccessful());
             Assert.NotNull(response.RawStatus);
