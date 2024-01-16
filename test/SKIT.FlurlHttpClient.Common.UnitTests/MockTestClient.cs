@@ -9,7 +9,11 @@ namespace SKIT.FlurlHttpClient
     public class MockTestClient : CommonClientBase
     {
         public MockTestClient()
-            : base()
+#if NETFRAMEWORK
+            : base(new HttpClient(new MockTestHttpMessageHandler(new HttpClientHandler())))
+#else
+            : base(new HttpClient(new MockTestHttpMessageHandler(new SocketsHttpHandler())))
+#endif
         {
             FlurlClient.BaseUrl = "http://localhost:5050/";
         }

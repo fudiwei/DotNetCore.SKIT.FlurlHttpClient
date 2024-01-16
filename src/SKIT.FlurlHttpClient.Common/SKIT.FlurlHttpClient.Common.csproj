@@ -41,8 +41,8 @@
 	</ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Flurl" Version="4.0.0-pre4" />
-        <PackageReference Include="Flurl.Http" Version="4.0.0-pre5" />
+        <PackageReference Include="Flurl" Version="4.0.0" />
+        <PackageReference Include="Flurl.Http" Version="4.0.1" />
         <PackageReference Include="Microsoft.CSharp" Version="4.7.0" Condition="'$(TargetFramework)' == 'netstandard2.0'" />
         <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
         <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
