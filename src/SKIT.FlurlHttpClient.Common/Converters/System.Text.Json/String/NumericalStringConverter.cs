@@ -45,14 +45,16 @@ namespace System.Text.Json.Serialization.Common
             {
                 if (string.IsNullOrEmpty(value))
                     writer.WriteStringValue(value);
+                else if (int.TryParse(value, out int valueAsInt32))
+                    writer.WriteNumberValue(valueAsInt32);
                 else if (long.TryParse(value, out long valueAsInt64))
                     writer.WriteNumberValue(valueAsInt64);
                 else if (ulong.TryParse(value, out ulong valueAsUInt64))
                     writer.WriteNumberValue(valueAsUInt64);
-                else if (decimal.TryParse(value, out decimal valueAsDecimal))
-                    writer.WriteNumberValue(valueAsDecimal);
                 else if (double.TryParse(value, out double valueAsDouble))
                     writer.WriteNumberValue(valueAsDouble);
+                else if (decimal.TryParse(value, out decimal valueAsDecimal))
+                    writer.WriteNumberValue(valueAsDecimal);
                 else
                     throw new JsonException($"Could not parse String '{value}' to Number.");
             }

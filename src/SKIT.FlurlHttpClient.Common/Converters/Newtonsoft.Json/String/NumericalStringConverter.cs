@@ -84,14 +84,16 @@ namespace Newtonsoft.Json.Converters.Common
             {
                 if (string.IsNullOrEmpty(value))
                     writer.WriteValue(value);
+                else if (int.TryParse(value, out int valueAsInt32))
+                    writer.WriteValue(valueAsInt32);
                 else if (long.TryParse(value, out long valueAsInt64))
                     writer.WriteValue(valueAsInt64);
                 else if (ulong.TryParse(value, out ulong valueAsUInt64))
                     writer.WriteValue(valueAsUInt64);
-                else if (decimal.TryParse(value, out decimal valueAsDecimal))
-                    writer.WriteValue(valueAsDecimal);
                 else if (double.TryParse(value, out double valueAsDouble))
                     writer.WriteValue(valueAsDouble);
+                else if (decimal.TryParse(value, out decimal valueAsDecimal))
+                    writer.WriteValue(valueAsDecimal);
                 else
                     throw new JsonSerializationException($"Could not parse String '{value}' to Number.");
             }
