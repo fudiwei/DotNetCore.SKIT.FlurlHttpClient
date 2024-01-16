@@ -164,9 +164,9 @@ namespace SKIT.FlurlHttpClient
 
             IFlurlRequest flurlRequest = FlurlClient.Request(urlSegments).WithVerb(method);
 
-            if (request.Timeout != null)
+            if (request._InternalTimeout != null)
             {
-                flurlRequest.WithTimeout(request.Timeout.Value);
+                flurlRequest.WithTimeout(request._InternalTimeout.Value);
             }
 
             return flurlRequest;
@@ -337,9 +337,9 @@ namespace SKIT.FlurlHttpClient
             if (flurlResponse == null) throw new ArgumentNullException(nameof(flurlResponse));
 
             TResponse result = new TResponse();
-            result.RawStatus = flurlResponse.StatusCode;
-            result.RawHeaders = new HttpHeaderCollection(flurlResponse.Headers);
-            result.RawBytes = await AsyncUtility.RunTaskWithCancellationTokenAsync(flurlResponse.GetBytesAsync(), cancellationToken);
+            result._InternalRawStatus = flurlResponse.StatusCode;
+            result._InternalRawHeaders = new HttpHeaderCollection(flurlResponse.Headers);
+            result._InternalRawBytes = await AsyncUtility.RunTaskWithCancellationTokenAsync(flurlResponse.GetBytesAsync(), cancellationToken);
             return result;
         }
 
@@ -358,18 +358,18 @@ namespace SKIT.FlurlHttpClient
             TResponse result;
 
             TResponse tmp = await WrapFlurlResponseAsync<TResponse>(flurlResponse, cancellationToken);
-            if (FormatUtility.MaybeJson(tmp.RawBytes))
+            if (FormatUtility.MaybeJson(tmp._InternalRawBytes))
             {
                 try
                 {
                     string? contentType = flurlResponse.Headers.GetAll(HttpHeaders.ContentType).FirstOrDefault();
                     string? charset = MediaTypeHeaderValue.TryParse(contentType, out MediaTypeHeaderValue? mediaType) ? mediaType.CharSet : null;
-                    string json = (string.IsNullOrEmpty(charset) ? Encoding.UTF8 : Encoding.GetEncoding(charset)).GetString(tmp.RawBytes);
+                    string json = (string.IsNullOrEmpty(charset) ? Encoding.UTF8 : Encoding.GetEncoding(charset)).GetString(tmp._InternalRawBytes);
 
                     result = JsonSerializer.Deserialize<TResponse>(json);
-                    result.RawStatus = tmp.RawStatus;
-                    result.RawHeaders = tmp.RawHeaders;
-                    result.RawBytes = tmp.RawBytes;
+                    result._InternalRawStatus = tmp._InternalRawStatus;
+                    result._InternalRawHeaders = tmp._InternalRawHeaders;
+                    result._InternalRawBytes = tmp._InternalRawBytes;
                 }
                 catch (Exception ex)
                 {

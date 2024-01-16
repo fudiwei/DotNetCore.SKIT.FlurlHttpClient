@@ -11,24 +11,39 @@ namespace SKIT.FlurlHttpClient
     {
         internal protected CommonResponseBase()
         {
-            RawHeaders = HttpHeaderCollection.Empty;
-            RawBytes = Array.Empty<byte>();
+            _InternalRawHeaders = HttpHeaderCollection.Empty;
+            _InternalRawBytes = Array.Empty<byte>();
+        }
+
+        [Newtonsoft.Json.JsonIgnore]
+        [System.Text.Json.Serialization.JsonIgnore]
+        internal int _InternalRawStatus;
+
+        [Newtonsoft.Json.JsonIgnore]
+        [System.Text.Json.Serialization.JsonIgnore]
+        internal HttpHeaderCollection _InternalRawHeaders;
+
+        [Newtonsoft.Json.JsonIgnore]
+        [System.Text.Json.Serialization.JsonIgnore]
+        internal byte[] _InternalRawBytes;
+
+        /// <inheritdoc/>
+        public int GetRawStatus()
+        {
+            return _InternalRawStatus;
         }
 
         /// <inheritdoc/>
-        [Newtonsoft.Json.JsonIgnore]
-        [System.Text.Json.Serialization.JsonIgnore]
-        public int RawStatus { get; internal set; }
+        public HttpHeaderCollection GetRawHeaders()
+        {
+            return _InternalRawHeaders;
+        }
 
         /// <inheritdoc/>
-        [Newtonsoft.Json.JsonIgnore]
-        [System.Text.Json.Serialization.JsonIgnore]
-        public HttpHeaderCollection RawHeaders { get; internal set; }
-
-        /// <inheritdoc/>
-        [Newtonsoft.Json.JsonIgnore]
-        [System.Text.Json.Serialization.JsonIgnore]
-        public byte[] RawBytes { get; internal set; }
+        public byte[] GetRawBytes()
+        {
+            return _InternalRawBytes;
+        }
 
         /// <inheritdoc/>
         public abstract bool IsSuccessful();
