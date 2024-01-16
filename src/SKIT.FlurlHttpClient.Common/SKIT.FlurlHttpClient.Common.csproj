@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFrameworks>net462; netstandard2.0; net6.0</TargetFrameworks>
+        <TargetFrameworks>net462; netstandard2.0; net6.0; net8.0</TargetFrameworks>
         <LangVersion>10.0</LangVersion>
         <Nullable>enable</Nullable>
         <NullableReferenceTypes>true</NullableReferenceTypes>
@@ -10,8 +10,8 @@
 
     <PropertyGroup>
         <PackageId>SKIT.FlurlHttpClient.Common</PackageId>
-		<PackageIcon>LOGO.png</PackageIcon>
-		<PackageReadmeFile>README.md</PackageReadmeFile>
+        <PackageIcon>LOGO.png</PackageIcon>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <PackageProjectUrl>https://github.com/fudiwei/DotNetCore.SKIT.FlurlHttpClient</PackageProjectUrl>
         <PackageTags>Flurl.Http</PackageTags>
@@ -22,32 +22,32 @@
         <RepositoryUrl>https://github.com/fudiwei/DotNetCore.SKIT.FlurlHttpClient.git</RepositoryUrl>
     </PropertyGroup>
 
-	<PropertyGroup Condition="'$(Configuration)' == 'Release'">
-		<ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
-		<Deterministic>true</Deterministic>
-		<EmbedUntrackedSources>true</EmbedUntrackedSources>
-		<GenerateDocumentationFile>true</GenerateDocumentationFile>
-		<IncludeSymbols>true</IncludeSymbols>
-		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
-	</PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+        <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+        <Deterministic>true</Deterministic>
+        <EmbedUntrackedSources>true</EmbedUntrackedSources>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <IncludeSymbols>true</IncludeSymbols>
+        <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    </PropertyGroup>
 
     <ItemGroup>
         <None Include="../../LOGO.png" Pack="true" PackagePath="/" />
         <None Include="README.md" Pack="true" PackagePath="/" />
     </ItemGroup>
 
-	<ItemGroup>
-		<Reference Include="Microsoft.CSharp" Condition="'$(TargetFramework)' == 'net462'" />
-	</ItemGroup>
+    <ItemGroup>
+        <Reference Include="Microsoft.CSharp" Condition="'$(TargetFramework)' == 'net462'" />
+    </ItemGroup>
 
     <ItemGroup>
         <PackageReference Include="Flurl" Version="4.0.0" />
         <PackageReference Include="Flurl.Http" Version="4.0.1" />
         <PackageReference Include="Microsoft.CSharp" Version="4.7.0" Condition="'$(TargetFramework)' == 'netstandard2.0'" />
-        <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
+        <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All" />
         <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-        <PackageReference Include="System.Text.Encodings.Web" Version="7.0.0" />
-        <PackageReference Include="System.Text.Json" Version="7.0.2" />
+        <PackageReference Include="System.Text.Encodings.Web" Version="8.0.0" />
+        <PackageReference Include="System.Text.Json" Version="8.0.1" />
     </ItemGroup>
 
 </Project>

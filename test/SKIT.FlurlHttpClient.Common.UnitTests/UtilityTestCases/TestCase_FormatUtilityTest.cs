@@ -49,17 +49,11 @@ namespace SKIT.FlurlHttpClient.UnitTests.TestCases.Utility
         public void TestFormatUtility_MaybeXml()
         {
             Assert.True(FormatUtility.MaybeXml("<xml></xml>"));
-            Assert.True(FormatUtility.MaybeXml("<xml></xml>"));
             Assert.True(FormatUtility.MaybeXml(" <xml> </xml> "));
-            Assert.True(FormatUtility.MaybeXml(" <xml> </xml> "));
-            Assert.True(FormatUtility.MaybeXml("\r\n<xml>\t</xml>\r\n"));
             Assert.True(FormatUtility.MaybeXml("\r\n<xml>\t</xml>\r\n"));
 
             Assert.True(FormatUtility.MaybeXml(Encoding.UTF8.GetBytes("<xml></xml>")));
-            Assert.True(FormatUtility.MaybeXml(Encoding.UTF8.GetBytes("<xml></xml>")));
             Assert.True(FormatUtility.MaybeXml(Encoding.UTF8.GetBytes(" <xml> </xml> ")));
-            Assert.True(FormatUtility.MaybeXml(Encoding.UTF8.GetBytes(" <xml> </xml> ")));
-            Assert.True(FormatUtility.MaybeXml(Encoding.UTF8.GetBytes("\r\n<xml>\t</xml>\r\n")));
             Assert.True(FormatUtility.MaybeXml(Encoding.UTF8.GetBytes("\r\n<xml>\t</xml>\r\n")));
 
             Assert.False(FormatUtility.MaybeXml(default(string)!));

@@ -1,17 +1,24 @@
+using System;
+
 namespace SKIT.FlurlHttpClient.Utilities.Internal
 {
     public static class FormatUtility
     {
         public static bool MaybeJson(string value)
         {
-            if (string.IsNullOrEmpty(value)) return false;
+            if (value == null) return false;
 
-            string str = value.Trim();
-            return (str.StartsWith("[") && str.EndsWith("]"))
-                || (str.StartsWith("{") && str.EndsWith("}"));
+            return MaybeJson(value.AsSpan());
         }
 
         public static bool MaybeJson(byte[] value)
+        {
+            if (value == null) return false;
+
+            return MaybeJson(value.AsSpan());
+        }
+
+        public static bool MaybeJson(ReadOnlySpan<byte> value)
         {
             if (value == null || value.Length == 0) return false;
 
@@ -23,7 +30,7 @@ namespace SKIT.FlurlHttpClient.Utilities.Internal
 
             byte bs = default, be = default;
 
-            for (long i = 0; i < value.LongLength; i++)
+            for (int i = 0; i < value.Length; i++)
             {
                 bs = value[i];
                 if (bs > B_SPACE)
@@ -33,7 +40,40 @@ namespace SKIT.FlurlHttpClient.Utilities.Internal
             if (bs != B_BRACE_L && bs != B_BRACKET_L)
                 return false;
 
-            for (long i = value.LongLength - 1; i >= 0; i--)
+            for (int i = value.Length - 1; i >= 0; i--)
+            {
+                be = value[i];
+                if (be > B_SPACE)
+                    break;
+            }
+
+            return (bs == B_BRACE_L && be == B_BRACE_R)
+                || (bs == B_BRACKET_L && be == B_BRACKET_R);
+        }
+
+        public static bool MaybeJson(ReadOnlySpan<char> value)
+        {
+            if (value == null || value.Length == 0) return false;
+
+            const char B_SPACE = ' ';
+            const char B_BRACE_L = '[';
+            const char B_BRACE_R = ']';
+            const char B_BRACKET_L = '{';
+            const char B_BRACKET_R = '}';
+
+            char bs = default, be = default;
+
+            for (int i = 0; i < value.Length; i++)
+            {
+                bs = value[i];
+                if (bs > B_SPACE)
+                    break;
+            }
+
+            if (bs != B_BRACE_L && bs != B_BRACKET_L)
+                return false;
+
+            for (int i = value.Length - 1; i >= 0; i--)
             {
                 be = value[i];
                 if (be > B_SPACE)
@@ -46,43 +86,94 @@ namespace SKIT.FlurlHttpClient.Utilities.Internal
 
         public static bool MaybeXml(string value)
         {
-            if (string.IsNullOrEmpty(value)) return false;
+            if (value == null) return false;
 
-            const int MIN_XML_LENGTH = 4;
-
-            string str = value.Trim();
-            return (str.StartsWith("<") && str.EndsWith(">") && str.Length >= MIN_XML_LENGTH);
+            return MaybeXml(value.AsSpan());
         }
 
         public static bool MaybeXml(byte[] value)
+        {
+            if (value == null) return false;
+
+            return MaybeXml(value.AsSpan());
+        }
+
+        public static bool MaybeXml(ReadOnlySpan<byte> value)
         {
             if (value == null || value.Length == 0) return false;
 
             const byte B_SPACE = 0x20;
             const byte B_ANGLEDBRACKET_L = 0x3c; // '<'
             const byte B_ANGLEDBRACKET_R = 0x3e; // '>'
+
             const int MIN_XML_LENGTH = 4;
 
             byte bs = default, be = default;
+            int ns = default, ne = default;
 
-            for (long i = 0; i < value.LongLength; i++)
+            for (int i = 0; i < value.Length; i++)
             {
                 bs = value[i];
                 if (bs > B_SPACE)
+                {
+                    ns = i;
                     break;
+                }
             }
 
             if (bs != B_ANGLEDBRACKET_L)
                 return false;
 
-            for (long i = value.LongLength - 1; i >= 0; i--)
+            for (int i = value.Length - 1; i >= 0; i--)
             {
                 be = value[i];
                 if (be > B_SPACE)
+                {
+                    ne = i;
                     break;
+                }
             }
 
-            return (bs == B_ANGLEDBRACKET_L && be == B_ANGLEDBRACKET_R && value.Length >= MIN_XML_LENGTH);
+            return (bs == B_ANGLEDBRACKET_L && be == B_ANGLEDBRACKET_R && (ne - ns + 1) >= MIN_XML_LENGTH);
+        }
+
+        public static bool MaybeXml(ReadOnlySpan<char> value)
+        {
+            if (value == null || value.Length == 0) return false;
+
+            const char B_SPACE = ' ';
+            const char B_ANGLEDBRACKET_L = '<';
+            const char B_ANGLEDBRACKET_R = '>';
+
+            const int MIN_XML_LENGTH = 4;
+
+            char bs = default, be = default;
+            int ns = default, ne = default;
+
+            for (int i = 0; i < value.Length; i++)
+            {
+                bs = value[i];
+                if (bs > B_SPACE)
+                {
+                    ns = i;
+                    break;
+                }
+            }
+
+            if (bs != B_ANGLEDBRACKET_L)
+                return false;
+
+            for (int i = value.Length - 1; i >= 0; i--)
+            {
+                be = value[i];
+                if (be > B_SPACE)
+                {
+                    ne = i;
+                    break;
+                }
+            }
+
+            return (bs == B_ANGLEDBRACKET_L && be == B_ANGLEDBRACKET_R && (ne - ns + 1) >= MIN_XML_LENGTH);
         }
     }
 }

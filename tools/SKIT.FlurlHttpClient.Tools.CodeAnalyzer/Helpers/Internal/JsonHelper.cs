@@ -1,21 +1,23 @@
-﻿using System;
+using System;
 
 namespace SKIT.FlurlHttpClient.Tools.CodeAnalyzer.Helpers
 {
+    using SKIT.FlurlHttpClient.Configuration;
+
     internal static class JsonHelper
     {
-        private static FlurlNewtonsoftJsonSerializer GetNewtonsoftJsonSerializer()
+        private static IJsonSerializer GetNewtonsoftJsonSerializer()
         {
-            var settings = FlurlNewtonsoftJsonSerializer.GetDefaultSerializerSettings();
+            var settings = NewtonsoftJsonSerializer.GetDefaultSerializerSettings();
             settings.CheckAdditionalContent = true;
             settings.MissingMemberHandling = Newtonsoft.Json.MissingMemberHandling.Error;
-            return new FlurlNewtonsoftJsonSerializer(settings);
+            return new NewtonsoftJsonSerializer(settings);
         }
 
-        private static FlurlSystemTextJsonSerializer GetSystemJsonSerializer()
+        private static IJsonSerializer GetSystemJsonSerializer()
         {
-            var options = FlurlSystemTextJsonSerializer.GetDefaultSerializerOptions();
-            return new FlurlSystemTextJsonSerializer(options);
+            var options = SystemTextJsonSerializer.GetDefaultSerializerOptions();
+            return new SystemTextJsonSerializer(options);
         }
 
         public static bool TryDeserialize(string json, Type type, out Exception error)
