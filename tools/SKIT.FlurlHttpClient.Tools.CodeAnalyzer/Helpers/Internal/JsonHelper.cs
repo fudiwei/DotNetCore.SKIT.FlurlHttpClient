@@ -17,6 +17,7 @@ namespace SKIT.FlurlHttpClient.Tools.CodeAnalyzer.Helpers
         private static IJsonSerializer GetSystemJsonSerializer()
         {
             var options = SystemTextJsonSerializer.GetDefaultSerializerOptions();
+            options.UnmappedMemberHandling = System.Text.Json.Serialization.JsonUnmappedMemberHandling.Disallow;
             return new SystemTextJsonSerializer(options);
         }
 

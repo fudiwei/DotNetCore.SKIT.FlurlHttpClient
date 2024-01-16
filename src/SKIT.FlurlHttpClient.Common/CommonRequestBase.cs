@@ -9,12 +9,12 @@ namespace SKIT.FlurlHttpClient
     {
         [Newtonsoft.Json.JsonIgnore]
         [System.Text.Json.Serialization.JsonIgnore]
-        internal TimeSpan? Timeout { get; private set; }
+        internal TimeSpan? _InternalTimeout;
 
         /// <inheritdoc/>
         public void WithTimeout(TimeSpan? timeout)
         {
-            Timeout = timeout;
+            _InternalTimeout = timeout;
         }
     }
 }

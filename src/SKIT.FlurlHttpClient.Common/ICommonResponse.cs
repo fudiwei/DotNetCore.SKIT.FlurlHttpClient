@@ -10,23 +10,17 @@ namespace SKIT.FlurlHttpClient
         /// <summary>
         /// 获取原始的 HTTP 响应状态码。
         /// </summary>
-        [Newtonsoft.Json.JsonIgnore]
-        [System.Text.Json.Serialization.JsonIgnore]
-        public int RawStatus { get; }
+        public int GetRawStatus();
 
         /// <summary>
-        /// 获取原始的 HTTP 响应表头集合。
+        /// 获取原始的 HTTP 响应标头集合。
         /// </summary>
-        [Newtonsoft.Json.JsonIgnore]
-        [System.Text.Json.Serialization.JsonIgnore]
-        public HttpHeaderCollection RawHeaders { get; }
+        public HttpHeaderCollection GetRawHeaders();
 
         /// <summary>
-        /// 获取原始的 HTTP 响应正文。
+        /// 获取原始的 HTTP 响应主体字节数组。
         /// </summary>
-        [Newtonsoft.Json.JsonIgnore]
-        [System.Text.Json.Serialization.JsonIgnore]
-        public byte[] RawBytes { get; }
+        public byte[] GetRawBytes();
 
         /// <summary>
         /// 获取一个值，该值指示调用 API 是否成功。
