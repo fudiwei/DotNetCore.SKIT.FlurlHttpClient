@@ -161,7 +161,7 @@ namespace SKIT.FlurlHttpClient.Configuration
 
         public bool TryGetValue(string key, out IEnumerable<string> value)
         {
-            return _dict.TryGetValue(key, out value);
+            return _dict.TryGetValue(key, out value!);
         }
 
         public bool TryGetGroupingValue(string key, out string? value)

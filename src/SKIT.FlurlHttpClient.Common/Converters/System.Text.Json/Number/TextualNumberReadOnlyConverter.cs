@@ -103,7 +103,7 @@ namespace System.Text.Json.Serialization.Common
 
             public override void WriteAsPropertyName(Utf8JsonWriter writer, sbyte? value, JsonSerializerOptions options)
             {
-                _converter.WriteAsPropertyName(writer, value, options);
+                _converter.WriteAsPropertyName(writer, value!, options);
             }
         }
 
@@ -158,7 +158,7 @@ namespace System.Text.Json.Serialization.Common
 
             public override void WriteAsPropertyName(Utf8JsonWriter writer, byte? value, JsonSerializerOptions options)
             {
-                _converter.WriteAsPropertyName(writer, value, options);
+                _converter.WriteAsPropertyName(writer, value!, options);
             }
         }
 
@@ -213,7 +213,7 @@ namespace System.Text.Json.Serialization.Common
 
             public override void WriteAsPropertyName(Utf8JsonWriter writer, short? value, JsonSerializerOptions options)
             {
-                _converter.WriteAsPropertyName(writer, value, options);
+                _converter.WriteAsPropertyName(writer, value!, options);
             }
         }
 
@@ -268,7 +268,7 @@ namespace System.Text.Json.Serialization.Common
 
             public override void WriteAsPropertyName(Utf8JsonWriter writer, ushort? value, JsonSerializerOptions options)
             {
-                _converter.WriteAsPropertyName(writer, value, options);
+                _converter.WriteAsPropertyName(writer, value!, options);
             }
         }
 
@@ -323,7 +323,7 @@ namespace System.Text.Json.Serialization.Common
 
             public override void WriteAsPropertyName(Utf8JsonWriter writer, int? value, JsonSerializerOptions options)
             {
-                _converter.WriteAsPropertyName(writer, value, options);
+                _converter.WriteAsPropertyName(writer, value!, options);
             }
         }
 
@@ -378,7 +378,7 @@ namespace System.Text.Json.Serialization.Common
 
             public override void WriteAsPropertyName(Utf8JsonWriter writer, uint? value, JsonSerializerOptions options)
             {
-                _converter.WriteAsPropertyName(writer, value, options);
+                _converter.WriteAsPropertyName(writer, value!, options);
             }
         }
 
@@ -433,7 +433,7 @@ namespace System.Text.Json.Serialization.Common
 
             public override void WriteAsPropertyName(Utf8JsonWriter writer, long? value, JsonSerializerOptions options)
             {
-                _converter.WriteAsPropertyName(writer, value, options);
+                _converter.WriteAsPropertyName(writer, value!, options);
             }
         }
 
@@ -488,7 +488,7 @@ namespace System.Text.Json.Serialization.Common
 
             public override void WriteAsPropertyName(Utf8JsonWriter writer, ulong? value, JsonSerializerOptions options)
             {
-                _converter.WriteAsPropertyName(writer, value, options);
+                _converter.WriteAsPropertyName(writer, value!, options);
             }
         }
 
@@ -543,7 +543,7 @@ namespace System.Text.Json.Serialization.Common
 
             public override void WriteAsPropertyName(Utf8JsonWriter writer, float? value, JsonSerializerOptions options)
             {
-                _converter.WriteAsPropertyName(writer, value, options);
+                _converter.WriteAsPropertyName(writer, value!, options);
             }
         }
 
@@ -598,7 +598,7 @@ namespace System.Text.Json.Serialization.Common
 
             public override void WriteAsPropertyName(Utf8JsonWriter writer, double? value, JsonSerializerOptions options)
             {
-                _converter.WriteAsPropertyName(writer, value, options);
+                _converter.WriteAsPropertyName(writer, value!, options);
             }
         }
 
@@ -653,7 +653,7 @@ namespace System.Text.Json.Serialization.Common
 
             public override void WriteAsPropertyName(Utf8JsonWriter writer, decimal? value, JsonSerializerOptions options)
             {
-                _converter.WriteAsPropertyName(writer, value, options);
+                _converter.WriteAsPropertyName(writer, value!, options);
             }
         }
 

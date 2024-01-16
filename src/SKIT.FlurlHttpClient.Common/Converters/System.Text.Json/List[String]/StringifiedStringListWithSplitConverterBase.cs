@@ -58,7 +58,7 @@ namespace System.Text.Json.Serialization.Common
 
             public override void WriteAsPropertyName(Utf8JsonWriter writer, IList<string>? value, JsonSerializerOptions options)
             {
-                _converter.WriteAsPropertyName(writer, value?.ToArray(), options);
+                _converter.WriteAsPropertyName(writer, value?.ToArray()!, options);
             }
         }
     }
