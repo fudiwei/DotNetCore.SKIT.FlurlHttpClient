@@ -129,6 +129,14 @@ namespace SKIT.FlurlHttpClient
             });
         }
 
+        /// <summary>
+        ///
+        /// </summary>
+        protected CommonClientBase(IFlurlClientFactory flurlClientFactory)
+            : this(flurlClientFactory.CreateHttpClient())
+        {
+        }
+
         /// <inheritdoc/>
         public void Configure(Action<CommonClientSettings> configure)
         {
