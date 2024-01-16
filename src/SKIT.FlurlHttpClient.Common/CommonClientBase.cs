@@ -9,6 +9,7 @@ using Flurl.Http;
 
 namespace SKIT.FlurlHttpClient
 {
+    using Flurl.Http.Configuration;
     using SKIT.FlurlHttpClient.Configuration;
     using SKIT.FlurlHttpClient.Configuration.Internal;
     using SKIT.FlurlHttpClient.Constants;
@@ -51,21 +52,24 @@ namespace SKIT.FlurlHttpClient
         /// <summary>
         ///
         /// </summary>
-        protected CommonClientBase()
+        protected CommonClientBase(HttpClient? httpClient = null)
         {
             Interceptors = new HttpInterceptorCollection();
-            FlurlClient = new FlurlClient();
+            FlurlClient = httpClient is null ? new FlurlClient() : new FlurlClient(httpClient);
             FlurlClient.WithSettings(flurlSettings =>
             {
                 IJsonSerializer jsonSerializer = new SystemTextJsonSerializer();
                 IFormUrlEncodedSerializer formUrlEncodedSerializer = new JsonifiedFormUrlEncodedSerializer(jsonSerializer);
                 flurlSettings.JsonSerializer = new InternalWrappedJsonSerializer(jsonSerializer);
                 flurlSettings.UrlEncodedSerializer = new InternalWrappedFormUrlEncodedSerializer(formUrlEncodedSerializer);
-                flurlSettings.BeforeCallAsync = async (flurlCall) =>
+
+                FlurlClient.BeforeCall(async flurlCall =>
                 {
                     using CancellationTokenSource cts = new CancellationTokenSource();
                     if (flurlSettings.Timeout.HasValue)
                         cts.CancelAfter(flurlSettings.Timeout.Value);
+                    if (flurlCall.Request.Settings.Timeout.HasValue)
+                        cts.CancelAfter(flurlCall.Request.Settings.Timeout.Value);
 
                     HttpInterceptorContext context = flurlCall.GetHttpInterceptorContext();
                     for (int i = 0, len = Interceptors.Count; i < len; i++)
@@ -88,12 +92,15 @@ namespace SKIT.FlurlHttpClient
                             throw new CommonInterceptorCallException(flurlCall, ex.Message, ex);
                         }
                     }
-                };
-                flurlSettings.AfterCallAsync = async (flurlCall) =>
+                });
+
+                FlurlClient.AfterCall(async flurlCall =>
                 {
                     using CancellationTokenSource cts = new CancellationTokenSource();
                     if (flurlSettings.Timeout.HasValue)
                         cts.CancelAfter(flurlSettings.Timeout.Value);
+                    if (flurlCall.Request.Settings.Timeout.HasValue)
+                        cts.CancelAfter(flurlCall.Request.Settings.Timeout.Value);
 
                     HttpInterceptorContext context = flurlCall.GetHttpInterceptorContext();
                     for (int i = Interceptors.Count - 1; i >= 0; i--)
@@ -118,7 +125,7 @@ namespace SKIT.FlurlHttpClient
                     }
 
                     context.Items.Clear();
-                };
+                });
             });
         }
 
@@ -136,7 +143,6 @@ namespace SKIT.FlurlHttpClient
                 flurlSettings.HttpVersion = settings.HttpVersion.ToString();
                 flurlSettings.JsonSerializer = new InternalWrappedJsonSerializer(settings.JsonSerializer);
                 flurlSettings.UrlEncodedSerializer = new InternalWrappedFormUrlEncodedSerializer(settings.FormUrlEncodedSerializer);
-                flurlSettings.HttpClientFactory = settings.FlurlHttpClientFactory;
             });
         }
 

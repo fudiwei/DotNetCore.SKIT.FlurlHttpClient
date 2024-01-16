@@ -50,7 +50,6 @@ namespace SKIT.FlurlHttpClient.UnitTests.TestCases.Configuration
         public async Task TestClientConfigure_HttpInterceptor()
         {
             using var client = new MockTestClient();
-            client.Configure(settings => settings.FlurlHttpClientFactory = new MockTestHttpClientFactory());
             client.Interceptors.Add(new MockInterceptor1());
             client.Interceptors.Add(new MockInterceptor2());
             Assert.IsNotNull(client.Interceptors);

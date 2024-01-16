@@ -5,18 +5,9 @@ using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Flurl.Http.Configuration;
 
 namespace SKIT.FlurlHttpClient
 {
-    public class MockTestHttpClientFactory : DefaultHttpClientFactory
-    {
-        public override HttpMessageHandler CreateMessageHandler()
-        {
-            return new MockTestHttpMessageHandler(base.CreateMessageHandler());
-        }
-    }
-
     public class MockTestHttpMessageHandler : DelegatingHandler
     {
         public MockTestHttpMessageHandler(HttpMessageHandler innerHandler)

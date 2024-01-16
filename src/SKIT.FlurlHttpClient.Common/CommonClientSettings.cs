@@ -31,19 +31,12 @@ namespace SKIT.FlurlHttpClient
         /// </summary>
         public IFormUrlEncodedSerializer FormUrlEncodedSerializer { get; set; } = default!;
 
-        // TODO: Migrate to Flurl.Http v4.x.
-        /// <summary>
-        /// 
-        /// </summary>
-        public IHttpClientFactory FlurlHttpClientFactory { get; set; } = default!;
-
         internal CommonClientSettings(FlurlHttpSettings flurlSettings)
         {
             Timeout = flurlSettings.Timeout;
             HttpVersion = Version.Parse(flurlSettings.HttpVersion);
             JsonSerializer = ((InternalWrappedJsonSerializer)flurlSettings.JsonSerializer)!.Serializer;
             FormUrlEncodedSerializer = ((InternalWrappedFormUrlEncodedSerializer)flurlSettings.UrlEncodedSerializer)!.Serializer;
-            FlurlHttpClientFactory = flurlSettings.HttpClientFactory;
         }
     }
 }
