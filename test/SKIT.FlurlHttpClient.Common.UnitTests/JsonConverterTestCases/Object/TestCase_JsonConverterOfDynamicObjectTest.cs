@@ -80,11 +80,11 @@ namespace SKIT.FlurlHttpClient.UnitTests.TestCases.JsonConverter
 
                 Assert.That(actualJson, Does.Contain("{\"BooleanProperty\":true,\"BooleanPropertyWithConverter\":1}"));
 
-                Assert.That(actualObj.NullProperty, Is.Null);
-                Assert.That(actualObj.BooleanProperty, Is.Not.Null);
-                Assert.That(actualObj.NumberProperty, Is.Not.Null);
-                Assert.That(actualObj.StringProperty, Is.Not.Null);
-                Assert.That(actualObj.GuidProperty, Is.Not.Null);
+                Assert.That(actualObj.NullProperty, Is.EqualTo(null));
+                Assert.That(actualObj.BooleanProperty, Is.EqualTo(true));
+                Assert.That(actualObj.NumberProperty, Is.EqualTo(123456));
+                Assert.That(actualObj.StringProperty, Is.EqualTo("abc"));
+                Assert.That(actualObj.GuidProperty, Is.EqualTo("11112222-3333-4444-5555-666677778888"));
                 Assert.That(actualObj.ArrayProperty, Is.Not.Null);
                 Assert.That(actualObj.ListProperty, Is.Not.Null);
                 Assert.That(actualObj.DictionaryProperty, Is.Not.Null);
