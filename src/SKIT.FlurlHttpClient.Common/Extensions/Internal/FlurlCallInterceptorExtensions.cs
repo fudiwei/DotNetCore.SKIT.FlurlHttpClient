@@ -15,15 +15,13 @@ namespace SKIT.FlurlHttpClient
             HttpInterceptorContext? context;
 
 #if NET5_0_OR_GREATER
-            if (!call.HttpRequestMessage.Options.TryGetValue(new HttpRequestOptionsKey<HttpInterceptorContext>(OPTION_KEY), out context) ||
-                context is null)
+            if (!call.HttpRequestMessage.Options.TryGetValue(new HttpRequestOptionsKey<HttpInterceptorContext>(OPTION_KEY), out context) || context is null)
             {
                 context = new HttpInterceptorContext(call);
                 SetHttpInterceptorContext(call, context);
             }
 #else
-            if (!call.HttpRequestMessage.Properties.TryGetValue(OPTION_KEY, out object? obj) ||
-                obj as HttpInterceptorContext is null)
+            if (!call.HttpRequestMessage.Properties.TryGetValue(OPTION_KEY, out object? obj) || obj as HttpInterceptorContext is null)
             {
                 context = new HttpInterceptorContext(call);
                 SetHttpInterceptorContext(call, context);
