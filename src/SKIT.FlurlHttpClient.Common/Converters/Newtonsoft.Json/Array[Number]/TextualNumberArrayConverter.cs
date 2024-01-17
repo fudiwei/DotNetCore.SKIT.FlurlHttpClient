@@ -54,14 +54,10 @@ namespace Newtonsoft.Json.Converters.Common
             Type elementType = objectType.GetElementType()!;
 
             object? result = _converter.ReadJson(reader, typeof(List<>).MakeGenericType(elementType), existingValue, serializer);
-            if (result is IList list)
-            {
-                Array array = Array.CreateInstance(elementType, list.Count);
-                list.CopyTo(array, 0);
-                return array;
-            }
+            if (result is null)
+                return null;
 
-            return null;
+            return TypeHelper.ConvertNumberListToArray((IList)result, elementType);
         }
 
         public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer)

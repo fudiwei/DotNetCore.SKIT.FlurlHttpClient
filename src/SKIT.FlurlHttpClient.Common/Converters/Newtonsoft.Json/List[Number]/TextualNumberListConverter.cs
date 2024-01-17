@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 
 namespace Newtonsoft.Json.Converters.Common
 {
@@ -66,7 +67,7 @@ namespace Newtonsoft.Json.Converters.Common
                 Type elementType = objectType.GetGenericArguments()[0];
                 Type convertType = Nullable.GetUnderlyingType(elementType) ?? elementType;
 
-                IList list = (IList)Activator.CreateInstance(typeof(List<>).MakeGenericType(elementType))!;
+                IList list = TypeHelper.CreateNumberList(elementType);
 
                 while (reader.Read())
                 {
