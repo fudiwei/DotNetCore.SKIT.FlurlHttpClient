@@ -1,8 +1,8 @@
 using System;
 
-namespace SKIT.FlurlHttpClient.Utilities.Internal
+namespace SKIT.FlurlHttpClient.Internal
 {
-    public static class FormatUtility
+    public static class StringAssert
     {
         public static bool MaybeJson(string value)
         {

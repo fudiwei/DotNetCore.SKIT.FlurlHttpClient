@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace System.Text.Json.Serialization.Common
 {
-    using SKIT.FlurlHttpClient.Converters.Internal;
+    using SKIT.FlurlHttpClient.Internal;
 
     public abstract partial class StringifiedNumberListWithSplitConverterBase : JsonConverterFactory
     {

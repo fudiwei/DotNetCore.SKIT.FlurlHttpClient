@@ -6,8 +6,6 @@ using NUnit.Framework;
 
 namespace SKIT.FlurlHttpClient.UnitTests.TestCases
 {
-    using SKIT.FlurlHttpClient.Configuration;
-
     public class TestCase_ConfigureHttpInterceptorTest
     {
         private class MockInterceptor1 : HttpInterceptor

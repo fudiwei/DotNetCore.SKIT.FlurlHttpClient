@@ -1,6 +1,6 @@
 using System;
 
-namespace SKIT.FlurlHttpClient.Exceptions
+namespace SKIT.FlurlHttpClient
 {
     /// <summary>
     /// 表示 SKIT.FlurlHttpClient 执行 HTTP 请求时引发的异常。

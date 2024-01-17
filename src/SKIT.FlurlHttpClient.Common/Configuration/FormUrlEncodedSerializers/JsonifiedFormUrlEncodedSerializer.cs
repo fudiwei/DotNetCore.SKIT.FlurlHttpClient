@@ -5,11 +5,11 @@ using Flurl.Http.Configuration;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace SKIT.FlurlHttpClient.Configuration
+namespace SKIT.FlurlHttpClient
 {
     /// <summary>
     /// <para>用于序列化 "application/x-www-form-urlencoded" 内容的序列化器。</para>
-    /// <para>基于 SKIT.FlurlHttpClient.Configuration.<see cref="IJsonSerializer"/> 实现。</para>
+    /// <para>基于 <see cref="IJsonSerializer"/> 实现。</para>
     /// </summary>
     public class JsonifiedFormUrlEncodedSerializer : IFormUrlEncodedSerializer
     {
@@ -18,13 +18,22 @@ namespace SKIT.FlurlHttpClient.Configuration
 
         private readonly DefaultUrlEncodedSerializer _flurlUrlEncodedSerializer = new DefaultUrlEncodedSerializer();
 
+        /// <summary>
+        /// 获取当前序列化器使用的 JSON 序列化器。
+        /// </summary>
         protected IJsonSerializer JsonSerializer { get; }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="jsonSerializer"></param>
+        /// <exception cref="ArgumentNullException"></exception>
         public JsonifiedFormUrlEncodedSerializer(IJsonSerializer jsonSerializer)
         {
             JsonSerializer = jsonSerializer ?? throw new ArgumentNullException(nameof(jsonSerializer));
         }
 
+        /// <inheritdoc/>
         public virtual string Serialize(object? obj, Type type)
         {
             if (obj is null)

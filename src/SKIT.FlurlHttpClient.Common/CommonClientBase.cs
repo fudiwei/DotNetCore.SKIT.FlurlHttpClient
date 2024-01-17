@@ -10,11 +10,7 @@ using Flurl.Http.Configuration;
 
 namespace SKIT.FlurlHttpClient
 {
-    using SKIT.FlurlHttpClient.Configuration;
-    using SKIT.FlurlHttpClient.Configuration.Internal;
-    using SKIT.FlurlHttpClient.Constants;
-    using SKIT.FlurlHttpClient.Exceptions;
-    using SKIT.FlurlHttpClient.Utilities.Internal;
+    using SKIT.FlurlHttpClient.Internal;
 
     /// <summary>
     /// SKIT.FlurlHttpClient 通用客户端基类。
@@ -340,7 +336,7 @@ namespace SKIT.FlurlHttpClient
             TResponse result = new TResponse();
             result._InternalRawStatus = flurlResponse.StatusCode;
             result._InternalRawHeaders = new HttpHeaderCollection(flurlResponse.Headers);
-            result._InternalRawBytes = await AsyncUtility.RunTaskWithCancellationTokenAsync(flurlResponse.GetBytesAsync(), cancellationToken);
+            result._InternalRawBytes = await AsyncEx.RunTaskWithCancellationTokenAsync(flurlResponse.GetBytesAsync(), cancellationToken);
             return result;
         }
 
@@ -359,7 +355,7 @@ namespace SKIT.FlurlHttpClient
             TResponse result;
 
             TResponse tmp = await WrapFlurlResponseAsync<TResponse>(flurlResponse, cancellationToken);
-            if (FormatUtility.MaybeJson(tmp._InternalRawBytes))
+            if (StringAssert.MaybeJson(tmp._InternalRawBytes))
             {
                 try
                 {

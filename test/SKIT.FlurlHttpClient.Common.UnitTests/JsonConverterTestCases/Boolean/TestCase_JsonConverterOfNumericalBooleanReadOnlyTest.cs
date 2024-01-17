@@ -2,8 +2,6 @@ using NUnit.Framework;
 
 namespace SKIT.FlurlHttpClient.UnitTests.TestCases
 {
-    using SKIT.FlurlHttpClient.Configuration;
-
     public class TestCase_JsonConverterOfNumericalBooleanReadOnlyTest
     {
         private sealed class MockObject

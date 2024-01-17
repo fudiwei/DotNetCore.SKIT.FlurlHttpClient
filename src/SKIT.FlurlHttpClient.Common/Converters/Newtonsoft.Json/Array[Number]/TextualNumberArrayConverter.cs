@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Newtonsoft.Json.Converters.Common
 {
-    using SKIT.FlurlHttpClient.Converters.Internal;
+    using SKIT.FlurlHttpClient.Internal;
 
     /// <summary>
     /// 一个 JSON 转换器，可针对指定适配类型做如下形式的对象转换。

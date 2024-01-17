@@ -2,7 +2,7 @@ using System;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
-namespace SKIT.FlurlHttpClient.Configuration
+namespace SKIT.FlurlHttpClient
 {
     /// <summary>
     /// <para>用于序列化 "application/json" 内容的序列化器。</para>
@@ -12,16 +12,28 @@ namespace SKIT.FlurlHttpClient.Configuration
     {
         private readonly JsonSerializerSettings _jsonSettings;
 
+        /// <summary>
+        /// 
+        /// </summary>
         public NewtonsoftJsonSerializer()
             : this(GetDefaultSerializerSettings())
         {
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="settings"></param>
+        /// <exception cref="ArgumentNullException"></exception>
         public NewtonsoftJsonSerializer(JsonSerializerSettings settings)
         {
             _jsonSettings = settings ?? throw new ArgumentNullException(nameof(settings));
         }
 
+        /// <summary>
+        /// 获取 SKIT.FlurlHttpClient 默认使用的 <see cref="JsonSerializerSettings"/> 实例。
+        /// </summary>
+        /// <returns></returns>
         public static JsonSerializerSettings GetDefaultSerializerSettings()
         {
             JsonSerializerSettings settings = new JsonSerializerSettings();
@@ -33,11 +45,13 @@ namespace SKIT.FlurlHttpClient.Configuration
             return settings;
         }
 
+        /// <inheritdoc/>
         public object? Deserialize(string json, Type type)
         {
             return JsonConvert.DeserializeObject(json, type, _jsonSettings);
         }
 
+        /// <inheritdoc/>
         public string Serialize(object? obj, Type type)
         {
             return JsonConvert.SerializeObject(obj, type, _jsonSettings);
