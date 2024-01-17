@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Flurl.Http;
 using NUnit.Framework;
 
-namespace SKIT.FlurlHttpClient.UnitTests.TestCases.Configuration
+namespace SKIT.FlurlHttpClient.UnitTests.TestCases
 {
     using SKIT.FlurlHttpClient.Configuration;
 
