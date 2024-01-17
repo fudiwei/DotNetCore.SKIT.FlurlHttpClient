@@ -1,4 +1,4 @@
-namespace SKIT.FlurlHttpClient.Constants
+namespace SKIT.FlurlHttpClient
 {
     /// <summary>
     /// SKIT.FlurlHttpClient 常量集之 MIME 类型。

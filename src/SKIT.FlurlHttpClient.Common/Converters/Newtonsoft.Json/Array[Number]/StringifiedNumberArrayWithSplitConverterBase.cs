@@ -2,7 +2,7 @@ using System;
 
 namespace Newtonsoft.Json.Converters.Common
 {
-    using SKIT.FlurlHttpClient.Converters.Internal;
+    using SKIT.FlurlHttpClient.Internal;
 
     public abstract class StringifiedNumberArrayWithSplitConverterBase : JsonConverter
     {

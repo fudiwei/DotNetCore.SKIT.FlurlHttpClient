@@ -1,6 +1,6 @@
 namespace System.Text.Json.Serialization.Common
 {
-    using SKIT.FlurlHttpClient.Converters.Internal;
+    using SKIT.FlurlHttpClient.Internal;
 
     public abstract partial class StringifiedNumberArrayWithSplitConverterBase : JsonConverterFactory
     {

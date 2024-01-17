@@ -3,9 +3,6 @@ using Flurl.Http.Configuration;
 
 namespace SKIT.FlurlHttpClient
 {
-    using SKIT.FlurlHttpClient.Configuration;
-    using SKIT.FlurlHttpClient.Configuration.Internal;
-
     /// <summary>
     /// SKIT.FlurlHttpClient 通用客户端配置项。
     /// </summary>

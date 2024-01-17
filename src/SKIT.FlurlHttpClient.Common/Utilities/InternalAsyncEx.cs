@@ -2,9 +2,9 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace SKIT.FlurlHttpClient.Utilities.Internal
+namespace SKIT.FlurlHttpClient.Internal
 {
-    public static class AsyncUtility
+    public static class AsyncEx
     {
         public static async Task<T> RunTaskWithCancellationTokenAsync<T>(Task<T> task, CancellationToken cancellationToken = default)
         {
@@ -18,7 +18,7 @@ namespace SKIT.FlurlHttpClient.Utilities.Internal
             else
             {
                 cancellationToken.ThrowIfCancellationRequested();
-                throw new OperationCanceledException("Infinite delay task completed.");
+                throw new TaskCanceledException("Task was cancelled.");
             }
         }
     }

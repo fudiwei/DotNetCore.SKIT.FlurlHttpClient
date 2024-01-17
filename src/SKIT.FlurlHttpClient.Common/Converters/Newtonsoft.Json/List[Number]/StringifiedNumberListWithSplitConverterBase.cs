@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Newtonsoft.Json.Converters.Common
 {
-    using SKIT.FlurlHttpClient.Converters.Internal;
+    using SKIT.FlurlHttpClient.Internal;
 
     public abstract partial class StringifiedNumberListWithSplitConverterBase : JsonConverter
     {

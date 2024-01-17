@@ -6,7 +6,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace SKIT.FlurlHttpClient.Converters.Internal
+namespace SKIT.FlurlHttpClient.Internal
 {
     internal static class TypeHelper
     {

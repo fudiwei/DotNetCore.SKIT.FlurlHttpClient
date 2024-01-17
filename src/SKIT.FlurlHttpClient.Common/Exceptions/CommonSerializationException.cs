@@ -1,6 +1,6 @@
 using System;
 
-namespace SKIT.FlurlHttpClient.Exceptions
+namespace SKIT.FlurlHttpClient
 {
     /// <summary>
     /// 表示 SKIT.FlurlHttpClient 数据序列化或反序列化失败引发的异常。

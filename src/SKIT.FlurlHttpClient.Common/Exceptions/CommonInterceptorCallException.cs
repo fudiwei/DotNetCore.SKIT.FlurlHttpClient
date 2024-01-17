@@ -1,7 +1,7 @@
 using System;
 using Flurl.Http;
 
-namespace SKIT.FlurlHttpClient.Exceptions
+namespace SKIT.FlurlHttpClient
 {
     /// <summary>
     /// 表示 SKIT.FlurlHttpClient 执行拦截器时引发的异常。

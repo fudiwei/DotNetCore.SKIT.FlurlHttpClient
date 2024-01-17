@@ -2,7 +2,7 @@ using System;
 using System.IO;
 using Flurl.Http.Configuration;
 
-namespace SKIT.FlurlHttpClient.Configuration.Internal
+namespace SKIT.FlurlHttpClient
 {
     internal sealed class InternalWrappedFormUrlEncodedSerializer : ISerializer
     {

@@ -3,8 +3,6 @@ using NUnit.Framework;
 
 namespace SKIT.FlurlHttpClient.UnitTests.TestCases
 {
-    using SKIT.FlurlHttpClient.Configuration;
-
     public class TestCase_JsonConverterOfStringifiedObjectInJsonFormatTest
     {
         private sealed class MockObject

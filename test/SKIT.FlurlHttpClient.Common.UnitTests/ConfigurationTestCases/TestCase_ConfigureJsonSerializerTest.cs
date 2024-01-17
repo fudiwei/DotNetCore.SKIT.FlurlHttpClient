@@ -2,8 +2,6 @@ using NUnit.Framework;
 
 namespace SKIT.FlurlHttpClient.UnitTests.TestCases
 {
-    using SKIT.FlurlHttpClient.Configuration;
-
     public class TestCase_ConfigureJsonSerializerTest
     {
         [Test(Description = "测试用例：配置项之 JSON 序列化器")]
