@@ -14,6 +14,7 @@ namespace System.Text.Json.Serialization.Common
     public class NumericalStringReadOnlyConverter : JsonConverter<string?>
     {
         private readonly JsonConverter<string?> _converter = new NumericalStringConverter();
+        private readonly JsonConverter<string?> _fallback = (JsonConverter<string?>)JsonSerializerOptions.Default.GetConverter(typeof(string));
 
         public override string? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
@@ -22,10 +23,7 @@ namespace System.Text.Json.Serialization.Common
 
         public override void Write(Utf8JsonWriter writer, string? value, JsonSerializerOptions options)
         {
-            if (value != null)
-                writer.WriteStringValue(value);
-            else
-                writer.WriteNullValue();
+            _fallback.Write(writer, value, options);
         }
     }
 }

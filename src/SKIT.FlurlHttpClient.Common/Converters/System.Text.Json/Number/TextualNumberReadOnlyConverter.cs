@@ -82,6 +82,7 @@ namespace System.Text.Json.Serialization.Common
         private sealed class InternalTextualNullableSByteReadOnlyConverter : JsonConverter<sbyte?>
         {
             private readonly JsonConverter<sbyte?> _converter = new Internal.TextualNullableSByteConverter();
+            private readonly JsonConverter<sbyte?> _fallback = (JsonConverter<sbyte?>)JsonSerializerOptions.Default.GetConverter(typeof(sbyte?));
 
             public override sbyte? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
@@ -90,10 +91,7 @@ namespace System.Text.Json.Serialization.Common
 
             public override void Write(Utf8JsonWriter writer, sbyte? value, JsonSerializerOptions options)
             {
-                if (value is null)
-                    writer.WriteNullValue();
-                else
-                    writer.WriteNumberValue(value.Value);
+                _fallback.Write(writer, value, options);
             }
 
             public override sbyte? ReadAsPropertyName(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
@@ -103,13 +101,14 @@ namespace System.Text.Json.Serialization.Common
 
             public override void WriteAsPropertyName(Utf8JsonWriter writer, sbyte? value, JsonSerializerOptions options)
             {
-                _converter.WriteAsPropertyName(writer, value!, options);
+                _fallback.WriteAsPropertyName(writer, value!, options);
             }
         }
 
         private sealed class InternalTextualSByteReadOnlyConverter : JsonConverter<sbyte>
         {
             private readonly JsonConverter<sbyte> _converter = new Internal.TextualSByteConverter();
+            private readonly JsonConverter<sbyte> _fallback = (JsonConverter<sbyte>)JsonSerializerOptions.Default.GetConverter(typeof(sbyte));
 
             public override sbyte Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
@@ -118,7 +117,7 @@ namespace System.Text.Json.Serialization.Common
 
             public override void Write(Utf8JsonWriter writer, sbyte value, JsonSerializerOptions options)
             {
-                writer.WriteNumberValue(value);
+                _fallback.Write(writer, value, options);
             }
 
             public override sbyte ReadAsPropertyName(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
@@ -128,7 +127,7 @@ namespace System.Text.Json.Serialization.Common
 
             public override void WriteAsPropertyName(Utf8JsonWriter writer, sbyte value, JsonSerializerOptions options)
             {
-                _converter.WriteAsPropertyName(writer, value, options);
+                _fallback.WriteAsPropertyName(writer, value, options);
             }
         }
         #endregion
@@ -137,6 +136,7 @@ namespace System.Text.Json.Serialization.Common
         private sealed class InternalTextualNullableByteReadOnlyConverter : JsonConverter<byte?>
         {
             private readonly JsonConverter<byte?> _converter = new Internal.TextualNullableByteConverter();
+            private readonly JsonConverter<byte?> _fallback = (JsonConverter<byte?>)JsonSerializerOptions.Default.GetConverter(typeof(byte?));
 
             public override byte? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
@@ -145,10 +145,7 @@ namespace System.Text.Json.Serialization.Common
 
             public override void Write(Utf8JsonWriter writer, byte? value, JsonSerializerOptions options)
             {
-                if (value is null)
-                    writer.WriteNullValue();
-                else
-                    writer.WriteNumberValue(value.Value);
+                _fallback.Write(writer, value, options);
             }
 
             public override byte? ReadAsPropertyName(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
@@ -158,13 +155,14 @@ namespace System.Text.Json.Serialization.Common
 
             public override void WriteAsPropertyName(Utf8JsonWriter writer, byte? value, JsonSerializerOptions options)
             {
-                _converter.WriteAsPropertyName(writer, value!, options);
+                _fallback.WriteAsPropertyName(writer, value!, options);
             }
         }
 
         private sealed class InternalTextualByteReadOnlyConverter : JsonConverter<byte>
         {
             private readonly JsonConverter<byte> _converter = new Internal.TextualByteConverter();
+            private readonly JsonConverter<byte> _fallback = (JsonConverter<byte>)JsonSerializerOptions.Default.GetConverter(typeof(byte));
 
             public override byte Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
@@ -173,7 +171,7 @@ namespace System.Text.Json.Serialization.Common
 
             public override void Write(Utf8JsonWriter writer, byte value, JsonSerializerOptions options)
             {
-                writer.WriteNumberValue(value);
+                _fallback.Write(writer, value, options);
             }
 
             public override byte ReadAsPropertyName(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
@@ -183,7 +181,7 @@ namespace System.Text.Json.Serialization.Common
 
             public override void WriteAsPropertyName(Utf8JsonWriter writer, byte value, JsonSerializerOptions options)
             {
-                _converter.WriteAsPropertyName(writer, value, options);
+                _fallback.WriteAsPropertyName(writer, value, options);
             }
         }
         #endregion
@@ -192,6 +190,7 @@ namespace System.Text.Json.Serialization.Common
         private sealed class InternalTextualNullableInt16ReadOnlyConverter : JsonConverter<short?>
         {
             private readonly JsonConverter<short?> _converter = new Internal.TextualNullableInt16Converter();
+            private readonly JsonConverter<short?> _fallback = (JsonConverter<short?>)JsonSerializerOptions.Default.GetConverter(typeof(short?));
 
             public override short? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
@@ -200,10 +199,7 @@ namespace System.Text.Json.Serialization.Common
 
             public override void Write(Utf8JsonWriter writer, short? value, JsonSerializerOptions options)
             {
-                if (value is null)
-                    writer.WriteNullValue();
-                else
-                    writer.WriteNumberValue(value.Value);
+                _fallback.Write(writer, value, options);
             }
 
             public override short? ReadAsPropertyName(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
@@ -213,13 +209,14 @@ namespace System.Text.Json.Serialization.Common
 
             public override void WriteAsPropertyName(Utf8JsonWriter writer, short? value, JsonSerializerOptions options)
             {
-                _converter.WriteAsPropertyName(writer, value!, options);
+                _fallback.WriteAsPropertyName(writer, value!, options);
             }
         }
 
         private sealed class InternalTextualInt16ReadOnlyConverter : JsonConverter<short>
         {
             private readonly JsonConverter<short> _converter = new Internal.TextualInt16Converter();
+            private readonly JsonConverter<short> _fallback = (JsonConverter<short>)JsonSerializerOptions.Default.GetConverter(typeof(short));
 
             public override short Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
@@ -228,7 +225,7 @@ namespace System.Text.Json.Serialization.Common
 
             public override void Write(Utf8JsonWriter writer, short value, JsonSerializerOptions options)
             {
-                writer.WriteNumberValue(value);
+                _fallback.Write(writer, value, options);
             }
 
             public override short ReadAsPropertyName(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
@@ -238,7 +235,7 @@ namespace System.Text.Json.Serialization.Common
 
             public override void WriteAsPropertyName(Utf8JsonWriter writer, short value, JsonSerializerOptions options)
             {
-                _converter.WriteAsPropertyName(writer, value, options);
+                _fallback.WriteAsPropertyName(writer, value, options);
             }
         }
         #endregion
@@ -247,6 +244,7 @@ namespace System.Text.Json.Serialization.Common
         private sealed class InternalTextualNullableUInt16ReadOnlyConverter : JsonConverter<ushort?>
         {
             private readonly JsonConverter<ushort?> _converter = new Internal.TextualNullableUInt16Converter();
+            private readonly JsonConverter<ushort?> _fallback = (JsonConverter<ushort?>)JsonSerializerOptions.Default.GetConverter(typeof(ushort?));
 
             public override ushort? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
@@ -255,10 +253,7 @@ namespace System.Text.Json.Serialization.Common
 
             public override void Write(Utf8JsonWriter writer, ushort? value, JsonSerializerOptions options)
             {
-                if (value is null)
-                    writer.WriteNullValue();
-                else
-                    writer.WriteNumberValue(value.Value);
+                _fallback.Write(writer, value, options);
             }
 
             public override ushort? ReadAsPropertyName(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
@@ -268,13 +263,14 @@ namespace System.Text.Json.Serialization.Common
 
             public override void WriteAsPropertyName(Utf8JsonWriter writer, ushort? value, JsonSerializerOptions options)
             {
-                _converter.WriteAsPropertyName(writer, value!, options);
+                _fallback.WriteAsPropertyName(writer, value!, options);
             }
         }
 
         private sealed class InternalTextualUInt16ReadOnlyConverter : JsonConverter<ushort>
         {
             private readonly JsonConverter<ushort> _converter = new Internal.TextualUInt16Converter();
+            private readonly JsonConverter<ushort> _fallback = (JsonConverter<ushort>)JsonSerializerOptions.Default.GetConverter(typeof(ushort));
 
             public override ushort Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
@@ -283,7 +279,7 @@ namespace System.Text.Json.Serialization.Common
 
             public override void Write(Utf8JsonWriter writer, ushort value, JsonSerializerOptions options)
             {
-                writer.WriteNumberValue(value);
+                _fallback.Write(writer, value, options);
             }
 
             public override ushort ReadAsPropertyName(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
@@ -293,7 +289,7 @@ namespace System.Text.Json.Serialization.Common
 
             public override void WriteAsPropertyName(Utf8JsonWriter writer, ushort value, JsonSerializerOptions options)
             {
-                _converter.WriteAsPropertyName(writer, value, options);
+                _fallback.WriteAsPropertyName(writer, value, options);
             }
         }
         #endregion
@@ -302,6 +298,7 @@ namespace System.Text.Json.Serialization.Common
         private sealed class InternalTextualNullableInt32ReadOnlyConverter : JsonConverter<int?>
         {
             private readonly JsonConverter<int?> _converter = new Internal.TextualNullableInt32Converter();
+            private readonly JsonConverter<int?> _fallback = (JsonConverter<int?>)JsonSerializerOptions.Default.GetConverter(typeof(int?));
 
             public override int? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
@@ -310,10 +307,7 @@ namespace System.Text.Json.Serialization.Common
 
             public override void Write(Utf8JsonWriter writer, int? value, JsonSerializerOptions options)
             {
-                if (value is null)
-                    writer.WriteNullValue();
-                else
-                    writer.WriteNumberValue(value.Value);
+                _fallback.Write(writer, value, options);
             }
 
             public override int? ReadAsPropertyName(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
@@ -323,13 +317,14 @@ namespace System.Text.Json.Serialization.Common
 
             public override void WriteAsPropertyName(Utf8JsonWriter writer, int? value, JsonSerializerOptions options)
             {
-                _converter.WriteAsPropertyName(writer, value!, options);
+                _fallback.WriteAsPropertyName(writer, value!, options);
             }
         }
 
         private sealed class InternalTextualInt32ReadOnlyConverter : JsonConverter<int>
         {
             private readonly JsonConverter<int> _converter = new Internal.TextualInt32Converter();
+            private readonly JsonConverter<int> _fallback = (JsonConverter<int>)JsonSerializerOptions.Default.GetConverter(typeof(int));
 
             public override int Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
@@ -338,7 +333,7 @@ namespace System.Text.Json.Serialization.Common
 
             public override void Write(Utf8JsonWriter writer, int value, JsonSerializerOptions options)
             {
-                writer.WriteNumberValue(value);
+                _fallback.Write(writer, value, options);
             }
 
             public override int ReadAsPropertyName(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
@@ -348,7 +343,7 @@ namespace System.Text.Json.Serialization.Common
 
             public override void WriteAsPropertyName(Utf8JsonWriter writer, int value, JsonSerializerOptions options)
             {
-                _converter.WriteAsPropertyName(writer, value, options);
+                _fallback.WriteAsPropertyName(writer, value, options);
             }
         }
         #endregion
@@ -357,6 +352,7 @@ namespace System.Text.Json.Serialization.Common
         private sealed class InternalTextualNullableUInt32ReadOnlyConverter : JsonConverter<uint?>
         {
             private readonly JsonConverter<uint?> _converter = new Internal.TextualNullableUInt32Converter();
+            private readonly JsonConverter<uint?> _fallback = (JsonConverter<uint?>)JsonSerializerOptions.Default.GetConverter(typeof(uint?));
 
             public override uint? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
@@ -365,10 +361,7 @@ namespace System.Text.Json.Serialization.Common
 
             public override void Write(Utf8JsonWriter writer, uint? value, JsonSerializerOptions options)
             {
-                if (value is null)
-                    writer.WriteNullValue();
-                else
-                    writer.WriteNumberValue(value.Value);
+                _fallback.Write(writer, value, options);
             }
 
             public override uint? ReadAsPropertyName(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
@@ -378,13 +371,14 @@ namespace System.Text.Json.Serialization.Common
 
             public override void WriteAsPropertyName(Utf8JsonWriter writer, uint? value, JsonSerializerOptions options)
             {
-                _converter.WriteAsPropertyName(writer, value!, options);
+                _fallback.WriteAsPropertyName(writer, value!, options);
             }
         }
 
         private sealed class InternalTextualUInt32ReadOnlyConverter : JsonConverter<uint>
         {
             private readonly JsonConverter<uint> _converter = new Internal.TextualUInt32Converter();
+            private readonly JsonConverter<uint> _fallback = (JsonConverter<uint>)JsonSerializerOptions.Default.GetConverter(typeof(uint));
 
             public override uint Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
@@ -393,7 +387,7 @@ namespace System.Text.Json.Serialization.Common
 
             public override void Write(Utf8JsonWriter writer, uint value, JsonSerializerOptions options)
             {
-                writer.WriteNumberValue(value);
+                _fallback.Write(writer, value, options);
             }
 
             public override uint ReadAsPropertyName(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
@@ -403,7 +397,7 @@ namespace System.Text.Json.Serialization.Common
 
             public override void WriteAsPropertyName(Utf8JsonWriter writer, uint value, JsonSerializerOptions options)
             {
-                _converter.WriteAsPropertyName(writer, value, options);
+                _fallback.WriteAsPropertyName(writer, value, options);
             }
         }
         #endregion
@@ -412,6 +406,7 @@ namespace System.Text.Json.Serialization.Common
         private sealed class InternalTextualNullableInt64ReadOnlyConverter : JsonConverter<long?>
         {
             private readonly JsonConverter<long?> _converter = new Internal.TextualNullableInt64Converter();
+            private readonly JsonConverter<long?> _fallback = (JsonConverter<long?>)JsonSerializerOptions.Default.GetConverter(typeof(long?));
 
             public override long? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
@@ -420,10 +415,7 @@ namespace System.Text.Json.Serialization.Common
 
             public override void Write(Utf8JsonWriter writer, long? value, JsonSerializerOptions options)
             {
-                if (value is null)
-                    writer.WriteNullValue();
-                else
-                    writer.WriteNumberValue(value.Value);
+                _fallback.Write(writer, value, options);
             }
 
             public override long? ReadAsPropertyName(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
@@ -433,13 +425,14 @@ namespace System.Text.Json.Serialization.Common
 
             public override void WriteAsPropertyName(Utf8JsonWriter writer, long? value, JsonSerializerOptions options)
             {
-                _converter.WriteAsPropertyName(writer, value!, options);
+                _fallback.WriteAsPropertyName(writer, value!, options);
             }
         }
 
         private sealed class InternalTextualInt64ReadOnlyConverter : JsonConverter<long>
         {
             private readonly JsonConverter<long> _converter = new Internal.TextualInt64Converter();
+            private readonly JsonConverter<long> _fallback = (JsonConverter<long>)JsonSerializerOptions.Default.GetConverter(typeof(long));
 
             public override long Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
@@ -448,7 +441,7 @@ namespace System.Text.Json.Serialization.Common
 
             public override void Write(Utf8JsonWriter writer, long value, JsonSerializerOptions options)
             {
-                writer.WriteNumberValue(value);
+                _fallback.Write(writer, value, options);
             }
 
             public override long ReadAsPropertyName(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
@@ -458,7 +451,7 @@ namespace System.Text.Json.Serialization.Common
 
             public override void WriteAsPropertyName(Utf8JsonWriter writer, long value, JsonSerializerOptions options)
             {
-                _converter.WriteAsPropertyName(writer, value, options);
+                _fallback.WriteAsPropertyName(writer, value, options);
             }
         }
         #endregion
@@ -467,6 +460,7 @@ namespace System.Text.Json.Serialization.Common
         private sealed class InternalTextualNullableUInt64ReadOnlyConverter : JsonConverter<ulong?>
         {
             private readonly JsonConverter<ulong?> _converter = new Internal.TextualNullableUInt64Converter();
+            private readonly JsonConverter<ulong?> _fallback = (JsonConverter<ulong?>)JsonSerializerOptions.Default.GetConverter(typeof(ulong?));
 
             public override ulong? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
@@ -475,10 +469,7 @@ namespace System.Text.Json.Serialization.Common
 
             public override void Write(Utf8JsonWriter writer, ulong? value, JsonSerializerOptions options)
             {
-                if (value is null)
-                    writer.WriteNullValue();
-                else
-                    writer.WriteNumberValue(value.Value);
+                _fallback.Write(writer, value, options);
             }
 
             public override ulong? ReadAsPropertyName(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
@@ -488,13 +479,14 @@ namespace System.Text.Json.Serialization.Common
 
             public override void WriteAsPropertyName(Utf8JsonWriter writer, ulong? value, JsonSerializerOptions options)
             {
-                _converter.WriteAsPropertyName(writer, value!, options);
+                _fallback.WriteAsPropertyName(writer, value!, options);
             }
         }
 
         private sealed class InternalTextualUInt64ReadOnlyConverter : JsonConverter<ulong>
         {
             private readonly JsonConverter<ulong> _converter = new Internal.TextualUInt64Converter();
+            private readonly JsonConverter<ulong> _fallback = (JsonConverter<ulong>)JsonSerializerOptions.Default.GetConverter(typeof(ulong));
 
             public override ulong Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
@@ -503,7 +495,7 @@ namespace System.Text.Json.Serialization.Common
             
             public override void Write(Utf8JsonWriter writer, ulong value, JsonSerializerOptions options)
             {
-                writer.WriteNumberValue(value);
+                _fallback.Write(writer, value, options);
             }
 
             public override ulong ReadAsPropertyName(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
@@ -513,7 +505,7 @@ namespace System.Text.Json.Serialization.Common
 
             public override void WriteAsPropertyName(Utf8JsonWriter writer, ulong value, JsonSerializerOptions options)
             {
-                _converter.WriteAsPropertyName(writer, value, options);
+                _fallback.WriteAsPropertyName(writer, value, options);
             }
         }
         #endregion
@@ -522,6 +514,7 @@ namespace System.Text.Json.Serialization.Common
         private sealed class InternalTextualNullableFloatReadOnlyConverter : JsonConverter<float?>
         {
             private readonly JsonConverter<float?> _converter = new Internal.TextualNullableFloatConverter();
+            private readonly JsonConverter<float?> _fallback = (JsonConverter<float?>)JsonSerializerOptions.Default.GetConverter(typeof(float?));
 
             public override float? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
@@ -530,10 +523,7 @@ namespace System.Text.Json.Serialization.Common
 
             public override void Write(Utf8JsonWriter writer, float? value, JsonSerializerOptions options)
             {
-                if (value is null)
-                    writer.WriteNullValue();
-                else
-                    writer.WriteNumberValue(value.Value);
+                _fallback.Write(writer, value, options);
             }
 
             public override float? ReadAsPropertyName(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
@@ -543,13 +533,14 @@ namespace System.Text.Json.Serialization.Common
 
             public override void WriteAsPropertyName(Utf8JsonWriter writer, float? value, JsonSerializerOptions options)
             {
-                _converter.WriteAsPropertyName(writer, value!, options);
+                _fallback.WriteAsPropertyName(writer, value!, options);
             }
         }
 
         private sealed class InternalTextualFloatReadOnlyConverter : JsonConverter<float>
         {
             private readonly JsonConverter<float> _converter = new Internal.TextualFloatConverter();
+            private readonly JsonConverter<float> _fallback = (JsonConverter<float>)JsonSerializerOptions.Default.GetConverter(typeof(float));
 
             public override float Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
@@ -558,7 +549,7 @@ namespace System.Text.Json.Serialization.Common
 
             public override void Write(Utf8JsonWriter writer, float value, JsonSerializerOptions options)
             {
-                writer.WriteNumberValue(value);
+                _fallback.Write(writer, value, options);
             }
 
             public override float ReadAsPropertyName(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
@@ -568,7 +559,7 @@ namespace System.Text.Json.Serialization.Common
 
             public override void WriteAsPropertyName(Utf8JsonWriter writer, float value, JsonSerializerOptions options)
             {
-                _converter.WriteAsPropertyName(writer, value, options);
+                _fallback.WriteAsPropertyName(writer, value, options);
             }
         }
         #endregion
@@ -577,6 +568,7 @@ namespace System.Text.Json.Serialization.Common
         private sealed class InternalTextualNullableDoubleReadOnlyConverter : JsonConverter<double?>
         {
             private readonly JsonConverter<double?> _converter = new Internal.TextualNullableDoubleConverter();
+            private readonly JsonConverter<double?> _fallback = (JsonConverter<double?>)JsonSerializerOptions.Default.GetConverter(typeof(double?));
 
             public override double? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
@@ -585,10 +577,7 @@ namespace System.Text.Json.Serialization.Common
 
             public override void Write(Utf8JsonWriter writer, double? value, JsonSerializerOptions options)
             {
-                if (value is null)
-                    writer.WriteNullValue();
-                else
-                    writer.WriteNumberValue(value.Value);
+                _fallback.Write(writer, value, options);
             }
 
             public override double? ReadAsPropertyName(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
@@ -598,13 +587,14 @@ namespace System.Text.Json.Serialization.Common
 
             public override void WriteAsPropertyName(Utf8JsonWriter writer, double? value, JsonSerializerOptions options)
             {
-                _converter.WriteAsPropertyName(writer, value!, options);
+                _fallback.WriteAsPropertyName(writer, value!, options);
             }
         }
 
         private sealed class InternalTextualDoubleReadOnlyConverter : JsonConverter<double>
         {
             private readonly JsonConverter<double> _converter = new Internal.TextualDoubleConverter();
+            private readonly JsonConverter<double> _fallback = (JsonConverter<double>)JsonSerializerOptions.Default.GetConverter(typeof(double));
 
             public override double Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
@@ -613,7 +603,7 @@ namespace System.Text.Json.Serialization.Common
 
             public override void Write(Utf8JsonWriter writer, double value, JsonSerializerOptions options)
             {
-                writer.WriteNumberValue(value);
+                _fallback.Write(writer, value, options);
             }
 
             public override double ReadAsPropertyName(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
@@ -623,7 +613,7 @@ namespace System.Text.Json.Serialization.Common
 
             public override void WriteAsPropertyName(Utf8JsonWriter writer, double value, JsonSerializerOptions options)
             {
-                _converter.WriteAsPropertyName(writer, value, options);
+                _fallback.WriteAsPropertyName(writer, value, options);
             }
         }
         #endregion
@@ -632,6 +622,7 @@ namespace System.Text.Json.Serialization.Common
         private sealed class InternalTextualNullableDecimalReadOnlyConverter : JsonConverter<decimal?>
         {
             private readonly JsonConverter<decimal?> _converter = new Internal.TextualNullableDecimalConverter();
+            private readonly JsonConverter<decimal?> _fallback = (JsonConverter<decimal?>)JsonSerializerOptions.Default.GetConverter(typeof(decimal?));
 
             public override decimal? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
@@ -640,10 +631,7 @@ namespace System.Text.Json.Serialization.Common
 
             public override void Write(Utf8JsonWriter writer, decimal? value, JsonSerializerOptions options)
             {
-                if (value is null)
-                    writer.WriteNullValue();
-                else
-                    writer.WriteNumberValue(value.Value);
+                _fallback.Write(writer, value, options);
             }
 
             public override decimal? ReadAsPropertyName(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
@@ -653,13 +641,14 @@ namespace System.Text.Json.Serialization.Common
 
             public override void WriteAsPropertyName(Utf8JsonWriter writer, decimal? value, JsonSerializerOptions options)
             {
-                _converter.WriteAsPropertyName(writer, value!, options);
+                _fallback.WriteAsPropertyName(writer, value!, options);
             }
         }
 
         private sealed class InternalTextualDecimalReadOnlyConverter : JsonConverter<decimal>
         {
             private readonly JsonConverter<decimal> _converter = new Internal.TextualDecimalConverter();
+            private readonly JsonConverter<decimal> _fallback = (JsonConverter<decimal>)JsonSerializerOptions.Default.GetConverter(typeof(decimal));
 
             public override decimal Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
@@ -668,7 +657,7 @@ namespace System.Text.Json.Serialization.Common
 
             public override void Write(Utf8JsonWriter writer, decimal value, JsonSerializerOptions options)
             {
-                writer.WriteNumberValue(value);
+                _fallback.Write(writer, value, options);
             }
 
             public override decimal ReadAsPropertyName(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
@@ -678,7 +667,7 @@ namespace System.Text.Json.Serialization.Common
 
             public override void WriteAsPropertyName(Utf8JsonWriter writer, decimal value, JsonSerializerOptions options)
             {
-                _converter.WriteAsPropertyName(writer, value, options);
+                _fallback.WriteAsPropertyName(writer, value!, options);
             }
         }
         #endregion

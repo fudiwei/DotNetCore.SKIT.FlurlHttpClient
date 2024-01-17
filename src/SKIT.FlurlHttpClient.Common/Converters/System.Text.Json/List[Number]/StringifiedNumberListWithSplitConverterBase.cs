@@ -61,12 +61,12 @@ namespace System.Text.Json.Serialization.Common
             }
 
             private readonly Type _convertType;
-            private readonly JsonConverterFactory _converterFactory;
+            private readonly JsonConverterFactory _factory;
 
             public InternalStringifiedNumberListWithSplitConverter(Type convertType, string separator)
             {
                 _convertType = convertType;
-                _converterFactory = new InternalStringifiedNumberArrayWithSplitConverter(separator);
+                _factory = new InternalStringifiedNumberArrayWithSplitConverter(separator);
             }
 
             public override bool CanConvert(Type typeToConvert)
@@ -80,7 +80,7 @@ namespace System.Text.Json.Serialization.Common
                 Type elementType = _convertType.GetGenericArguments()[0];
                 Type arrayType = elementType.MakeArrayType();
 
-                JsonConverter<object?> converter = (JsonConverter<object?>)_converterFactory.CreateConverter(arrayType, options)!;
+                JsonConverter<object?> converter = (JsonConverter<object?>)_factory.CreateConverter(arrayType, options)!;
                 Array? array = (Array?)converter.Read(ref reader, elementType.MakeArrayType(), options);
                 if (array == null)
                     return null;
@@ -99,7 +99,7 @@ namespace System.Text.Json.Serialization.Common
                     Type elementType = _convertType.GetGenericArguments()[0];
                     Type arrayType = elementType.MakeArrayType();
 
-                    JsonConverter<object?> converter = (JsonConverter<object?>)_converterFactory.CreateConverter(arrayType, options)!;
+                    JsonConverter<object?> converter = (JsonConverter<object?>)_factory.CreateConverter(arrayType, options)!;
                     Array array = (Array)_type2ToArrayMethodMap[elementType].Invoke(null, new object?[] { value })!;
 
                     converter.Write(writer, array, options);
