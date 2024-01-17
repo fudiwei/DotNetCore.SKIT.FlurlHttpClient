@@ -10,21 +10,21 @@ namespace SKIT.FlurlHttpClient.UnitTests.TestCases.Configuration
         public void TestClientConfigure_JsonSerializer()
         {
             using var client = new MockTestClient();
-            Assert.IsNotNull(client.JsonSerializer);
+            Assert.That(client.JsonSerializer, Is.Not.Null);
 
             var newtonsoftJsonSerializer = new NewtonsoftJsonSerializer();
             client.Configure(settings =>
             {
                 settings.JsonSerializer = newtonsoftJsonSerializer;
             });
-            Assert.AreSame(client.JsonSerializer, newtonsoftJsonSerializer);
+            Assert.That(client.JsonSerializer, Is.SameAs(newtonsoftJsonSerializer));
 
             var systemTextJsonSerializer = new SystemTextJsonSerializer();
             client.Configure(settings =>
             {
                 settings.JsonSerializer = systemTextJsonSerializer;
             });
-            Assert.AreSame(client.JsonSerializer, systemTextJsonSerializer);
+            Assert.That(client.JsonSerializer, Is.SameAs(systemTextJsonSerializer));
         }
     }
 }

@@ -15,11 +15,16 @@ namespace SKIT.FlurlHttpClient.UnitTests.TestCases.JsonConverter
 
         private static void TestCustomJsonConverter(IJsonSerializer jsonSerializer)
         {
-            var mockObj1 = new MockObject() { Property = new string[] { "a", "b", "c" } };
-            var actualJson1 = jsonSerializer.Serialize(mockObj1);
-            var actualObj1 = jsonSerializer.Deserialize<MockObject>(actualJson1);
-            Assert.AreEqual("{\"Property\":\"a;b;c\"}", actualJson1);
-            CollectionAssert.AreEqual(mockObj1.Property, actualObj1.Property);
+            Assert.Multiple(() =>
+            {
+                var expectObj = new MockObject() { Property = new string[] { "a", "b", "c" } };
+                var actualJson = jsonSerializer.Serialize(expectObj);
+                var actualObj = jsonSerializer.Deserialize<MockObject>(actualJson);
+
+                Assert.That(actualJson, Is.EqualTo("{\"Property\":\"a;b;c\"}"));
+
+                Assert.That(actualObj.Property, Is.EqualTo(expectObj.Property));
+            });
         }
 
         [Test(Description = "测试用例：自定义 Newtosoft.Json.JsonConverter 之 TextualStringArrayWithSemicolonSplitConverter")]

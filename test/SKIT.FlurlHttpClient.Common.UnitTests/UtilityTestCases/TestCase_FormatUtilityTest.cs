@@ -10,69 +10,69 @@ namespace SKIT.FlurlHttpClient.UnitTests.TestCases.Utility
         [Test(Description = "测试用例：工具类之 `MaybeJson`")]
         public void TestFormatUtility_MaybeJson()
         {
-            Assert.True(FormatUtility.MaybeJson("{}"));
-            Assert.True(FormatUtility.MaybeJson("[]"));
-            Assert.True(FormatUtility.MaybeJson(" { } "));
-            Assert.True(FormatUtility.MaybeJson(" [ ] "));
-            Assert.True(FormatUtility.MaybeJson("\r\n{\t}\r\n"));
-            Assert.True(FormatUtility.MaybeJson("\r\n[\t]\r\n"));
+            Assert.That(FormatUtility.MaybeJson("{}"), Is.True);
+            Assert.That(FormatUtility.MaybeJson("[]"), Is.True);
+            Assert.That(FormatUtility.MaybeJson(" { } "), Is.True);
+            Assert.That(FormatUtility.MaybeJson(" [ ] "), Is.True);
+            Assert.That(FormatUtility.MaybeJson("\r\n{\t}\r\n"), Is.True);
+            Assert.That(FormatUtility.MaybeJson("\r\n[\t]\r\n"), Is.True);
 
-            Assert.True(FormatUtility.MaybeJson(Encoding.UTF8.GetBytes("{}")));
-            Assert.True(FormatUtility.MaybeJson(Encoding.UTF8.GetBytes("[]")));
-            Assert.True(FormatUtility.MaybeJson(Encoding.UTF8.GetBytes(" { } ")));
-            Assert.True(FormatUtility.MaybeJson(Encoding.UTF8.GetBytes(" [ ] ")));
-            Assert.True(FormatUtility.MaybeJson(Encoding.UTF8.GetBytes("\r\n{\t}\r\n")));
-            Assert.True(FormatUtility.MaybeJson(Encoding.UTF8.GetBytes("\r\n[\t]\r\n")));
+            Assert.That(FormatUtility.MaybeJson(Encoding.UTF8.GetBytes("{}")), Is.True);
+            Assert.That(FormatUtility.MaybeJson(Encoding.UTF8.GetBytes("[]")), Is.True);
+            Assert.That(FormatUtility.MaybeJson(Encoding.UTF8.GetBytes(" { } ")), Is.True);
+            Assert.That(FormatUtility.MaybeJson(Encoding.UTF8.GetBytes(" [ ] ")), Is.True);
+            Assert.That(FormatUtility.MaybeJson(Encoding.UTF8.GetBytes("\r\n{\t}\r\n")), Is.True);
+            Assert.That(FormatUtility.MaybeJson(Encoding.UTF8.GetBytes("\r\n[\t]\r\n")), Is.True);
 
-            Assert.False(FormatUtility.MaybeJson(default(string)!));
-            Assert.False(FormatUtility.MaybeJson(""));
-            Assert.False(FormatUtility.MaybeJson(" "));
-            Assert.False(FormatUtility.MaybeJson("{"));
-            Assert.False(FormatUtility.MaybeJson("}"));
-            Assert.False(FormatUtility.MaybeJson("["));
-            Assert.False(FormatUtility.MaybeJson("]"));
-            Assert.False(FormatUtility.MaybeJson("{]"));
-            Assert.False(FormatUtility.MaybeJson("[}"));
+            Assert.That(FormatUtility.MaybeJson(default(string)!), Is.False);
+            Assert.That(FormatUtility.MaybeJson(""), Is.False);
+            Assert.That(FormatUtility.MaybeJson(" "), Is.False);
+            Assert.That(FormatUtility.MaybeJson("{"), Is.False);
+            Assert.That(FormatUtility.MaybeJson("}"), Is.False);
+            Assert.That(FormatUtility.MaybeJson("["), Is.False);
+            Assert.That(FormatUtility.MaybeJson("]"), Is.False);
+            Assert.That(FormatUtility.MaybeJson("{]"), Is.False);
+            Assert.That(FormatUtility.MaybeJson("[}"), Is.False);
 
-            Assert.False(FormatUtility.MaybeJson(default(byte[])!));
-            Assert.False(FormatUtility.MaybeJson(Encoding.UTF8.GetBytes("")));
-            Assert.False(FormatUtility.MaybeJson(Encoding.UTF8.GetBytes(" ")));
-            Assert.False(FormatUtility.MaybeJson(Encoding.UTF8.GetBytes("{")));
-            Assert.False(FormatUtility.MaybeJson(Encoding.UTF8.GetBytes("}")));
-            Assert.False(FormatUtility.MaybeJson(Encoding.UTF8.GetBytes("[")));
-            Assert.False(FormatUtility.MaybeJson(Encoding.UTF8.GetBytes("]")));
-            Assert.False(FormatUtility.MaybeJson(Encoding.UTF8.GetBytes("{]")));
-            Assert.False(FormatUtility.MaybeJson(Encoding.UTF8.GetBytes("[}")));
+            Assert.That(FormatUtility.MaybeJson(default(byte[])!), Is.False);
+            Assert.That(FormatUtility.MaybeJson(Encoding.UTF8.GetBytes("")), Is.False);
+            Assert.That(FormatUtility.MaybeJson(Encoding.UTF8.GetBytes(" ")), Is.False);
+            Assert.That(FormatUtility.MaybeJson(Encoding.UTF8.GetBytes("{")), Is.False);
+            Assert.That(FormatUtility.MaybeJson(Encoding.UTF8.GetBytes("}")), Is.False);
+            Assert.That(FormatUtility.MaybeJson(Encoding.UTF8.GetBytes("[")), Is.False);
+            Assert.That(FormatUtility.MaybeJson(Encoding.UTF8.GetBytes("]")), Is.False);
+            Assert.That(FormatUtility.MaybeJson(Encoding.UTF8.GetBytes("{]")), Is.False);
+            Assert.That(FormatUtility.MaybeJson(Encoding.UTF8.GetBytes("[}")), Is.False);
         }
 
         [Test(Description = "测试用例：工具类之 `MaybeXml`")]
         public void TestFormatUtility_MaybeXml()
         {
-            Assert.True(FormatUtility.MaybeXml("<xml></xml>"));
-            Assert.True(FormatUtility.MaybeXml(" <xml> </xml> "));
-            Assert.True(FormatUtility.MaybeXml("\r\n<xml>\t</xml>\r\n"));
+            Assert.That(FormatUtility.MaybeXml("<xml></xml>"));
+            Assert.That(FormatUtility.MaybeXml(" <xml> </xml> "));
+            Assert.That(FormatUtility.MaybeXml("\r\n<xml>\t</xml>\r\n"));
 
-            Assert.True(FormatUtility.MaybeXml(Encoding.UTF8.GetBytes("<xml></xml>")));
-            Assert.True(FormatUtility.MaybeXml(Encoding.UTF8.GetBytes(" <xml> </xml> ")));
-            Assert.True(FormatUtility.MaybeXml(Encoding.UTF8.GetBytes("\r\n<xml>\t</xml>\r\n")));
+            Assert.That(FormatUtility.MaybeXml(Encoding.UTF8.GetBytes("<xml></xml>")));
+            Assert.That(FormatUtility.MaybeXml(Encoding.UTF8.GetBytes(" <xml> </xml> ")));
+            Assert.That(FormatUtility.MaybeXml(Encoding.UTF8.GetBytes("\r\n<xml>\t</xml>\r\n")));
 
-            Assert.False(FormatUtility.MaybeXml(default(string)!));
-            Assert.False(FormatUtility.MaybeXml(""));
-            Assert.False(FormatUtility.MaybeXml(" "));
-            Assert.False(FormatUtility.MaybeXml("<"));
-            Assert.False(FormatUtility.MaybeXml(">"));
-            Assert.False(FormatUtility.MaybeXml("<<"));
-            Assert.False(FormatUtility.MaybeXml(">>"));
-            Assert.False(FormatUtility.MaybeXml("<>"));
+            Assert.That(FormatUtility.MaybeXml(default(string)!), Is.False);
+            Assert.That(FormatUtility.MaybeXml(""), Is.False);
+            Assert.That(FormatUtility.MaybeXml(" "), Is.False);
+            Assert.That(FormatUtility.MaybeXml("<"), Is.False);
+            Assert.That(FormatUtility.MaybeXml(">"), Is.False);
+            Assert.That(FormatUtility.MaybeXml("<<"), Is.False);
+            Assert.That(FormatUtility.MaybeXml(">>"), Is.False);
+            Assert.That(FormatUtility.MaybeXml("<>"), Is.False);
 
-            Assert.False(FormatUtility.MaybeXml(default(byte[])!));
-            Assert.False(FormatUtility.MaybeXml(Encoding.UTF8.GetBytes("")));
-            Assert.False(FormatUtility.MaybeXml(Encoding.UTF8.GetBytes(" ")));
-            Assert.False(FormatUtility.MaybeXml(Encoding.UTF8.GetBytes("<")));
-            Assert.False(FormatUtility.MaybeXml(Encoding.UTF8.GetBytes(">")));
-            Assert.False(FormatUtility.MaybeXml(Encoding.UTF8.GetBytes("<<")));
-            Assert.False(FormatUtility.MaybeXml(Encoding.UTF8.GetBytes(">>")));
-            Assert.False(FormatUtility.MaybeXml(Encoding.UTF8.GetBytes("<>")));
+            Assert.That(FormatUtility.MaybeXml(default(byte[])!), Is.False);
+            Assert.That(FormatUtility.MaybeXml(Encoding.UTF8.GetBytes("")), Is.False);
+            Assert.That(FormatUtility.MaybeXml(Encoding.UTF8.GetBytes(" ")), Is.False);
+            Assert.That(FormatUtility.MaybeXml(Encoding.UTF8.GetBytes("<")), Is.False);
+            Assert.That(FormatUtility.MaybeXml(Encoding.UTF8.GetBytes(">")), Is.False);
+            Assert.That(FormatUtility.MaybeXml(Encoding.UTF8.GetBytes("<<")), Is.False);
+            Assert.That(FormatUtility.MaybeXml(Encoding.UTF8.GetBytes(">>")), Is.False);
+            Assert.That(FormatUtility.MaybeXml(Encoding.UTF8.GetBytes("<>")), Is.False);
         }
     }
 }

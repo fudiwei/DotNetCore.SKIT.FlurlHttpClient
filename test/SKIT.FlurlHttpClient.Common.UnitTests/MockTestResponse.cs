@@ -16,7 +16,7 @@ namespace SKIT.FlurlHttpClient
 
         public override bool IsSuccessful()
         {
-            return RawStatus >= 200 && RawStatus < 300 && ReturnValue;
+            return GetRawStatus() >= 200 && GetRawStatus() < 300 && ReturnValue;
         }
     }
 }

@@ -26,14 +26,15 @@ namespace SKIT.FlurlHttpClient.UnitTests.TestCases.Configuration
         private static void TestConfigureFormUrlEncodedSerializer(JsonifiedFormUrlEncodedSerializer formUrlEncodedSerializer)
         {
             using var client = new MockTestClient();
-            Assert.IsNotNull(client.FormUrlEncodedSerializer);
+            Assert.That(client.FormUrlEncodedSerializer, Is.Not.Null);
 
             client.Configure(settings => settings.FormUrlEncodedSerializer = formUrlEncodedSerializer);
-            Assert.AreSame(client.FormUrlEncodedSerializer, formUrlEncodedSerializer);
+            Assert.That(client.FormUrlEncodedSerializer, Is.SameAs(formUrlEncodedSerializer));
 
             // 模拟请求：复杂字典
+            Assert.Multiple(() =>
             {
-                var mockObj = new SortedDictionary<string, object?>(new Dictionary<string, object?>()
+                var expectObj = new SortedDictionary<string, object?>(new Dictionary<string, object?>()
                 {
                     { "integer", 12345 },
                     { "string", "abcdef"  },
@@ -44,20 +45,21 @@ namespace SKIT.FlurlHttpClient.UnitTests.TestCases.Configuration
                 }, StringComparer.Ordinal);
 
                 const string EXPECTED = "array[0]=%E4%BD%A0%E5%A5%BD&array[1]=%E4%B8%96%E7%95%8C&boolean=true&guid=12345678-ffff-ffff-ffff-123456789abc&integer=12345&object.key=value&string=abcdef";
-                StringAssert.AreEqualIgnoringCase(EXPECTED, client.FormUrlEncodedSerializer.Serialize(mockObj));
-            }
+                Assert.That(client.FormUrlEncodedSerializer.Serialize(expectObj), Is.EqualTo(EXPECTED).IgnoreCase);
+            });
 
             // 模拟请求：带有自定义 JsonConverter 的对象
+            Assert.Multiple(() =>
             {
-                var mockObj = new MockObject()
+                var expectObj = new MockObject()
                 {
                     PropertyAsStringArray = new string[] { "你好", "世界" },
                     PropertyAsDateTimeOffset = new DateTimeOffset(2006, 1, 2, 15, 4, 5, TimeSpan.FromHours(8))
                 };
 
                 const string EXPECTED = "PropertyAsStringArray=%E4%BD%A0%E5%A5%BD%2C%E4%B8%96%E7%95%8C&PropertyAsDateTimeOffset=2006-01-02+15%3A04%3A05";
-                StringAssert.AreEqualIgnoringCase(EXPECTED, client.FormUrlEncodedSerializer.Serialize(mockObj));
-            }
+                Assert.That(client.FormUrlEncodedSerializer.Serialize(expectObj), Is.EqualTo(EXPECTED).IgnoreCase);
+            });
         }
 
         [Test(Description = "测试用例：配置项之 FormUrlEncoded 序列化器")]
