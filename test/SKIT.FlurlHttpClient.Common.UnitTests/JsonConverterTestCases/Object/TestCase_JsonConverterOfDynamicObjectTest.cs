@@ -56,36 +56,41 @@ namespace SKIT.FlurlHttpClient.UnitTests.TestCases.JsonConverter
 
         private static void TestCustomJsonConverter(IJsonSerializer jsonSerializer)
         {
-            var mockObj1 = new MockObject()
+            Assert.Multiple(() =>
             {
-                NullProperty = null,
-                BooleanProperty = true,
-                NumberProperty = 123456,
-                StringProperty = "abc",
-                GuidProperty = Guid.Parse("11112222-3333-4444-5555-666677778888"),
-                ArrayProperty =  new object?[] { null, true, 123456, "abc" },
-                ListProperty = new List<object?>() { null, true, 123456, "abc" },
-                DictionaryProperty = new Dictionary<string, object?>() { { "k0", null }, { "k1", true }, { "k2", 123456 }, { "k3", "abc" } },
-                AnonymousObjectProperty = new { k0 = default(object), k1 = true, k2 = 123456, k3 = "abc" },
-                ObjectWithCustomConverterProperty = new MockNestedObject()
+                var expectObj = new MockObject()
                 {
+                    NullProperty = null,
                     BooleanProperty = true,
-                    BooleanPropertyWithConverter = true
-                }
-            };
-            var actualJson1 = jsonSerializer.Serialize(mockObj1);
-            var actualObj1 = jsonSerializer.Deserialize<MockObject>(actualJson1);
-            Assert.IsNull(actualObj1.NullProperty);
-            Assert.IsNotNull(actualObj1.BooleanProperty);
-            Assert.IsNotNull(actualObj1.NumberProperty);
-            Assert.IsNotNull(actualObj1.StringProperty);
-            Assert.IsNotNull(actualObj1.GuidProperty);
-            Assert.IsNotNull(actualObj1.ArrayProperty);
-            Assert.IsNotNull(actualObj1.ListProperty);
-            Assert.IsNotNull(actualObj1.DictionaryProperty);
-            Assert.IsNotNull(actualObj1.AnonymousObjectProperty);
-            Assert.IsNotNull(actualObj1.ObjectWithCustomConverterProperty);
-            StringAssert.Contains("{\"BooleanProperty\":true,\"BooleanPropertyWithConverter\":1}", actualJson1);
+                    NumberProperty = 123456,
+                    StringProperty = "abc",
+                    GuidProperty = Guid.Parse("11112222-3333-4444-5555-666677778888"),
+                    ArrayProperty = new object?[] { null, true, 123456, "abc" },
+                    ListProperty = new List<object?>() { null, true, 123456, "abc" },
+                    DictionaryProperty = new Dictionary<string, object?>() { { "k0", null }, { "k1", true }, { "k2", 123456 }, { "k3", "abc" } },
+                    AnonymousObjectProperty = new { k0 = default(object), k1 = true, k2 = 123456, k3 = "abc" },
+                    ObjectWithCustomConverterProperty = new MockNestedObject()
+                    {
+                        BooleanProperty = true,
+                        BooleanPropertyWithConverter = true
+                    }
+                };
+                var actualJson = jsonSerializer.Serialize(expectObj);
+                var actualObj = jsonSerializer.Deserialize<MockObject>(actualJson);
+
+                Assert.That(actualJson, Does.Contain("{\"BooleanProperty\":true,\"BooleanPropertyWithConverter\":1}"));
+
+                Assert.That(actualObj.NullProperty, Is.Null);
+                Assert.That(actualObj.BooleanProperty, Is.Not.Null);
+                Assert.That(actualObj.NumberProperty, Is.Not.Null);
+                Assert.That(actualObj.StringProperty, Is.Not.Null);
+                Assert.That(actualObj.GuidProperty, Is.Not.Null);
+                Assert.That(actualObj.ArrayProperty, Is.Not.Null);
+                Assert.That(actualObj.ListProperty, Is.Not.Null);
+                Assert.That(actualObj.DictionaryProperty, Is.Not.Null);
+                Assert.That(actualObj.AnonymousObjectProperty, Is.Not.Null);
+                Assert.That(actualObj.ObjectWithCustomConverterProperty, Is.Not.Null);
+            });
         }
 
         [Test(Description = "测试用例：自定义 Newtosoft.Json.JsonConverter 之 DynamicObjectConverter")]

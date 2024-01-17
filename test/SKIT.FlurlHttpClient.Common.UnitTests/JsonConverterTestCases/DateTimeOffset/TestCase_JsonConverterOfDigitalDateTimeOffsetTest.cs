@@ -26,19 +26,29 @@ namespace SKIT.FlurlHttpClient.UnitTests.TestCases.JsonConverter
         {
             DateTimeOffset DATETIME = new DateTimeOffset(2006, 1, 2, 15, 4, 5, TimeSpan.FromHours(8));
 
-            var mockObj1 = new MockObject() { Property = DATETIME, NullableProperty = null };
-            var actualJson1 = jsonSerializer.Serialize(mockObj1);
-            var actualObj1 = jsonSerializer.Deserialize<MockObject>(actualJson1);
-            Assert.AreEqual("{\"Property\":\"20060102150405\"}", actualJson1);
-            Assert.AreEqual(mockObj1.Property, actualObj1.Property);
-            Assert.AreEqual(mockObj1.NullableProperty, actualObj1.NullableProperty);
+            Assert.Multiple(() =>
+            {
+                var expectObj = new MockObject() { Property = DATETIME, NullableProperty = null };
+                var actualJson = jsonSerializer.Serialize(expectObj);
+                var actualObj = jsonSerializer.Deserialize<MockObject>(actualJson);
 
-            var mockObj2 = new MockObject() { Property = DATETIME, NullableProperty = DATETIME };
-            var actualJson2 = jsonSerializer.Serialize(mockObj2);
-            var actualObj2 = jsonSerializer.Deserialize<MockObject>(actualJson2);
-            Assert.AreEqual("{\"Property\":\"20060102150405\",\"NullableProperty\":\"20060102150405\"}", actualJson2);
-            Assert.AreEqual(mockObj2.Property, actualObj2.Property);
-            Assert.AreEqual(mockObj2.NullableProperty, actualObj2.NullableProperty);
+                Assert.That(actualJson, Is.EqualTo("{\"Property\":\"20060102150405\"}"));
+
+                Assert.That(actualObj.Property, Is.EqualTo(expectObj.Property));
+                Assert.That(actualObj.NullableProperty, Is.EqualTo(expectObj.NullableProperty));
+            });
+
+            Assert.Multiple(() =>
+            {
+                var expectObj = new MockObject() { Property = DATETIME, NullableProperty = DATETIME };
+                var actualJson = jsonSerializer.Serialize(expectObj);
+                var actualObj = jsonSerializer.Deserialize<MockObject>(actualJson);
+
+                Assert.That(actualJson, Is.EqualTo("{\"Property\":\"20060102150405\",\"NullableProperty\":\"20060102150405\"}"));
+
+                Assert.That(actualObj.Property, Is.EqualTo(expectObj.Property));
+                Assert.That(actualObj.NullableProperty, Is.EqualTo(expectObj.NullableProperty));
+            });
         }
 
         [Test(Description = "测试用例：自定义 Newtosoft.Json.JsonConverter 之 RegularDateTimeOffsetConverter")]

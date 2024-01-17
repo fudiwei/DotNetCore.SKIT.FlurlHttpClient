@@ -143,101 +143,111 @@ namespace SKIT.FlurlHttpClient.UnitTests.TestCases.JsonConverter
 
         private static void TestCustomJsonConverter(IJsonSerializer jsonSerializer)
         {
-            var mockObj1 = new MockObject()
+            Assert.Multiple(() =>
             {
-                PropertyAsByte = new byte[] { byte.MinValue, byte.MaxValue },
-                PropertyAsSByte = new sbyte[] { sbyte.MinValue, sbyte.MaxValue },
-                PropertyAsInt16 = new short[] { short.MinValue, short.MaxValue },
-                PropertyAsUInt16 = new ushort[] { ushort.MinValue, ushort.MaxValue },
-                PropertyAsInt32 = new int[] { int.MinValue, int.MaxValue },
-                PropertyAsUInt32 = new uint[] { uint.MinValue, uint.MaxValue },
-                PropertyAsInt64 = new long[] { long.MinValue, long.MaxValue },
-                PropertyAsUInt64 = new ulong[] { ulong.MinValue, ulong.MaxValue },
-                PropertyAsFloat = new float[] { -1.23F, 1.23F },
-                PropertyAsDouble = new double[] { -1.23D, 1.23D },
-                PropertyAsDecimal = new decimal[] { -1.23M, 1.23M }
-            };
-            var actualJson1 = jsonSerializer.Serialize(mockObj1);
-            var actualObj1 = jsonSerializer.Deserialize<MockObject>(actualJson1);
-            StringAssert.Contains("\"PropertyAsByte\":\"0;255\"", actualJson1);
-            StringAssert.Contains("\"PropertyAsSByte\":\"-128;127\"", actualJson1);
-            StringAssert.Contains("\"PropertyAsInt16\":\"-32768;32767\"", actualJson1);
-            StringAssert.Contains("\"PropertyAsUInt16\":\"0;65535\"", actualJson1);
-            StringAssert.Contains("\"PropertyAsInt32\":\"-2147483648;2147483647\"", actualJson1);
-            StringAssert.Contains("\"PropertyAsUInt32\":\"0;4294967295\"", actualJson1);
-            StringAssert.Contains("\"PropertyAsInt64\":\"-9223372036854775808;9223372036854775807\"", actualJson1);
-            StringAssert.Contains("\"PropertyAsUInt64\":\"0;18446744073709551615\"", actualJson1);
-            StringAssert.Contains("\"PropertyAsDecimal\":\"-1.23;1.23\"", actualJson1);
-            CollectionAssert.AreEqual(mockObj1.PropertyAsByte, actualObj1.PropertyAsByte);
-            CollectionAssert.AreEqual(mockObj1.PropertyAsSByte, actualObj1.PropertyAsSByte);
-            CollectionAssert.AreEqual(mockObj1.PropertyAsInt16, actualObj1.PropertyAsInt16);
-            CollectionAssert.AreEqual(mockObj1.PropertyAsUInt16, actualObj1.PropertyAsUInt16);
-            CollectionAssert.AreEqual(mockObj1.PropertyAsInt32, actualObj1.PropertyAsInt32);
-            CollectionAssert.AreEqual(mockObj1.PropertyAsUInt32, actualObj1.PropertyAsUInt32);
-            CollectionAssert.AreEqual(mockObj1.PropertyAsInt64, actualObj1.PropertyAsInt64);
-            CollectionAssert.AreEqual(mockObj1.PropertyAsUInt64, actualObj1.PropertyAsUInt64);
-            CollectionAssert.AreEqual(mockObj1.PropertyAsFloat, actualObj1.PropertyAsFloat);
-            CollectionAssert.AreEqual(mockObj1.PropertyAsDouble, actualObj1.PropertyAsDouble);
-            CollectionAssert.AreEqual(mockObj1.PropertyAsDecimal, actualObj1.PropertyAsDecimal);
-            CollectionAssert.AreEqual(mockObj1.PropertyAsNullableByte, actualObj1.PropertyAsNullableByte);
-            CollectionAssert.AreEqual(mockObj1.PropertyAsNullableSByte, actualObj1.PropertyAsNullableSByte);
-            CollectionAssert.AreEqual(mockObj1.PropertyAsNullableInt16, actualObj1.PropertyAsNullableInt16);
-            CollectionAssert.AreEqual(mockObj1.PropertyAsNullableUInt16, actualObj1.PropertyAsNullableUInt16);
-            CollectionAssert.AreEqual(mockObj1.PropertyAsNullableInt32, actualObj1.PropertyAsNullableInt32);
-            CollectionAssert.AreEqual(mockObj1.PropertyAsNullableUInt32, actualObj1.PropertyAsNullableUInt32);
-            CollectionAssert.AreEqual(mockObj1.PropertyAsNullableInt64, actualObj1.PropertyAsNullableInt64);
-            CollectionAssert.AreEqual(mockObj1.PropertyAsNullableUInt64, actualObj1.PropertyAsNullableUInt64);
-            CollectionAssert.AreEqual(mockObj1.PropertyAsNullableFloat, actualObj1.PropertyAsNullableFloat);
-            CollectionAssert.AreEqual(mockObj1.PropertyAsNullableDouble, actualObj1.PropertyAsNullableDouble);
-            CollectionAssert.AreEqual(mockObj1.PropertyAsNullableDecimal, actualObj1.PropertyAsNullableDecimal);
+                var expectObj = new MockObject()
+                {
+                    PropertyAsByte = new byte[] { byte.MinValue, byte.MaxValue },
+                    PropertyAsSByte = new sbyte[] { sbyte.MinValue, sbyte.MaxValue },
+                    PropertyAsInt16 = new short[] { short.MinValue, short.MaxValue },
+                    PropertyAsUInt16 = new ushort[] { ushort.MinValue, ushort.MaxValue },
+                    PropertyAsInt32 = new int[] { int.MinValue, int.MaxValue },
+                    PropertyAsUInt32 = new uint[] { uint.MinValue, uint.MaxValue },
+                    PropertyAsInt64 = new long[] { long.MinValue, long.MaxValue },
+                    PropertyAsUInt64 = new ulong[] { ulong.MinValue, ulong.MaxValue },
+                    PropertyAsFloat = new float[] { -1.23F, 1.23F },
+                    PropertyAsDouble = new double[] { -1.23D, 1.23D },
+                    PropertyAsDecimal = new decimal[] { -1.23M, 1.23M }
+                };
+                var actualJson = jsonSerializer.Serialize(expectObj);
+                var actualObj = jsonSerializer.Deserialize<MockObject>(actualJson);
 
-            var mockObj2 = new MockObject()
+                Assert.That(actualJson, Does.Contain("\"PropertyAsByte\":\"0;255\""));
+                Assert.That(actualJson, Does.Contain("\"PropertyAsSByte\":\"-128;127\""));
+                Assert.That(actualJson, Does.Contain("\"PropertyAsInt16\":\"-32768;32767\""));
+                Assert.That(actualJson, Does.Contain("\"PropertyAsUInt16\":\"0;65535\""));
+                Assert.That(actualJson, Does.Contain("\"PropertyAsInt32\":\"-2147483648;2147483647\""));
+                Assert.That(actualJson, Does.Contain("\"PropertyAsUInt32\":\"0;4294967295\""));
+                Assert.That(actualJson, Does.Contain("\"PropertyAsInt64\":\"-9223372036854775808;9223372036854775807\""));
+                Assert.That(actualJson, Does.Contain("\"PropertyAsUInt64\":\"0;18446744073709551615\""));
+                Assert.That(actualJson, Does.Contain("\"PropertyAsDecimal\":\"-1.23;1.23\""));
+
+                Assert.That(actualObj.PropertyAsByte, Is.EqualTo(expectObj.PropertyAsByte));
+                Assert.That(actualObj.PropertyAsSByte, Is.EqualTo(expectObj.PropertyAsSByte));
+                Assert.That(actualObj.PropertyAsInt16, Is.EqualTo(expectObj.PropertyAsInt16));
+                Assert.That(actualObj.PropertyAsUInt16, Is.EqualTo(expectObj.PropertyAsUInt16));
+                Assert.That(actualObj.PropertyAsInt32, Is.EqualTo(expectObj.PropertyAsInt32));
+                Assert.That(actualObj.PropertyAsUInt32, Is.EqualTo(expectObj.PropertyAsUInt32));
+                Assert.That(actualObj.PropertyAsInt64, Is.EqualTo(expectObj.PropertyAsInt64));
+                Assert.That(actualObj.PropertyAsUInt64, Is.EqualTo(expectObj.PropertyAsUInt64));
+                Assert.That(actualObj.PropertyAsFloat, Is.EqualTo(expectObj.PropertyAsFloat));
+                Assert.That(actualObj.PropertyAsDouble, Is.EqualTo(expectObj.PropertyAsDouble));
+                Assert.That(actualObj.PropertyAsDecimal, Is.EqualTo(expectObj.PropertyAsDecimal));
+                Assert.That(actualObj.PropertyAsNullableByte, Is.EqualTo(expectObj.PropertyAsNullableByte));
+                Assert.That(actualObj.PropertyAsNullableSByte, Is.EqualTo(expectObj.PropertyAsNullableSByte));
+                Assert.That(actualObj.PropertyAsNullableInt16, Is.EqualTo(expectObj.PropertyAsNullableInt16));
+                Assert.That(actualObj.PropertyAsNullableUInt16, Is.EqualTo(expectObj.PropertyAsNullableUInt16));
+                Assert.That(actualObj.PropertyAsNullableInt32, Is.EqualTo(expectObj.PropertyAsNullableInt32));
+                Assert.That(actualObj.PropertyAsNullableUInt32, Is.EqualTo(expectObj.PropertyAsNullableUInt32));
+                Assert.That(actualObj.PropertyAsNullableInt64, Is.EqualTo(expectObj.PropertyAsNullableInt64));
+                Assert.That(actualObj.PropertyAsNullableUInt64, Is.EqualTo(expectObj.PropertyAsNullableUInt64));
+                Assert.That(actualObj.PropertyAsNullableFloat, Is.EqualTo(expectObj.PropertyAsNullableFloat));
+                Assert.That(actualObj.PropertyAsNullableDouble, Is.EqualTo(expectObj.PropertyAsNullableDouble));
+                Assert.That(actualObj.PropertyAsNullableDecimal, Is.EqualTo(expectObj.PropertyAsNullableDecimal));
+            });
+
+            Assert.Multiple(() =>
             {
-                PropertyAsNullableByte = new byte?[] { null, byte.MinValue, byte.MaxValue },
-                PropertyAsNullableSByte = new sbyte?[] { null, sbyte.MinValue, sbyte.MaxValue },
-                PropertyAsNullableInt16 = new short?[] { null, short.MinValue, short.MaxValue },
-                PropertyAsNullableUInt16 = new ushort?[] { null, ushort.MinValue, ushort.MaxValue },
-                PropertyAsNullableInt32 = new int?[] { null, int.MinValue, int.MaxValue },
-                PropertyAsNullableUInt32 = new uint?[] { null, uint.MinValue, uint.MaxValue },
-                PropertyAsNullableInt64 = new long?[] { null, long.MinValue, long.MaxValue },
-                PropertyAsNullableUInt64 = new ulong?[] { null, ulong.MinValue, ulong.MaxValue },
-                PropertyAsNullableFloat = new float?[] { null, -1.23F, 1.23F, float.NaN, float.PositiveInfinity, float.NegativeInfinity },
-                PropertyAsNullableDouble = new double?[] { null, -1.23D, 1.23D, double.NaN, double.PositiveInfinity, double.NegativeInfinity },
-                PropertyAsNullableDecimal = new decimal?[] { null, -1.23M, 1.23M }
-            };
-            var actualJson2 = jsonSerializer.Serialize(mockObj2);
-            var actualObj2 = jsonSerializer.Deserialize<MockObject>(actualJson2);
-            StringAssert.Contains("\"PropertyAsNullableByte\":\";0;255\"", actualJson2);
-            StringAssert.Contains("\"PropertyAsNullableSByte\":\";-128;127\"", actualJson2);
-            StringAssert.Contains("\"PropertyAsNullableInt16\":\";-32768;32767\"", actualJson2);
-            StringAssert.Contains("\"PropertyAsNullableUInt16\":\";0;65535\"", actualJson2);
-            StringAssert.Contains("\"PropertyAsNullableInt32\":\";-2147483648;2147483647\"", actualJson2);
-            StringAssert.Contains("\"PropertyAsNullableUInt32\":\";0;4294967295\"", actualJson2);
-            StringAssert.Contains("\"PropertyAsNullableInt64\":\";-9223372036854775808;9223372036854775807\"", actualJson2);
-            StringAssert.Contains("\"PropertyAsNullableUInt64\":\";0;18446744073709551615\"", actualJson2);
-            StringAssert.Contains("\"PropertyAsNullableDecimal\":\";-1.23;1.23\"", actualJson2);
-            CollectionAssert.AreEqual(mockObj2.PropertyAsByte, actualObj2.PropertyAsByte);
-            CollectionAssert.AreEqual(mockObj2.PropertyAsSByte, actualObj2.PropertyAsSByte);
-            CollectionAssert.AreEqual(mockObj2.PropertyAsInt16, actualObj2.PropertyAsInt16);
-            CollectionAssert.AreEqual(mockObj2.PropertyAsUInt16, actualObj2.PropertyAsUInt16);
-            CollectionAssert.AreEqual(mockObj2.PropertyAsInt32, actualObj2.PropertyAsInt32);
-            CollectionAssert.AreEqual(mockObj2.PropertyAsUInt32, actualObj2.PropertyAsUInt32);
-            CollectionAssert.AreEqual(mockObj2.PropertyAsInt64, actualObj2.PropertyAsInt64);
-            CollectionAssert.AreEqual(mockObj2.PropertyAsUInt64, actualObj2.PropertyAsUInt64);
-            CollectionAssert.AreEqual(mockObj2.PropertyAsFloat, actualObj2.PropertyAsFloat);
-            CollectionAssert.AreEqual(mockObj2.PropertyAsDouble, actualObj2.PropertyAsDouble);
-            CollectionAssert.AreEqual(mockObj2.PropertyAsDecimal, actualObj2.PropertyAsDecimal);
-            CollectionAssert.AreEqual(mockObj2.PropertyAsNullableByte, actualObj2.PropertyAsNullableByte);
-            CollectionAssert.AreEqual(mockObj2.PropertyAsNullableSByte, actualObj2.PropertyAsNullableSByte);
-            CollectionAssert.AreEqual(mockObj2.PropertyAsNullableInt16, actualObj2.PropertyAsNullableInt16);
-            CollectionAssert.AreEqual(mockObj2.PropertyAsNullableUInt16, actualObj2.PropertyAsNullableUInt16);
-            CollectionAssert.AreEqual(mockObj2.PropertyAsNullableInt32, actualObj2.PropertyAsNullableInt32);
-            CollectionAssert.AreEqual(mockObj2.PropertyAsNullableUInt32, actualObj2.PropertyAsNullableUInt32);
-            CollectionAssert.AreEqual(mockObj2.PropertyAsNullableInt64, actualObj2.PropertyAsNullableInt64);
-            CollectionAssert.AreEqual(mockObj2.PropertyAsNullableUInt64, actualObj2.PropertyAsNullableUInt64);
-            CollectionAssert.AreEqual(mockObj2.PropertyAsNullableFloat, actualObj2.PropertyAsNullableFloat);
-            CollectionAssert.AreEqual(mockObj2.PropertyAsNullableDouble, actualObj2.PropertyAsNullableDouble);
-            CollectionAssert.AreEqual(mockObj2.PropertyAsNullableDecimal, actualObj2.PropertyAsNullableDecimal);
+                var expectObj = new MockObject()
+                {
+                    PropertyAsNullableByte = new byte?[] { null, byte.MinValue, byte.MaxValue },
+                    PropertyAsNullableSByte = new sbyte?[] { null, sbyte.MinValue, sbyte.MaxValue },
+                    PropertyAsNullableInt16 = new short?[] { null, short.MinValue, short.MaxValue },
+                    PropertyAsNullableUInt16 = new ushort?[] { null, ushort.MinValue, ushort.MaxValue },
+                    PropertyAsNullableInt32 = new int?[] { null, int.MinValue, int.MaxValue },
+                    PropertyAsNullableUInt32 = new uint?[] { null, uint.MinValue, uint.MaxValue },
+                    PropertyAsNullableInt64 = new long?[] { null, long.MinValue, long.MaxValue },
+                    PropertyAsNullableUInt64 = new ulong?[] { null, ulong.MinValue, ulong.MaxValue },
+                    PropertyAsNullableFloat = new float?[] { null, -1.23F, 1.23F, float.NaN, float.PositiveInfinity, float.NegativeInfinity },
+                    PropertyAsNullableDouble = new double?[] { null, -1.23D, 1.23D, double.NaN, double.PositiveInfinity, double.NegativeInfinity },
+                    PropertyAsNullableDecimal = new decimal?[] { null, -1.23M, 1.23M }
+                };
+                var actualJson = jsonSerializer.Serialize(expectObj);
+                var actualObj = jsonSerializer.Deserialize<MockObject>(actualJson);
+
+                Assert.That(actualJson, Does.Contain("\"PropertyAsNullableByte\":\";0;255\""));
+                Assert.That(actualJson, Does.Contain("\"PropertyAsNullableSByte\":\";-128;127\""));
+                Assert.That(actualJson, Does.Contain("\"PropertyAsNullableInt16\":\";-32768;32767\""));
+                Assert.That(actualJson, Does.Contain("\"PropertyAsNullableUInt16\":\";0;65535\""));
+                Assert.That(actualJson, Does.Contain("\"PropertyAsNullableInt32\":\";-2147483648;2147483647\""));
+                Assert.That(actualJson, Does.Contain("\"PropertyAsNullableUInt32\":\";0;4294967295\""));
+                Assert.That(actualJson, Does.Contain("\"PropertyAsNullableInt64\":\";-9223372036854775808;9223372036854775807\""));
+                Assert.That(actualJson, Does.Contain("\"PropertyAsNullableUInt64\":\";0;18446744073709551615\""));
+                Assert.That(actualJson, Does.Contain("\"PropertyAsNullableDecimal\":\";-1.23;1.23\""));
+
+                Assert.That(actualObj.PropertyAsByte, Is.EqualTo(expectObj.PropertyAsByte));
+                Assert.That(actualObj.PropertyAsSByte, Is.EqualTo(expectObj.PropertyAsSByte));
+                Assert.That(actualObj.PropertyAsInt16, Is.EqualTo(expectObj.PropertyAsInt16));
+                Assert.That(actualObj.PropertyAsUInt16, Is.EqualTo(expectObj.PropertyAsUInt16));
+                Assert.That(actualObj.PropertyAsInt32, Is.EqualTo(expectObj.PropertyAsInt32));
+                Assert.That(actualObj.PropertyAsUInt32, Is.EqualTo(expectObj.PropertyAsUInt32));
+                Assert.That(actualObj.PropertyAsInt64, Is.EqualTo(expectObj.PropertyAsInt64));
+                Assert.That(actualObj.PropertyAsUInt64, Is.EqualTo(expectObj.PropertyAsUInt64));
+                Assert.That(actualObj.PropertyAsFloat, Is.EqualTo(expectObj.PropertyAsFloat));
+                Assert.That(actualObj.PropertyAsDouble, Is.EqualTo(expectObj.PropertyAsDouble));
+                Assert.That(actualObj.PropertyAsDecimal, Is.EqualTo(expectObj.PropertyAsDecimal));
+                Assert.That(actualObj.PropertyAsNullableByte, Is.EqualTo(expectObj.PropertyAsNullableByte));
+                Assert.That(actualObj.PropertyAsNullableSByte, Is.EqualTo(expectObj.PropertyAsNullableSByte));
+                Assert.That(actualObj.PropertyAsNullableInt16, Is.EqualTo(expectObj.PropertyAsNullableInt16));
+                Assert.That(actualObj.PropertyAsNullableUInt16, Is.EqualTo(expectObj.PropertyAsNullableUInt16));
+                Assert.That(actualObj.PropertyAsNullableInt32, Is.EqualTo(expectObj.PropertyAsNullableInt32));
+                Assert.That(actualObj.PropertyAsNullableUInt32, Is.EqualTo(expectObj.PropertyAsNullableUInt32));
+                Assert.That(actualObj.PropertyAsNullableInt64, Is.EqualTo(expectObj.PropertyAsNullableInt64));
+                Assert.That(actualObj.PropertyAsNullableUInt64, Is.EqualTo(expectObj.PropertyAsNullableUInt64));
+                Assert.That(actualObj.PropertyAsNullableFloat, Is.EqualTo(expectObj.PropertyAsNullableFloat));
+                Assert.That(actualObj.PropertyAsNullableDouble, Is.EqualTo(expectObj.PropertyAsNullableDouble));
+                Assert.That(actualObj.PropertyAsNullableDecimal, Is.EqualTo(expectObj.PropertyAsNullableDecimal));
+            });
         }
 
         [Test(Description = "测试用例：自定义 Newtosoft.Json.JsonConverter 之 TextualNumberArrayWithSemicolonSplitConverter")]

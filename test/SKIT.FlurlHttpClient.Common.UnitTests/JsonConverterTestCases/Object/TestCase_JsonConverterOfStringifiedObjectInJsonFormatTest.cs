@@ -37,21 +37,26 @@ namespace SKIT.FlurlHttpClient.UnitTests.TestCases.JsonConverter
 
         private static void TestCustomJsonConverter(IJsonSerializer jsonSerializer)
         {
-            var mockObj1 = new MockObject()
+            Assert.Multiple(() =>
             {
-                PlainObject = new MockNestedObject()
+                var expectObj = new MockObject()
                 {
-                    BooleanProperty = true,
-                    BooleanPropertyWithConverter = true
-                },
-                CollectionObject = new List<string>() { "hello world" }
-            };
-            var actualJson1 = jsonSerializer.Serialize(mockObj1);
-            var actualObj1 = jsonSerializer.Deserialize<MockObject>(actualJson1);
-            Assert.AreEqual("{\"PlainObject\":\"{\\\"BooleanProperty\\\":true,\\\"BooleanPropertyWithConverter\\\":1}\",\"CollectionObject\":\"[\\\"hello world\\\"]\"}", actualJson1);
-            Assert.AreEqual(mockObj1.PlainObject!.BooleanProperty, actualObj1.PlainObject?.BooleanProperty);
-            Assert.AreEqual(mockObj1.PlainObject!.BooleanPropertyWithConverter, actualObj1.PlainObject?.BooleanPropertyWithConverter);
-            CollectionAssert.AreEqual(mockObj1.CollectionObject, actualObj1.CollectionObject);
+                    PlainObject = new MockNestedObject()
+                    {
+                        BooleanProperty = true,
+                        BooleanPropertyWithConverter = true
+                    },
+                    CollectionObject = new List<string>() { "hello world" }
+                };
+                var actualJson = jsonSerializer.Serialize(expectObj);
+                var actualObj = jsonSerializer.Deserialize<MockObject>(actualJson);
+
+                Assert.That(actualJson, Is.EqualTo("{\"PlainObject\":\"{\\\"BooleanProperty\\\":true,\\\"BooleanPropertyWithConverter\\\":1}\",\"CollectionObject\":\"[\\\"hello world\\\"]\"}"));
+
+                Assert.That(actualObj.PlainObject?.BooleanProperty, Is.EqualTo(expectObj.PlainObject!.BooleanProperty));
+                Assert.That(actualObj.PlainObject?.BooleanPropertyWithConverter, Is.EqualTo(expectObj.PlainObject!.BooleanPropertyWithConverter));
+                Assert.That(actualObj.CollectionObject, Is.EqualTo(expectObj.CollectionObject));
+            });
         }
 
         [Test(Description = "测试用例：自定义 Newtosoft.Json.JsonConverter 之 TextualObjectInJsonFormatConverter")]

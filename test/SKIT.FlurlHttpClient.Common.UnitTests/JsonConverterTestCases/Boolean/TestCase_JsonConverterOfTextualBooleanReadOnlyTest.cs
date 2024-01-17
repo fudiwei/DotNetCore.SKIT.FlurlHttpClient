@@ -23,34 +23,56 @@ namespace SKIT.FlurlHttpClient.UnitTests.TestCases.JsonConverter
 
         private static void TestCustomJsonConverter(IJsonSerializer jsonSerializer)
         {
-            var mockObj1 = new MockObject() { NullableProperty = null };
-            var actualJson1 = jsonSerializer.Serialize(mockObj1);
-            var actualObj1 = jsonSerializer.Deserialize<MockObject>(actualJson1);
-            Assert.AreEqual("{\"Property\":false}", actualJson1);
-            Assert.AreEqual(mockObj1.Property, actualObj1.Property);
-            Assert.AreEqual(mockObj1.NullableProperty, actualObj1.NullableProperty);
+            Assert.Multiple(() =>
+            {
+                var expectObj = new MockObject() { NullableProperty = null };
+                var actualJson = jsonSerializer.Serialize(expectObj);
+                var actualObj = jsonSerializer.Deserialize<MockObject>(actualJson);
 
-            var mockObj2 = new MockObject() { Property = false, NullableProperty = false };
-            var actualJson2 = jsonSerializer.Serialize(mockObj2);
-            var actualObj2 = jsonSerializer.Deserialize<MockObject>(actualJson2);
-            Assert.AreEqual("{\"Property\":false,\"NullableProperty\":false}", actualJson2);
-            Assert.AreEqual(mockObj2.Property, actualObj2.Property);
-            Assert.AreEqual(mockObj2.Property, jsonSerializer.Deserialize<MockObject>("{\"Property\":false}").Property);
-            Assert.AreEqual(mockObj2.Property, jsonSerializer.Deserialize<MockObject>("{\"Property\":\"false\"}").Property);
-            Assert.AreEqual(mockObj2.NullableProperty, actualObj2.NullableProperty);
-            Assert.AreEqual(mockObj2.NullableProperty, jsonSerializer.Deserialize<MockObject>("{\"NullableProperty\":false}").NullableProperty);
-            Assert.AreEqual(mockObj2.NullableProperty, jsonSerializer.Deserialize<MockObject>("{\"NullableProperty\":\"false\"}").NullableProperty);
+                Assert.That(actualJson, Is.EqualTo("{\"Property\":false}"));
 
-            var mockObj3 = new MockObject() { Property = true, NullableProperty = true };
-            var actualJson3 = jsonSerializer.Serialize(mockObj3);
-            var actualObj3 = jsonSerializer.Deserialize<MockObject>(actualJson3);
-            Assert.AreEqual("{\"Property\":true,\"NullableProperty\":true}", actualJson3);
-            Assert.AreEqual(mockObj3.Property, actualObj3.Property);
-            Assert.AreEqual(mockObj3.Property, jsonSerializer.Deserialize<MockObject>("{\"Property\":true}").Property);
-            Assert.AreEqual(mockObj3.Property, jsonSerializer.Deserialize<MockObject>("{\"Property\":\"true\"}").Property);
-            Assert.AreEqual(mockObj3.NullableProperty, actualObj3.NullableProperty);
-            Assert.AreEqual(mockObj3.NullableProperty, jsonSerializer.Deserialize<MockObject>("{\"NullableProperty\":true}").NullableProperty);
-            Assert.AreEqual(mockObj3.NullableProperty, jsonSerializer.Deserialize<MockObject>("{\"NullableProperty\":\"true\"}").NullableProperty);
+                Assert.That(actualObj.Property, Is.EqualTo(expectObj.Property));
+                Assert.That(jsonSerializer.Deserialize<MockObject>("{\"Property\":\"false\"}").Property, Is.EqualTo(expectObj.Property));
+                Assert.That(jsonSerializer.Deserialize<MockObject>("{}").Property, Is.EqualTo(expectObj.Property));
+
+                Assert.That(actualObj.NullableProperty, Is.EqualTo(expectObj.NullableProperty));
+                Assert.That(jsonSerializer.Deserialize<MockObject>("{\"NullableProperty\":null}").NullableProperty, Is.EqualTo(expectObj.NullableProperty));
+                Assert.That(jsonSerializer.Deserialize<MockObject>("{}").NullableProperty, Is.EqualTo(expectObj.NullableProperty));
+            });
+
+            Assert.Multiple(() =>
+            {
+                var expectObj = new MockObject() { Property = false, NullableProperty = false };
+                var actualJson = jsonSerializer.Serialize(expectObj);
+                var actualObj = jsonSerializer.Deserialize<MockObject>(actualJson);
+
+                Assert.That(actualJson, Is.EqualTo("{\"Property\":false,\"NullableProperty\":false}"));
+
+                Assert.That(actualObj.Property, Is.EqualTo(expectObj.Property));
+                Assert.That(jsonSerializer.Deserialize<MockObject>("{\"Property\":false}").Property, Is.EqualTo(expectObj.Property));
+                Assert.That(jsonSerializer.Deserialize<MockObject>("{\"Property\":\"false\"}").Property, Is.EqualTo(expectObj.Property));
+
+                Assert.That(actualObj.NullableProperty, Is.EqualTo(expectObj.NullableProperty));
+                Assert.That(jsonSerializer.Deserialize<MockObject>("{\"NullableProperty\":false}").NullableProperty, Is.EqualTo(expectObj.NullableProperty));
+                Assert.That(jsonSerializer.Deserialize<MockObject>("{\"NullableProperty\":\"false\"}").NullableProperty, Is.EqualTo(expectObj.NullableProperty));
+            });
+
+            Assert.Multiple(() =>
+            {
+                var expectObj = new MockObject() { Property = true, NullableProperty = true };
+                var actualJson = jsonSerializer.Serialize(expectObj);
+                var actualObj = jsonSerializer.Deserialize<MockObject>(actualJson);
+
+                Assert.That(actualJson, Is.EqualTo("{\"Property\":true,\"NullableProperty\":true}"));
+
+                Assert.That(actualObj.Property, Is.EqualTo(expectObj.Property));
+                Assert.That(jsonSerializer.Deserialize<MockObject>("{\"Property\":true}").Property, Is.EqualTo(expectObj.Property));
+                Assert.That(jsonSerializer.Deserialize<MockObject>("{\"Property\":\"true\"}").Property, Is.EqualTo(expectObj.Property));
+
+                Assert.That(actualObj.NullableProperty, Is.EqualTo(expectObj.NullableProperty));
+                Assert.That(jsonSerializer.Deserialize<MockObject>("{\"NullableProperty\":true}").NullableProperty, Is.EqualTo(expectObj.NullableProperty));
+                Assert.That(jsonSerializer.Deserialize<MockObject>("{\"NullableProperty\":\"true\"}").NullableProperty, Is.EqualTo(expectObj.NullableProperty));
+            });
         }
 
         [Test(Description = "测试用例：自定义 Newtosoft.Json.JsonConverter 之 TextualBooleanReadOnlyConverter")]
