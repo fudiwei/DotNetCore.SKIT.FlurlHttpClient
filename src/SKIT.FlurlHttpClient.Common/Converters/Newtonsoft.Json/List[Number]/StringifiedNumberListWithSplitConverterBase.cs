@@ -1,8 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
 
 namespace Newtonsoft.Json.Converters.Common
 {
@@ -68,24 +66,6 @@ namespace Newtonsoft.Json.Converters.Common
 
         private sealed class InternalStringifiedNumberListWithSplitConverter : JsonConverter
         {
-            private readonly static IDictionary<Type, MethodInfo> _type2ToArrayMethodMap;
-            private readonly static IDictionary<Type, MethodInfo> _type2ToListMethodMap;
-
-            static InternalStringifiedNumberListWithSplitConverter()
-            {
-                _type2ToArrayMethodMap = new Dictionary<Type, MethodInfo>(capacity: TypeHelper.NumberTypes.Length + 1);
-                _type2ToListMethodMap = new Dictionary<Type, MethodInfo>(capacity: TypeHelper.NumberTypes.Length + 1);
-
-                MethodInfo toListBaseMethodInfo = typeof(Enumerable).GetMethod(nameof(Enumerable.ToList), BindingFlags.Public | BindingFlags.Static)!;
-                MethodInfo toArrayBaseMethodInfo = typeof(Enumerable).GetMethod(nameof(Enumerable.ToArray), BindingFlags.Public | BindingFlags.Static)!;
-
-                foreach (Type type in TypeHelper.NumberTypes)
-                {
-                    _type2ToArrayMethodMap[type] = toArrayBaseMethodInfo.MakeGenericMethod(type);
-                    _type2ToListMethodMap[type] = toListBaseMethodInfo.MakeGenericMethod(type);
-                }
-            }
-
             private readonly Type _convertType;
             private readonly JsonConverter _converter;
 
@@ -110,7 +90,7 @@ namespace Newtonsoft.Json.Converters.Common
                 if (array == null)
                     return null;
 
-                return _type2ToListMethodMap[elementType].Invoke(null, new object?[] { array })!;
+                return TypeHelper.ConvertNumberArrayToList(array, elementType);
             }
 
             public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer)
@@ -122,8 +102,7 @@ namespace Newtonsoft.Json.Converters.Common
                 else
                 {
                     Type elementType = _convertType.GetGenericArguments()[0];
-
-                    Array array = (Array)_type2ToArrayMethodMap[elementType].Invoke(null, new object?[] { value })!;
+                    Array array = TypeHelper.ConvertNumberListToArray((IList)value, elementType);
 
                     _converter.WriteJson(writer, array, serializer);
                 }

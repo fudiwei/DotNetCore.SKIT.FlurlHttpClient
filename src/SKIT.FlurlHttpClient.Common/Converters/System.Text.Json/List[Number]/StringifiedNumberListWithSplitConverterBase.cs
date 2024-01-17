@@ -1,6 +1,5 @@
+using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
 
 namespace System.Text.Json.Serialization.Common
 {
@@ -42,24 +41,6 @@ namespace System.Text.Json.Serialization.Common
 
         private sealed class InternalStringifiedNumberListWithSplitConverter : JsonConverter<object?>
         {
-            private readonly static IDictionary<Type, MethodInfo> _type2ToArrayMethodMap;
-            private readonly static IDictionary<Type, MethodInfo> _type2ToListMethodMap;
-
-            static InternalStringifiedNumberListWithSplitConverter()
-            {
-                _type2ToArrayMethodMap = new Dictionary<Type, MethodInfo>(capacity: TypeHelper.NumberTypes.Length + 1);
-                _type2ToListMethodMap = new Dictionary<Type, MethodInfo>(capacity: TypeHelper.NumberTypes.Length + 1);
-
-                MethodInfo toListBaseMethodInfo = typeof(Enumerable).GetMethod(nameof(Enumerable.ToList), BindingFlags.Public | BindingFlags.Static)!;
-                MethodInfo toArrayBaseMethodInfo = typeof(Enumerable).GetMethod(nameof(Enumerable.ToArray), BindingFlags.Public | BindingFlags.Static)!;
-
-                foreach (Type type in TypeHelper.NumberTypes)
-                {
-                    _type2ToArrayMethodMap[type] = toArrayBaseMethodInfo.MakeGenericMethod(type);
-                    _type2ToListMethodMap[type] = toListBaseMethodInfo.MakeGenericMethod(type);
-                }
-            }
-
             private readonly Type _convertType;
             private readonly JsonConverterFactory _factory;
 
@@ -85,7 +66,7 @@ namespace System.Text.Json.Serialization.Common
                 if (array == null)
                     return null;
 
-                return _type2ToListMethodMap[elementType].Invoke(null, new object?[] { array })!;
+                return TypeHelper.ConvertNumberArrayToList(array, elementType);
             }
 
             public override void Write(Utf8JsonWriter writer, object? value, JsonSerializerOptions options)
@@ -98,10 +79,9 @@ namespace System.Text.Json.Serialization.Common
                 {
                     Type elementType = _convertType.GetGenericArguments()[0];
                     Type arrayType = elementType.MakeArrayType();
+                    Array array = TypeHelper.ConvertNumberListToArray((IList)value, elementType);
 
                     JsonConverter<object?> converter = (JsonConverter<object?>)_factory.CreateConverter(arrayType, options)!;
-                    Array array = (Array)_type2ToArrayMethodMap[elementType].Invoke(null, new object?[] { value })!;
-
                     converter.Write(writer, array, options);
                 }
             }

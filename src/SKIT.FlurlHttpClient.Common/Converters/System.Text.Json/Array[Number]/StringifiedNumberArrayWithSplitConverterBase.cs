@@ -58,14 +58,14 @@ namespace System.Text.Json.Serialization.Common
                     if (value == null)
                         return null;
                     if (value == string.Empty)
-                        return Array.CreateInstance(elementType, 0);
+                        return TypeHelper.CreateNumberArray(elementType);
 
 #if NET5_0_OR_GREATER
                     string[] array = value.Split(_separator);
 #else
                     string[] array = value.Split(new string[] { _separator }, StringSplitOptions.None);
 #endif
-                    Array result = Array.CreateInstance(elementType, array.Length);
+                    Array result = TypeHelper.CreateNumberArray(elementType, array.Length);
                     for (long i = 0, len = result.Length; i < len; i++)
                     {
                         string str = array[i];
