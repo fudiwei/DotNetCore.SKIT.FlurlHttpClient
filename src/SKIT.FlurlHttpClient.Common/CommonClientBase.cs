@@ -6,10 +6,10 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Flurl.Http;
+using Flurl.Http.Configuration;
 
 namespace SKIT.FlurlHttpClient
 {
-    using Flurl.Http.Configuration;
     using SKIT.FlurlHttpClient.Configuration;
     using SKIT.FlurlHttpClient.Configuration.Internal;
     using SKIT.FlurlHttpClient.Constants;
@@ -123,8 +123,6 @@ namespace SKIT.FlurlHttpClient
                             throw new CommonInterceptorCallException(flurlCall, ex.Message, ex);
                         }
                     }
-
-                    context.Items.Clear();
                 });
             });
         }
@@ -135,6 +133,7 @@ namespace SKIT.FlurlHttpClient
         protected CommonClientBase(IFlurlClientFactory flurlClientFactory)
             : this(flurlClientFactory.CreateHttpClient())
         {
+            if (flurlClientFactory == null) throw new ArgumentNullException(nameof(flurlClientFactory));
         }
 
         /// <inheritdoc/>
@@ -186,6 +185,8 @@ namespace SKIT.FlurlHttpClient
 
             try
             {
+                flurlRequest.Client = FlurlClient;
+
                 return await flurlRequest
                     .AllowAnyHttpStatus()
                     .SendAsync(flurlRequest.Verb, httpContent, cancellationToken: cancellationToken);
