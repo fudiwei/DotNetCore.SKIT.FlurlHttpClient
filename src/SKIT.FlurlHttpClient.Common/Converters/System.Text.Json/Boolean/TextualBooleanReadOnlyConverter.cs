@@ -33,20 +33,18 @@ namespace System.Text.Json.Serialization.Common
     {
         private sealed class InternalTextualNullableBooleanReadOnlyConverter : JsonConverter<bool?>
         {
-            private readonly JsonConverterFactory _converterFactory = new TextualBooleanConverter();
+            private readonly JsonConverterFactory _factory = new TextualBooleanConverter();
+            private readonly JsonConverter<bool?> _fallback = (JsonConverter<bool?>)JsonSerializerOptions.Default.GetConverter(typeof(bool?));
 
             public override bool? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
-                JsonConverter<bool?> converter = (JsonConverter<bool?>)_converterFactory.CreateConverter(typeof(bool?), options)!;
+                JsonConverter<bool?> converter = (JsonConverter<bool?>)_factory.CreateConverter(typeof(bool?), options)!;
                 return converter.Read(ref reader, typeToConvert, options);
             }
 
             public override void Write(Utf8JsonWriter writer, bool? value, JsonSerializerOptions options)
             {
-                if (value is null)
-                    writer.WriteNullValue();
-                else
-                    writer.WriteBooleanValue(value.Value);
+                _fallback.Write(writer, value, options);
             }
         }
 
