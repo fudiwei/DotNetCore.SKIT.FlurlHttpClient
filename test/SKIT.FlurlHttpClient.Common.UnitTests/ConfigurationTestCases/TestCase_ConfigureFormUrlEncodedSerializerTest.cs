@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using NUnit.Framework;
 
-namespace SKIT.FlurlHttpClient.UnitTests.TestCases.Configuration
+namespace SKIT.FlurlHttpClient.UnitTests.TestCases
 {
     using SKIT.FlurlHttpClient.Configuration;
 

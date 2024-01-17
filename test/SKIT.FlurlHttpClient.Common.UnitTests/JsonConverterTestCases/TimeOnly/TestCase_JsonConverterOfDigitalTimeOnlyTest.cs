@@ -2,7 +2,7 @@
 using System;
 using NUnit.Framework;
 
-namespace SKIT.FlurlHttpClient.UnitTests.TestCases.JsonConverter
+namespace SKIT.FlurlHttpClient.UnitTests.TestCases
 {
     using SKIT.FlurlHttpClient.Configuration;
 

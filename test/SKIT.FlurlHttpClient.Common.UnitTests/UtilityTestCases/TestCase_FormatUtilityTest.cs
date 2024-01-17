@@ -1,7 +1,7 @@
 using System.Text;
 using NUnit.Framework;
 
-namespace SKIT.FlurlHttpClient.UnitTests.TestCases.Utility
+namespace SKIT.FlurlHttpClient.UnitTests.TestCases
 {
     using SKIT.FlurlHttpClient.Utilities.Internal;
 
