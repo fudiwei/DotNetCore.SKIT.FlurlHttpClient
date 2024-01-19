@@ -17,7 +17,8 @@ namespace SKIT.FlurlHttpClient
     /// </summary>
     public abstract class CommonClientBase : ICommonClient
     {
-        private bool _disposed;
+        private volatile bool _disposed;
+        private readonly bool _disposeClient;
 
         /// <summary>
         /// <inheritdoc />
@@ -46,10 +47,14 @@ namespace SKIT.FlurlHttpClient
         protected IFlurlClient FlurlClient { get; }
 
         /// <summary>
-        ///
+        /// 
         /// </summary>
-        protected CommonClientBase(HttpClient? httpClient = null)
+        /// <param name="httpClient"></param>
+        /// <param name="disposeClient"></param>
+        protected CommonClientBase(HttpClient? httpClient = null, bool disposeClient = true)
         {
+            _disposeClient = disposeClient;
+
             Interceptors = new HttpInterceptorCollection();
             FlurlClient = httpClient is null ? new FlurlClient() : new FlurlClient(httpClient);
             FlurlClient.WithSettings(flurlSettings =>
@@ -121,15 +126,6 @@ namespace SKIT.FlurlHttpClient
                     }
                 });
             });
-        }
-
-        /// <summary>
-        ///
-        /// </summary>
-        protected CommonClientBase(IFlurlClientFactory flurlClientFactory)
-            : this(flurlClientFactory.CreateHttpClient())
-        {
-            if (flurlClientFactory == null) throw new ArgumentNullException(nameof(flurlClientFactory));
         }
 
         /// <inheritdoc/>
@@ -336,7 +332,7 @@ namespace SKIT.FlurlHttpClient
             TResponse result = new TResponse();
             result._InternalRawStatus = flurlResponse.StatusCode;
             result._InternalRawHeaders = new HttpHeaderCollection(flurlResponse.Headers);
-            result._InternalRawBytes = await AsyncEx.RunTaskWithCancellationTokenAsync(flurlResponse.GetBytesAsync(), cancellationToken);
+            result._InternalRawBytes = await _AsyncEx.RunTaskWithCancellationTokenAsync(flurlResponse.GetBytesAsync(), cancellationToken);
             return result;
         }
 
@@ -355,7 +351,7 @@ namespace SKIT.FlurlHttpClient
             TResponse result;
 
             TResponse tmp = await WrapFlurlResponseAsync<TResponse>(flurlResponse, cancellationToken);
-            if (StringAssert.MaybeJson(tmp._InternalRawBytes))
+            if (_StringAssert.MaybeJson(tmp._InternalRawBytes))
             {
                 try
                 {
@@ -391,7 +387,10 @@ namespace SKIT.FlurlHttpClient
             {
                 if (disposing)
                 {
-                    FlurlClient.Dispose();
+                    if (_disposeClient)
+                    {
+                        FlurlClient.Dispose();
+                    }
                 }
 
                 _disposed = true;
