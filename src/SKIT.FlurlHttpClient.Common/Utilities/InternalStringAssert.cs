@@ -2,7 +2,7 @@ using System;
 
 namespace SKIT.FlurlHttpClient.Internal
 {
-    public static class StringAssert
+    public static class _StringAssert
     {
         public static bool MaybeJson(string value)
         {

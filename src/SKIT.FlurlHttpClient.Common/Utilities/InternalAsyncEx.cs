@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace SKIT.FlurlHttpClient.Internal
 {
-    public static class AsyncEx
+    public static class _AsyncEx
     {
         public static async Task<T> RunTaskWithCancellationTokenAsync<T>(Task<T> task, CancellationToken cancellationToken = default)
         {
