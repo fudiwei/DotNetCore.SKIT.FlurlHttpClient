@@ -17,7 +17,19 @@ namespace SKIT.FlurlHttpClient.UnitTests.TestCases
             [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.Common.StringifiedObjectInJsonFormatConverter))]
             [System.Text.Json.Serialization.JsonPropertyOrder(2)]
             [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.Common.StringifiedObjectInJsonFormatConverter))]
-            public IList<string>? CollectionObject { get; set; }
+            public List<string>? CollectionObject { get; set; }
+
+            [Newtonsoft.Json.JsonProperty(nameof(GenericPlainObject), Order = 3)]
+            [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.Common.StringifiedObjectInJsonFormatConverter<MockNestedObject>))]
+            [System.Text.Json.Serialization.JsonPropertyOrder(3)]
+            [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.Common.StringifiedObjectInJsonFormatConverter<MockNestedObject>))]
+            public MockNestedObject? GenericPlainObject { get; set; }
+
+            [Newtonsoft.Json.JsonProperty(nameof(GenericCollectionObject), Order = 4)]
+            [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.Common.StringifiedObjectInJsonFormatConverter<IList<string>>))]
+            [System.Text.Json.Serialization.JsonPropertyOrder(4)]
+            [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.Common.StringifiedObjectInJsonFormatConverter<IList<string>>))]
+            public List<string>? GenericCollectionObject { get; set; }
         }
 
         private sealed class MockNestedObject
@@ -44,16 +56,26 @@ namespace SKIT.FlurlHttpClient.UnitTests.TestCases
                         BooleanProperty = true,
                         BooleanPropertyWithConverter = true
                     },
-                    CollectionObject = new List<string>() { "hello world" }
+                    CollectionObject = new List<string>() { "hello" },
+                    GenericPlainObject = new MockNestedObject()
+                    {
+                        BooleanProperty = false,
+                        BooleanPropertyWithConverter = false
+                    },
+                    GenericCollectionObject = new List<string>() { "world" }
                 };
                 var actualJson = jsonSerializer.Serialize(expectObj);
                 var actualObj = jsonSerializer.Deserialize<MockObject>(actualJson);
 
-                Assert.That(actualJson, Is.EqualTo("{\"PlainObject\":\"{\\\"BooleanProperty\\\":true,\\\"BooleanPropertyWithConverter\\\":1}\",\"CollectionObject\":\"[\\\"hello world\\\"]\"}"));
+                Assert.That(actualJson, Is.EqualTo("{\"PlainObject\":\"{\\\"BooleanProperty\\\":true,\\\"BooleanPropertyWithConverter\\\":1}\",\"CollectionObject\":\"[\\\"hello\\\"]\",\"GenericPlainObject\":\"{\\\"BooleanProperty\\\":false,\\\"BooleanPropertyWithConverter\\\":0}\",\"GenericCollectionObject\":\"[\\\"world\\\"]\"}"));
 
                 Assert.That(actualObj.PlainObject?.BooleanProperty, Is.EqualTo(expectObj.PlainObject!.BooleanProperty));
                 Assert.That(actualObj.PlainObject?.BooleanPropertyWithConverter, Is.EqualTo(expectObj.PlainObject!.BooleanPropertyWithConverter));
                 Assert.That(actualObj.CollectionObject, Is.EqualTo(expectObj.CollectionObject));
+
+                Assert.That(actualObj.GenericPlainObject?.BooleanProperty, Is.EqualTo(expectObj.GenericPlainObject!.BooleanProperty));
+                Assert.That(actualObj.GenericPlainObject?.BooleanPropertyWithConverter, Is.EqualTo(expectObj.GenericPlainObject!.BooleanPropertyWithConverter));
+                Assert.That(actualObj.GenericCollectionObject, Is.EqualTo(expectObj.GenericCollectionObject));
             });
         }
 

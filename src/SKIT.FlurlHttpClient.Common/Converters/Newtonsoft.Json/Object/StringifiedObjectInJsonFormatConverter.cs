@@ -55,4 +55,32 @@ namespace Newtonsoft.Json.Converters.Common
                 writer.WriteValue(JsonConvert.SerializeObject(value, value.GetType(), serializer.ExtractSerializerSettings()));
         }
     }
+
+    /// <summary>
+    /// <seealso cref="StringifiedObjectInJsonFormatConverter"/> 的泛型版本。
+    /// </summary>
+    public sealed class StringifiedObjectInJsonFormatConverter<T> : JsonConverter<T>
+    {
+        private readonly JsonConverter _converter = new StringifiedObjectInJsonFormatConverter();
+
+        public override bool CanRead
+        {
+            get { return _converter.CanRead; }
+        }
+
+        public override bool CanWrite
+        {
+            get { return _converter.CanWrite; }
+        }
+
+        public override T? ReadJson(JsonReader reader, Type objectType, T? existingValue, bool hasExistingValue, JsonSerializer serializer)
+        {
+            return (T?)_converter.ReadJson(reader, objectType, existingValue, serializer);
+        }
+
+        public override void WriteJson(JsonWriter writer, T? value, JsonSerializer serializer)
+        {
+            _converter.WriteJson(writer, value, serializer);
+        }
+    }
 }

@@ -17,7 +17,7 @@ namespace System.Text.Json.Serialization.Common
     /// <code>  <see cref="ExpandoObject"/></code>
     /// <code>  <see cref="IDynamicMetaObjectProvider"/></code>
     /// </summary>
-    public partial class DynamicObjectConverter : JsonConverterFactory
+    public sealed partial class DynamicObjectConverter : JsonConverterFactory
     {
         public override bool CanConvert(Type typeToConvert)
         {
