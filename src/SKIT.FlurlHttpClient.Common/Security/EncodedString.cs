@@ -10,7 +10,7 @@ namespace SKIT.FlurlHttpClient
         /// <summary>
         /// 将指定的经过 Base64 编码的字符串转换为等效的字节数组。
         /// </summary>
-        /// <param name="bytes"></param>
+        /// <param name="s"></param>
         /// <returns></returns>
         public static byte[] FromBase64String(EncodedString s)
         {
@@ -71,7 +71,7 @@ namespace SKIT.FlurlHttpClient
         /// 将指定的经过编码的字符串转换为等效的字节数组。
         /// </summary>
         /// <param name="s"></param>
-        /// <param name="defaultEncodingKind"></param>
+        /// <param name="encodingKind"></param>
         /// <returns></returns>
         /// <exception cref="FormatException"></exception>
         public static byte[] FromEncodedString(string s, EncodingKinds encodingKind)
@@ -120,6 +120,7 @@ namespace SKIT.FlurlHttpClient
         /// 将字节数组转换为等效 <see cref="EncodedString"/> 表示形式。
         /// </summary>
         /// <param name="bytes"></param>
+        /// <param name="encodingKind"></param>
         /// <returns></returns>
         public static EncodedString ToEncodedString(byte[] bytes, EncodingKinds encodingKind)
         {
@@ -200,19 +201,26 @@ namespace SKIT.FlurlHttpClient
             return this.Value;
         }
 
+        /// <inheritdoc/>
         public static bool operator ==(EncodedString left, EncodedString right) => left.Equals(right);
+        /// <inheritdoc/>
         public static bool operator !=(EncodedString left, EncodedString right) => !left.Equals(right);
 
+        /// <inheritdoc/>
         public static implicit operator string?(EncodedString s) => s.Value;
+        /// <inheritdoc/>
         public static explicit operator EncodedString(string? s) => new EncodedString(s);
 
-#pragma warning disable CS8603
-#pragma warning disable CS8604
+        /// <inheritdoc/>
+        public static implicit operator bool(EncodedString s) => true;
+        /// <inheritdoc/>
+        public static explicit operator EncodedString(bool s) => new EncodedString();
+
 #pragma warning disable CS8769
         #region Implement `ICloneable`
         object ICloneable.Clone()
         {
-            return new EncodedString(Value, EncodingKind);
+            return new EncodedString(this.Value, this.EncodingKind);
         }
         #endregion
 
@@ -229,11 +237,9 @@ namespace SKIT.FlurlHttpClient
             if (ret != 0)
                 return ret;
 
-            return EncodingKind.CompareTo(other.EncodingKind);
+            return this.EncodingKind.CompareTo(other.EncodingKind);
         }
         #endregion
 #pragma warning restore CS8769
-#pragma warning restore CS8604
-#pragma warning restore CS8603
     }
 }

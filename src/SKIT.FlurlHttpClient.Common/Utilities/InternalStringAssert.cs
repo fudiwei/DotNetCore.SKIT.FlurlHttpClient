@@ -2,7 +2,9 @@ using System;
 
 namespace SKIT.FlurlHttpClient.Internal
 {
+#pragma warning disable IDE1006
     public static class _StringAssert
+#pragma warning restore IDE1006
     {
         public static bool MaybeJson(string value)
         {
