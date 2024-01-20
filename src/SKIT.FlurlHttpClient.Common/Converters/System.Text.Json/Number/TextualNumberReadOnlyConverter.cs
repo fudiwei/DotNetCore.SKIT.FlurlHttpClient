@@ -23,7 +23,7 @@ namespace System.Text.Json.Serialization.Common
     /// <code>  <see cref="double"/> <see cref="double"/>?</code>
     /// <code>  <see cref="decimal"/> <see cref="decimal"/>?</code>
     /// </summary>
-    public partial class TextualNumberReadOnlyConverter : JsonConverterFactory
+    public sealed partial class TextualNumberReadOnlyConverter : JsonConverterFactory
     {
         public override bool CanConvert(Type typeToConvert)
         {

@@ -10,7 +10,7 @@ namespace System.Text.Json.Serialization.Common
     /// 适配类型：
     /// <code>  任意类型。</code>
     /// </summary>
-    public partial class StringifiedObjectInJsonFormatConverter : JsonConverterFactory
+    public sealed partial class StringifiedObjectInJsonFormatConverter : JsonConverterFactory
     {
         public override bool CanConvert(Type typeToConvert)
         {
@@ -25,7 +25,7 @@ namespace System.Text.Json.Serialization.Common
 
     partial class StringifiedObjectInJsonFormatConverter
     {
-        private sealed class InternalStringifiedObjectInJsonFormatConverter : JsonConverter<object?>
+        internal sealed class InternalStringifiedObjectInJsonFormatConverter : JsonConverter<object?>
         {
             private readonly Type _convertType;
 
@@ -66,6 +66,29 @@ namespace System.Text.Json.Serialization.Common
                 else
                     writer.WriteStringValue(JsonSerializer.Serialize(value, value.GetType(), options));
             }
+        }
+    }
+
+    /// <summary>
+    /// <seealso cref="StringifiedObjectInJsonFormatConverter"/> 的泛型版本。
+    /// </summary>
+    public sealed class StringifiedObjectInJsonFormatConverter<T> : JsonConverter<T>
+    {
+        private readonly JsonConverter<object?> _converter = new StringifiedObjectInJsonFormatConverter.InternalStringifiedObjectInJsonFormatConverter(typeof(T));
+
+        public override bool CanConvert(Type typeToConvert)
+        {
+            return _converter.CanConvert(typeToConvert);
+        }
+
+        public override T? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        {
+            return (T?)_converter.Read(ref reader, typeToConvert, options);
+        }
+
+        public override void Write(Utf8JsonWriter writer, T value, JsonSerializerOptions options)
+        {
+            _converter.Write(writer, value, options);
         }
     }
 }
