@@ -6,7 +6,7 @@ namespace SKIT.FlurlHttpClient.UnitTests.TestCases
     public class TestCase_SecurityEncodedStringTest
     {
         [Test(Description = "测试用例：EncodedString")]
-        public void TestSecurityEncodedStringTest()
+        public void TestSecurityEncodedString()
         {
             Assert.Multiple(() =>
             {
