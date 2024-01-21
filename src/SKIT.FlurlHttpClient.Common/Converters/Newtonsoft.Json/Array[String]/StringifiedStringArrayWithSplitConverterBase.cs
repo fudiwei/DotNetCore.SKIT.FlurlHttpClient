@@ -25,7 +25,7 @@ namespace Newtonsoft.Json.Converters.Common
             else if (reader.TokenType == JsonToken.String)
             {
                 string? value = serializer.Deserialize<string>(reader);
-                if (value == null)
+                if (value is null)
                     return null;
                 if (value == string.Empty)
                     return Array.Empty<string>();

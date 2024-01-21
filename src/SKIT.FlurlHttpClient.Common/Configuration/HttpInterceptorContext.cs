@@ -78,7 +78,7 @@ namespace SKIT.FlurlHttpClient
 
         public static void SetHttpInterceptorContext(this FlurlCall call, HttpInterceptorContext context)
         {
-            if (context == null) throw new ArgumentNullException(nameof(context));
+            if (context is null) throw new ArgumentNullException(nameof(context));
 
 #if NET5_0_OR_GREATER
             call.HttpRequestMessage.Options.Set(new HttpRequestOptionsKey<HttpInterceptorContext>(OPTION_KEY), context);

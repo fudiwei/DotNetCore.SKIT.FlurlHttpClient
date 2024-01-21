@@ -18,7 +18,7 @@ namespace SKIT.FlurlHttpClient
             {
                 case EncodingKinds.Unspecified:
                 case EncodingKinds.Base64:
-                    return s.Value == null ? Array.Empty<byte>() : Convert.FromBase64String(s.Value);
+                    return s.Value is null ? Array.Empty<byte>() : Convert.FromBase64String(s.Value);
 
                 default:
                     throw new FormatException($"Input string was not encoded in Base64.");
@@ -37,7 +37,7 @@ namespace SKIT.FlurlHttpClient
                 case EncodingKinds.Unspecified:
                 case EncodingKinds.Hex:
                     {
-                        if (s.Value == null)
+                        if (s.Value is null)
                             return Array.Empty<byte>();
 
 

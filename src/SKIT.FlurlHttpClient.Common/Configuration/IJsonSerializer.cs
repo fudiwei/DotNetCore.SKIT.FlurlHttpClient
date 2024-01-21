@@ -35,7 +35,7 @@ namespace SKIT.FlurlHttpClient
         /// <returns></returns>
         public static string Serialize<T>(this IJsonSerializer serializer, T obj)
         {
-            if (serializer == null) throw new ArgumentNullException(nameof(serializer));
+            if (serializer is null) throw new ArgumentNullException(nameof(serializer));
 
             return serializer.Serialize(obj, obj?.GetType() ?? typeof(T))!;
         }
@@ -49,7 +49,7 @@ namespace SKIT.FlurlHttpClient
         /// <returns></returns>
         public static T Deserialize<T>(this IJsonSerializer serializer, string json)
         {
-            if (serializer == null) throw new ArgumentNullException(nameof(serializer));
+            if (serializer is null) throw new ArgumentNullException(nameof(serializer));
 
             return (T)serializer.Deserialize(json, typeof(T))!;
         }

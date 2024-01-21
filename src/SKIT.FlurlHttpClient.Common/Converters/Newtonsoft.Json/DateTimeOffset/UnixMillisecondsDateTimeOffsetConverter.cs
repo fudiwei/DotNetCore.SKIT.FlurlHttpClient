@@ -34,7 +34,7 @@ namespace Newtonsoft.Json.Converters.Common
 
         public override object? ReadJson(JsonReader reader, Type objectType, object? existingValue, JsonSerializer serializer)
         {
-            DateTimeOffset? result = _converter.ReadJson(reader, objectType, (DateTimeOffset?)existingValue, (DateTimeOffset?)existingValue != null, serializer);
+            DateTimeOffset? result = _converter.ReadJson(reader, objectType, (DateTimeOffset?)existingValue, (DateTimeOffset?)existingValue is not null, serializer);
             if (objectType == typeof(DateTimeOffset))
                 return result.GetValueOrDefault();
             return result;

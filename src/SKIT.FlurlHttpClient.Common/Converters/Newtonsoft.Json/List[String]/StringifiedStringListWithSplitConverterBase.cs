@@ -28,7 +28,7 @@ namespace Newtonsoft.Json.Converters.Common
         public override object? ReadJson(JsonReader reader, Type objectType, object? existingValue, JsonSerializer serializer)
         {
             JsonConverter<IList<string>?> converter = new InternalStringifiedStringListWithSplitConverter(Separator);
-            return converter.ReadJson(reader, objectType, (IList<string>?)existingValue, (IList<string>?)existingValue != null, serializer);
+            return converter.ReadJson(reader, objectType, (IList<string>?)existingValue, (IList<string>?)existingValue is not null, serializer);
         }
 
         public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer)

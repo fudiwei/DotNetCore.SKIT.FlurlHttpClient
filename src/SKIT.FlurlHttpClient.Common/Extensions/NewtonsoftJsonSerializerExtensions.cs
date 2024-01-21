@@ -1,10 +1,10 @@
-﻿namespace Newtonsoft.Json
+namespace Newtonsoft.Json
 {
     public static class NewtonsoftJsonSerializerExtensions
     {
         public static JsonSerializerSettings ExtractSerializerSettings(this JsonSerializer serializer)
         {
-            if (serializer == null)
+            if (serializer is null)
                 return new JsonSerializerSettings();
 
             return new JsonSerializerSettings

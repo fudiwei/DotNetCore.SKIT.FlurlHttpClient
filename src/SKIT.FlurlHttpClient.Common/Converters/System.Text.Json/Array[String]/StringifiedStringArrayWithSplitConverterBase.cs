@@ -13,7 +13,7 @@ namespace System.Text.Json.Serialization.Common
             else if (reader.TokenType == JsonTokenType.String)
             {
                 string? value = reader.GetString();
-                if (value == null)
+                if (value is null)
                     return null;
                 if (value == string.Empty)
                     return Array.Empty<string>();

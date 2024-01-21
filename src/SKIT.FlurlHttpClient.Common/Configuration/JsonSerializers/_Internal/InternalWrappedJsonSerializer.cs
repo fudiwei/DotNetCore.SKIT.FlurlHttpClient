@@ -10,14 +10,12 @@ namespace SKIT.FlurlHttpClient
 
         public InternalWrappedJsonSerializer(IJsonSerializer jsonSerializer)
         {
-            if (jsonSerializer == null) throw new ArgumentNullException(nameof(jsonSerializer));
-
-            Serializer = jsonSerializer;
+            Serializer = jsonSerializer ?? throw new ArgumentNullException(nameof(jsonSerializer));
         }
 
         T ISerializer.Deserialize<T>(Stream stream)
         {
-            if (stream == null) throw new ArgumentNullException(nameof(stream));
+            if (stream is null) throw new ArgumentNullException(nameof(stream));
 
             if (stream.CanSeek)
             {
@@ -36,7 +34,7 @@ namespace SKIT.FlurlHttpClient
 
         string? ISerializer.Serialize(object obj)
         {
-            if (obj == null)
+            if (obj is null)
                 return null;
 
             return Serializer.Serialize(obj);

@@ -10,7 +10,7 @@ namespace SKIT.FlurlHttpClient.Internal
     {
         public static async Task<T> RunTaskWithCancellationTokenAsync<T>(Task<T> task, CancellationToken cancellationToken = default)
         {
-            if (task == null) throw new ArgumentNullException(nameof(task));
+            if (task is null) throw new ArgumentNullException(nameof(task));
 
             Task taskWithCt = await Task.WhenAny(task, Task.Delay(Timeout.Infinite, cancellationToken));
             if (taskWithCt == task)

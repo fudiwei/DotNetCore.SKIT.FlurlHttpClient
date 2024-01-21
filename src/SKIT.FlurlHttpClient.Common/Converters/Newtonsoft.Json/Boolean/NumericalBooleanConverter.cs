@@ -34,7 +34,7 @@ namespace Newtonsoft.Json.Converters.Common
 
         public override object? ReadJson(JsonReader reader, Type objectType, object? existingValue, JsonSerializer serializer)
         {
-            bool? result = _converter.ReadJson(reader, objectType, (bool?)existingValue, (bool?)existingValue != null, serializer);
+            bool? result = _converter.ReadJson(reader, objectType, (bool?)existingValue, (bool?)existingValue is not null, serializer);
             if (objectType == typeof(bool))
                 return result.GetValueOrDefault();
             return result;

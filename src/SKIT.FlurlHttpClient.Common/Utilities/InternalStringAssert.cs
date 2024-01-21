@@ -8,21 +8,21 @@ namespace SKIT.FlurlHttpClient.Internal
     {
         public static bool MaybeJson(string value)
         {
-            if (value == null) return false;
+            if (value is null) return false;
 
             return MaybeJson(value.AsSpan());
         }
 
         public static bool MaybeJson(byte[] value)
         {
-            if (value == null) return false;
+            if (value is null) return false;
 
             return MaybeJson(value.AsSpan());
         }
 
         public static bool MaybeJson(ReadOnlySpan<byte> value)
         {
-            if (value == null || value.Length == 0) return false;
+            if (value.Length == 0) return false;
 
             const byte B_SPACE = 0x20;
             const byte B_BRACE_L = 0x5b; // '['
@@ -55,7 +55,7 @@ namespace SKIT.FlurlHttpClient.Internal
 
         public static bool MaybeJson(ReadOnlySpan<char> value)
         {
-            if (value == null || value.Length == 0) return false;
+            if (value.Length == 0) return false;
 
             const char B_SPACE = ' ';
             const char B_BRACE_L = '[';
@@ -88,21 +88,21 @@ namespace SKIT.FlurlHttpClient.Internal
 
         public static bool MaybeXml(string value)
         {
-            if (value == null) return false;
+            if (value is null) return false;
 
             return MaybeXml(value.AsSpan());
         }
 
         public static bool MaybeXml(byte[] value)
         {
-            if (value == null) return false;
+            if (value is null) return false;
 
             return MaybeXml(value.AsSpan());
         }
 
         public static bool MaybeXml(ReadOnlySpan<byte> value)
         {
-            if (value == null || value.Length == 0) return false;
+            if (value.Length == 0) return false;
 
             const byte B_SPACE = 0x20;
             const byte B_ANGLEDBRACKET_L = 0x3c; // '<'
@@ -141,7 +141,7 @@ namespace SKIT.FlurlHttpClient.Internal
 
         public static bool MaybeXml(ReadOnlySpan<char> value)
         {
-            if (value == null || value.Length == 0) return false;
+            if (value.Length == 0) return false;
 
             const char B_SPACE = ' ';
             const char B_ANGLEDBRACKET_L = '<';

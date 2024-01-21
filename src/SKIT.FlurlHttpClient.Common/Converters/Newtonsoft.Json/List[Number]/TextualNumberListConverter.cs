@@ -157,7 +157,7 @@ namespace Newtonsoft.Json.Converters.Common
                                     case TypeCode.Single:
                                         {
                                             float? tmp = default;
-                                            if (str != null && serializer.FloatFormatHandling == FloatFormatHandling.String)
+                                            if (str is not null && serializer.FloatFormatHandling == FloatFormatHandling.String)
                                             {
                                                 if (str == VALUE_NAN)
                                                     tmp = float.NaN;
@@ -177,7 +177,7 @@ namespace Newtonsoft.Json.Converters.Common
                                     case TypeCode.Double:
                                         {
                                             double? tmp = default;
-                                            if (str != null && serializer.FloatFormatHandling == FloatFormatHandling.String)
+                                            if (str is not null && serializer.FloatFormatHandling == FloatFormatHandling.String)
                                             {
                                                 if (str == VALUE_NAN)
                                                     tmp = double.NaN;

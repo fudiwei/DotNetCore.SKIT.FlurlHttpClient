@@ -131,7 +131,8 @@ namespace SKIT.FlurlHttpClient
         /// <inheritdoc/>
         public void Configure(Action<CommonClientSettings> configure)
         {
-            if (configure == null) throw new ArgumentNullException(nameof(configure));
+            if (configure is null) throw new ArgumentNullException(nameof(configure));
+            if (_disposed) throw new ObjectDisposedException(nameof(FlurlClient));
 
             FlurlClient.WithSettings(flurlSettings =>
             {
@@ -151,11 +152,12 @@ namespace SKIT.FlurlHttpClient
         /// <returns></returns>
         protected virtual IFlurlRequest CreateFlurlRequest(CommonRequestBase request, HttpMethod method, params object[] urlSegments)
         {
-            if (request == null) throw new ArgumentNullException(nameof(request));
+            if (request is null) throw new ArgumentNullException(nameof(request));
+            if (_disposed) throw new ObjectDisposedException(nameof(FlurlClient));
 
             IFlurlRequest flurlRequest = FlurlClient.Request(urlSegments).WithVerb(method);
 
-            if (request._InternalTimeout != null)
+            if (request._InternalTimeout is not null)
             {
                 flurlRequest.WithTimeout(request._InternalTimeout.Value);
             }
@@ -172,7 +174,7 @@ namespace SKIT.FlurlHttpClient
         /// <returns></returns>
         protected virtual async Task<IFlurlResponse> SendFlurlRequestAsync(IFlurlRequest flurlRequest, HttpContent? httpContent = null, CancellationToken cancellationToken = default)
         {
-            if (flurlRequest == null) throw new ArgumentNullException(nameof(flurlRequest));
+            if (flurlRequest is null) throw new ArgumentNullException(nameof(flurlRequest));
             if (_disposed) throw new ObjectDisposedException(nameof(FlurlClient));
 
             try
@@ -214,11 +216,11 @@ namespace SKIT.FlurlHttpClient
         /// <returns></returns>
         protected virtual async Task<IFlurlResponse> SendFlurlRequestAsJsonAsync(IFlurlRequest flurlRequest, object? data = null, CancellationToken cancellationToken = default)
         {
-            if (flurlRequest == null) throw new ArgumentNullException(nameof(flurlRequest));
+            if (flurlRequest is null) throw new ArgumentNullException(nameof(flurlRequest));
             if (_disposed) throw new ObjectDisposedException(nameof(FlurlClient));
 
             HttpContent? httpContent = null;
-            if (data != null)
+            if (data is not null)
             {
                 try
                 {
@@ -270,11 +272,11 @@ namespace SKIT.FlurlHttpClient
         /// <returns></returns>
         protected virtual async Task<IFlurlResponse> SendFlurlRequestAsFormUrlEncodedAsync(IFlurlRequest flurlRequest, object? data = null, CancellationToken cancellationToken = default)
         {
-            if (flurlRequest == null) throw new ArgumentNullException(nameof(flurlRequest));
+            if (flurlRequest is null) throw new ArgumentNullException(nameof(flurlRequest));
             if (_disposed) throw new ObjectDisposedException(nameof(FlurlClient));
 
             HttpContent? httpContent = null;
-            if (data != null)
+            if (data is not null)
             {
                 try
                 {
@@ -327,7 +329,7 @@ namespace SKIT.FlurlHttpClient
         protected async Task<TResponse> WrapFlurlResponseAsync<TResponse>(IFlurlResponse flurlResponse, CancellationToken cancellationToken = default)
             where TResponse : CommonResponseBase, new()
         {
-            if (flurlResponse == null) throw new ArgumentNullException(nameof(flurlResponse));
+            if (flurlResponse is null) throw new ArgumentNullException(nameof(flurlResponse));
 
             TResponse result = new TResponse();
             result._InternalRawStatus = flurlResponse.StatusCode;
@@ -346,7 +348,7 @@ namespace SKIT.FlurlHttpClient
         protected async Task<TResponse> WrapFlurlResponseAsJsonAsync<TResponse>(IFlurlResponse flurlResponse, CancellationToken cancellationToken = default)
             where TResponse : CommonResponseBase, new()
         {
-            if (flurlResponse == null) throw new ArgumentNullException(nameof(flurlResponse));
+            if (flurlResponse is null) throw new ArgumentNullException(nameof(flurlResponse));
 
             TResponse result;
 

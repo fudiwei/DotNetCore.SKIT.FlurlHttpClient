@@ -27,7 +27,7 @@ namespace Newtonsoft.Json.Converters.Common
         public override object? ReadJson(JsonReader reader, Type objectType, object? existingValue, JsonSerializer serializer)
         {
             JsonConverter<TimeOnly?> converter = new InternalFormattedTimeOnlyConverter(FormatString);
-            TimeOnly? result = converter.ReadJson(reader, objectType, (TimeOnly?)existingValue, (TimeOnly?)existingValue != null, serializer);
+            TimeOnly? result = converter.ReadJson(reader, objectType, (TimeOnly?)existingValue, (TimeOnly?)existingValue is not null, serializer);
             if (objectType == typeof(TimeOnly))
                 return result.GetValueOrDefault();
             return result;

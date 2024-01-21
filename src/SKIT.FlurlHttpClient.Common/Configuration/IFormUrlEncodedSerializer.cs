@@ -27,7 +27,7 @@ namespace SKIT.FlurlHttpClient
         /// <returns></returns>
         public static string Serialize<T>(this IFormUrlEncodedSerializer serializer, T obj)
         {
-            if (serializer == null) throw new ArgumentNullException(nameof(serializer));
+            if (serializer is null) throw new ArgumentNullException(nameof(serializer));
 
             return serializer.Serialize(obj, obj?.GetType() ?? typeof(T))!;
         }

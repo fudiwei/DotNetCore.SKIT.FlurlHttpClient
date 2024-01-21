@@ -55,7 +55,7 @@ namespace System.Text.Json.Serialization.Common
                     Type convertType = Nullable.GetUnderlyingType(elementType) ?? elementType;
 
                     string? value = reader.GetString();
-                    if (value == null)
+                    if (value is null)
                         return null;
                     if (value == string.Empty)
                         return TypeHelper.CreateNumberArray(elementType);
