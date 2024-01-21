@@ -14,7 +14,7 @@ namespace Newtonsoft.Json.Converters.Common
     /// </summary>
     public sealed partial class NumericalBooleanConverter : JsonConverter
     {
-        private readonly JsonConverter<bool?> _converter = new InternalNumericalBooleanConverter();
+        private static readonly JsonConverter<bool?> _converter = new InternalNumericalBooleanConverter();
 
         public override bool CanRead
         {

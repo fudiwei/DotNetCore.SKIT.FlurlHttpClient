@@ -13,8 +13,8 @@ namespace System.Text.Json.Serialization.Common
     /// </summary>
     public class NumericalStringReadOnlyConverter : JsonConverter<string?>
     {
-        private readonly JsonConverter<string?> _converter = new NumericalStringConverter();
-        private readonly JsonConverter<string?> _fallback = (JsonConverter<string?>)JsonSerializerOptions.Default.GetConverter(typeof(string));
+        private static readonly JsonConverter<string?> _converter = new NumericalStringConverter();
+        private static readonly JsonConverter<string?> _fallback = (JsonConverter<string?>)JsonSerializerOptions.Default.GetConverter(typeof(string));
 
         public override string? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {

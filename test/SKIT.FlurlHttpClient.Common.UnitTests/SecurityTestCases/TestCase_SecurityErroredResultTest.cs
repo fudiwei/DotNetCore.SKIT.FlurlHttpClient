@@ -14,11 +14,19 @@ namespace SKIT.FlurlHttpClient.UnitTests.TestCases
                 Assert.That(ErroredResult.True == false, Is.False);
                 Assert.That(ErroredResult.True != true, Is.False);
                 Assert.That(ErroredResult.True != false, Is.True);
+                Assert.That(true == ErroredResult.True , Is.True);
+                Assert.That(false == ErroredResult.True, Is.False);
+                Assert.That(true != ErroredResult.True, Is.False);
+                Assert.That(false != ErroredResult.True, Is.True);
 
                 Assert.That(ErroredResult.False == true, Is.False);
                 Assert.That(ErroredResult.False == false, Is.True);
                 Assert.That(ErroredResult.False != true, Is.True);
                 Assert.That(ErroredResult.False != false, Is.False);
+                Assert.That(true == ErroredResult.False, Is.False);
+                Assert.That(false == ErroredResult.False, Is.True);
+                Assert.That(true != ErroredResult.False, Is.True);
+                Assert.That(false != ErroredResult.False, Is.False);
 
                 Assert.That((bool)ErroredResult.True, Is.True);
                 Assert.That((bool)ErroredResult.False, Is.False);

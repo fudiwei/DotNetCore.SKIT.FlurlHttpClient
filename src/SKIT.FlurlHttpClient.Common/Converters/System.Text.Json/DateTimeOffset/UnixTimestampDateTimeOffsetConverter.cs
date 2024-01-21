@@ -73,7 +73,7 @@ namespace System.Text.Json.Serialization.Common
 
         private sealed class InternalUnixTimestampDateTimeOffsetConverter : JsonConverter<DateTimeOffset>
         {
-            private readonly JsonConverter<DateTimeOffset?> _converter = new InternalUnixTimestampNullableDateTimeOffsetConverter();
+            private static readonly JsonConverter<DateTimeOffset?> _converter = new InternalUnixTimestampNullableDateTimeOffsetConverter();
 
             public override DateTimeOffset Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

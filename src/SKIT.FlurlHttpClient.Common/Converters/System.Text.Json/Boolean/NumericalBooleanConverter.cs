@@ -111,7 +111,7 @@ namespace System.Text.Json.Serialization.Common
 
         private sealed class InternalNumericalBooleanConverter : JsonConverter<bool>
         {
-            private readonly JsonConverter<bool?> _converter = new InternalNumericalNullableBooleanConverter();
+            private static readonly JsonConverter<bool?> _converter = new InternalNumericalNullableBooleanConverter();
 
             public override bool Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

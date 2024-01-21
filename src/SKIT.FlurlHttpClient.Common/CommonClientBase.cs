@@ -353,7 +353,7 @@ namespace SKIT.FlurlHttpClient
             TResponse result;
 
             TResponse tmp = await WrapFlurlResponseAsync<TResponse>(flurlResponse, cancellationToken);
-            if (_StringAssert.MaybeJson(tmp._InternalRawBytes))
+            if (_StringSyntaxAssert.MaybeJson(tmp._InternalRawBytes))
             {
                 try
                 {

@@ -60,7 +60,7 @@ namespace System.Text.Json.Serialization.Common.Internal
 
     internal sealed class TextualDecimalConverter : JsonConverter<decimal>
     {
-        private readonly JsonConverter<decimal?> _converter = new TextualNullableDecimalConverter();
+        private static readonly JsonConverter<decimal?> _converter = new TextualNullableDecimalConverter();
 
         public override decimal Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {

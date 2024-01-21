@@ -60,7 +60,7 @@ namespace System.Text.Json.Serialization.Common.Internal
 
     internal sealed class TextualByteConverter : JsonConverter<byte>
     {
-        private readonly JsonConverter<byte?> _converter = new TextualNullableByteConverter();
+        private static readonly JsonConverter<byte?> _converter = new TextualNullableByteConverter();
 
         public override byte Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {

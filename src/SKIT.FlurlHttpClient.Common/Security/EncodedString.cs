@@ -211,11 +211,6 @@ namespace SKIT.FlurlHttpClient
         /// <inheritdoc/>
         public static explicit operator EncodedString(string? s) => new EncodedString(s);
 
-        /// <inheritdoc/>
-        public static implicit operator bool(EncodedString s) => true;
-        /// <inheritdoc/>
-        public static explicit operator EncodedString(bool s) => new EncodedString();
-
 #pragma warning disable CS8769
         #region Implement `ICloneable`
         object ICloneable.Clone()
