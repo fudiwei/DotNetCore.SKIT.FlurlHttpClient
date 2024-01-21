@@ -72,7 +72,7 @@ namespace SKIT.FlurlHttpClient
         /// </summary>
         public string? Age
         {
-            get { return TryGetGroupingValue(HttpHeaders.Age, out string? value) ? value : default; }
+            get { return TryGetMergedValue(HttpHeaders.Age, out string? value) ? value : default; }
         }
 
         /// <summary>
@@ -80,7 +80,7 @@ namespace SKIT.FlurlHttpClient
         /// </summary>
         public string? CacheControl
         {
-            get { return TryGetGroupingValue(HttpHeaders.CacheControl, out string? value) ? value : default; }
+            get { return TryGetMergedValue(HttpHeaders.CacheControl, out string? value) ? value : default; }
         }
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace SKIT.FlurlHttpClient
         /// </summary>
         public string? ContentEncoding
         {
-            get { return TryGetGroupingValue(HttpHeaders.ContentEncoding, out string? value) ? value : default; }
+            get { return TryGetMergedValue(HttpHeaders.ContentEncoding, out string? value) ? value : default; }
         }
 
         /// <summary>
@@ -96,7 +96,7 @@ namespace SKIT.FlurlHttpClient
         /// </summary>
         public string? ContentLanguage
         {
-            get { return TryGetGroupingValue(HttpHeaders.ContentLanguage, out string? value) ? value : default; }
+            get { return TryGetMergedValue(HttpHeaders.ContentLanguage, out string? value) ? value : default; }
         }
 
         /// <summary>
@@ -104,7 +104,7 @@ namespace SKIT.FlurlHttpClient
         /// </summary>
         public string? ContentLength
         {
-            get { return TryGetGroupingValue(HttpHeaders.ContentLength, out string? value) ? value : default; }
+            get { return TryGetMergedValue(HttpHeaders.ContentLength, out string? value) ? value : default; }
         }
 
         /// <summary>
@@ -112,7 +112,7 @@ namespace SKIT.FlurlHttpClient
         /// </summary>
         public string? ContentType
         {
-            get { return TryGetGroupingValue(HttpHeaders.ContentType, out string? value) ? value : default; }
+            get { return TryGetMergedValue(HttpHeaders.ContentType, out string? value) ? value : default; }
         }
 
         /// <summary>
@@ -120,7 +120,7 @@ namespace SKIT.FlurlHttpClient
         /// </summary>
         public string? Date
         {
-            get { return TryGetGroupingValue(HttpHeaders.Date, out string? value) ? value : default; }
+            get { return TryGetMergedValue(HttpHeaders.Date, out string? value) ? value : default; }
         }
 
         /// <summary>
@@ -128,7 +128,7 @@ namespace SKIT.FlurlHttpClient
         /// </summary>
         public string? Expires
         {
-            get { return TryGetGroupingValue(HttpHeaders.Expires, out string? value) ? value : default; }
+            get { return TryGetMergedValue(HttpHeaders.Expires, out string? value) ? value : default; }
         }
 
         /// <summary>
@@ -136,7 +136,7 @@ namespace SKIT.FlurlHttpClient
         /// </summary>
         public string? ETag
         {
-            get { return TryGetGroupingValue(HttpHeaders.ETag, out string? value) ? value : default; }
+            get { return TryGetMergedValue(HttpHeaders.ETag, out string? value) ? value : default; }
         }
 
         /// <summary>
@@ -144,7 +144,7 @@ namespace SKIT.FlurlHttpClient
         /// </summary>
         public string? LastModified
         {
-            get { return TryGetGroupingValue(HttpHeaders.LastModified, out string? value) ? value : default; }
+            get { return TryGetMergedValue(HttpHeaders.LastModified, out string? value) ? value : default; }
         }
 
         IEnumerable<string> IDictionary<string, IEnumerable<string>>.this[string key]
@@ -211,7 +211,7 @@ namespace SKIT.FlurlHttpClient
         }
 
         /// <inheritdoc/>
-        public bool TryGetGroupingValue(string key, out string? value)
+        public bool TryGetMergedValue(string key, out string? value)
         {
             bool result = _dict.TryGetValue(key, out IEnumerable<string>? values);
             value = values is null ? null : string.Join(", ", values);
@@ -234,9 +234,9 @@ namespace SKIT.FlurlHttpClient
         }
 
         /// <inheritdoc/>
-        public string GetGroupingValueOrEmpty(string key)
+        public string GetMergedValueOrEmpty(string key)
         {
-            TryGetGroupingValue(key, out string? value);
+            TryGetMergedValue(key, out string? value);
             return value ?? string.Empty;
         }
 
@@ -306,7 +306,7 @@ namespace SKIT.FlurlHttpClient
                     KeyValuePair<string, IEnumerable<string>> current = enumerator.Current;
                     stringBuilder.Append(current.Key);
                     stringBuilder.Append(": ");
-                    stringBuilder.Append(GetGroupingValueOrEmpty(current.Key));
+                    stringBuilder.Append(GetMergedValueOrEmpty(current.Key));
                     stringBuilder.Append("\r\n");
                 }
             }

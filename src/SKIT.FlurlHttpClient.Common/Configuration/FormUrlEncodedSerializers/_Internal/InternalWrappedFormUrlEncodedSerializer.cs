@@ -10,9 +10,7 @@ namespace SKIT.FlurlHttpClient
 
         public InternalWrappedFormUrlEncodedSerializer(IFormUrlEncodedSerializer jsonSerializer)
         {
-            if (jsonSerializer == null) throw new ArgumentNullException(nameof(jsonSerializer));
-
-            Serializer = jsonSerializer;
+            Serializer = jsonSerializer ?? throw new ArgumentNullException(nameof(jsonSerializer));
         }
 
         T ISerializer.Deserialize<T>(Stream stream)
@@ -27,7 +25,7 @@ namespace SKIT.FlurlHttpClient
 
         string? ISerializer.Serialize(object obj)
         {
-            if (obj == null)
+            if (obj is null)
                 return null;
 
             return Serializer.Serialize(obj);

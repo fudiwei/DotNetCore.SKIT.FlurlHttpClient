@@ -21,8 +21,8 @@ namespace Flurl.Http
 
         public static IFlurlRequest WithUrl(this IFlurlRequest request, Func<Url, Url> configure)
         {
-            if (request == null) throw new ArgumentNullException(nameof(request));
-            if (configure == null) throw new ArgumentNullException(nameof(configure));
+            if (request is null) throw new ArgumentNullException(nameof(request));
+            if (configure is null) throw new ArgumentNullException(nameof(configure));
 
             request.Url = configure(request.Url);
             return request;

@@ -27,7 +27,7 @@ namespace Newtonsoft.Json.Converters.Common
         public override object? ReadJson(JsonReader reader, Type objectType, object? existingValue, JsonSerializer serializer)
         {
             JsonConverter<DateOnly?> converter = new InternalFormattedDateOnlyConverter(FormatString);
-            DateOnly? result = converter.ReadJson(reader, objectType, (DateOnly?)existingValue, (DateOnly?)existingValue != null, serializer);
+            DateOnly? result = converter.ReadJson(reader, objectType, (DateOnly?)existingValue, (DateOnly?)existingValue is not null, serializer);
             if (objectType == typeof(DateOnly))
                 return result.GetValueOrDefault();
             return result;

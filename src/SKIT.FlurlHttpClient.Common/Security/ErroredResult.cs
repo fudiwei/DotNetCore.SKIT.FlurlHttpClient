@@ -62,7 +62,7 @@ namespace SKIT.FlurlHttpClient
         /// <param name="error"></param>
         public ErroredResult(bool result, Exception? error)
         {
-            if (result && error != null) throw new ArgumentException("Invalid result value.", nameof(result));
+            if (result && error is not null) throw new ArgumentException("Invalid result value.", nameof(result));
 
             this.Result = result;
             this.Error = error;

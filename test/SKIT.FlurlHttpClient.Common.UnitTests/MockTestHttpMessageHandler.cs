@@ -18,7 +18,7 @@ namespace SKIT.FlurlHttpClient
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
             byte[] reqBytes = Array.Empty<byte>();
-            if (request.Content != null)
+            if (request.Content is not null)
                 reqBytes = await request.Content.ReadAsByteArrayAsync();
 
             HttpResponseMessage httpResponseMessage = new HttpResponseMessage

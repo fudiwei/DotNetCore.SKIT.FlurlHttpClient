@@ -26,7 +26,7 @@ namespace SKIT.FlurlHttpClient
         public async Task<T> SendFlurlRequestAsync<T>(IFlurlRequest flurlRequest, HttpContent? httpContent = null, CancellationToken cancellationToken = default)
             where T : MockTestResponse, new()
         {
-            if (flurlRequest == null) throw new ArgumentNullException(nameof(flurlRequest));
+            if (flurlRequest is null) throw new ArgumentNullException(nameof(flurlRequest));
 
             using IFlurlResponse flurlResponse = await base.SendFlurlRequestAsync(flurlRequest, httpContent, cancellationToken);
             return await WrapFlurlResponseAsJsonAsync<T>(flurlResponse, cancellationToken);
@@ -35,7 +35,7 @@ namespace SKIT.FlurlHttpClient
         public async Task<T> SendFlurlRequestAsJsonAsync<T>(IFlurlRequest flurlRequest, object? data = null, CancellationToken cancellationToken = default)
             where T : MockTestResponse, new()
         {
-            if (flurlRequest == null) throw new ArgumentNullException(nameof(flurlRequest));
+            if (flurlRequest is null) throw new ArgumentNullException(nameof(flurlRequest));
 
             bool isSimpleRequest = data == null ||
                 flurlRequest.Verb == HttpMethod.Get ||

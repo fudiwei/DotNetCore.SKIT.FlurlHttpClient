@@ -63,7 +63,7 @@ namespace System.Text.Json.Serialization.Common
 
                 JsonConverter<object?> converter = (JsonConverter<object?>)_factory.CreateConverter(arrayType, options)!;
                 Array? array = (Array?)converter.Read(ref reader, elementType.MakeArrayType(), options);
-                if (array == null)
+                if (array is null)
                     return null;
 
                 return TypeHelper.ConvertNumberArrayToList(array, elementType);

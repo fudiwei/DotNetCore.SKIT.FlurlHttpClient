@@ -44,7 +44,7 @@ namespace Newtonsoft.Json.Converters.Common
                 Type convertType = Nullable.GetUnderlyingType(elementType) ?? elementType;
 
                 string? value = serializer.Deserialize<string>(reader);
-                if (value == null)
+                if (value is null)
                     return null;
                 if (value == string.Empty)
                     return TypeHelper.CreateNumberArray(elementType);

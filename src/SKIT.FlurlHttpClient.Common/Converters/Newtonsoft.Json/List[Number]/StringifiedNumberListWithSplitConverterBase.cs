@@ -87,7 +87,7 @@ namespace Newtonsoft.Json.Converters.Common
                 Type arrayType = elementType.MakeArrayType();
 
                 Array? array = (Array?)_converter.ReadJson(reader, arrayType, existingValue, serializer);
-                if (array == null)
+                if (array is null)
                     return null;
 
                 return TypeHelper.ConvertNumberArrayToList(array, elementType);

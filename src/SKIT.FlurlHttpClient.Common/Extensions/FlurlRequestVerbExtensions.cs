@@ -32,7 +32,7 @@ namespace Flurl.Http
 
         public static IFlurlRequest WithVerb(this IFlurlRequest request, HttpMethod method)
         {
-            if (request == null) throw new ArgumentNullException(nameof(request));
+            if (request is null) throw new ArgumentNullException(nameof(request));
 
             request.Verb = method;
             return request;
