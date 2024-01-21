@@ -111,10 +111,6 @@ namespace SKIT.FlurlHttpClient
         public static bool operator ==(ErroredResult left, bool right) => left.Result.Equals(right);
         /// <inheritdoc/>
         public static bool operator !=(ErroredResult left, bool right) => !left.Result.Equals(right);
-        /// <inheritdoc/>
-        public static bool operator ==(bool left, ErroredResult right) => left.Equals(right.Result);
-        /// <inheritdoc/>
-        public static bool operator !=(bool left, ErroredResult right) => !left.Equals(right.Result);
 
         /// <inheritdoc/>
         public static implicit operator bool(ErroredResult r) => r.Result;

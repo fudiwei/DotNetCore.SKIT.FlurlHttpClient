@@ -14,7 +14,7 @@ namespace Newtonsoft.Json.Converters.Common
     /// </summary>
     public sealed partial class UnixMillisecondsDateTimeOffsetConverter : JsonConverter
     {
-        private readonly JsonConverter<DateTimeOffset?> _converter = new InternalUnixMillisecondsDateTimeOffsetConverter();
+        private static readonly JsonConverter<DateTimeOffset?> _converter = new InternalUnixMillisecondsDateTimeOffsetConverter();
 
         public override bool CanRead
         {

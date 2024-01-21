@@ -74,7 +74,7 @@ namespace System.Text.Json.Serialization.Common
     /// </summary>
     public sealed class StringifiedObjectInJsonFormatConverter<T> : JsonConverter<T>
     {
-        private readonly JsonConverter<object?> _converter = new StringifiedObjectInJsonFormatConverter.InternalStringifiedObjectInJsonFormatConverter(typeof(T));
+        private static readonly JsonConverter<object?> _converter = new StringifiedObjectInJsonFormatConverter.InternalStringifiedObjectInJsonFormatConverter(typeof(T));
 
         public override bool CanConvert(Type typeToConvert)
         {

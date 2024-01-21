@@ -60,7 +60,7 @@ namespace System.Text.Json.Serialization.Common.Internal
 
     internal sealed class TextualDoubleConverter : JsonConverter<double>
     {
-        private readonly JsonConverter<double?> _converter = new TextualNullableDoubleConverter();
+        private static readonly JsonConverter<double?> _converter = new TextualNullableDoubleConverter();
 
         public override double Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {

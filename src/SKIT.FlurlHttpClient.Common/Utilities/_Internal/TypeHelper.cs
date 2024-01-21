@@ -50,30 +50,29 @@ namespace SKIT.FlurlHttpClient.Internal
             foreach (Type type in NumberTypes)
             {
                 {
-                    var initFunc = new Func<int, Array>((length) => Array.CreateInstance(type, length));
-                    NumberType2ArrayConstructorExpressionMap[type] = initFunc;
+                    NumberType2ArrayConstructorExpressionMap[type] = new Func<int, Array>((length) => Array.CreateInstance(type, length));
                 }
 
                 {
-                    var paramExpr = Expression.Parameter(typeof(Array), "source");
-                    var unaryExpr = Expression.Convert(paramExpr, type.MakeArrayType());
-                    var callExpr = Expression.Call(typeof(Enumerable), nameof(Enumerable.ToList), new[] { type }, unaryExpr);
+                    ParameterExpression paramExpr = Expression.Parameter(typeof(Array), "source");
+                    UnaryExpression unaryExpr = Expression.Convert(paramExpr, type.MakeArrayType());
+                    MethodCallExpression callExpr = Expression.Call(typeof(Enumerable), nameof(Enumerable.ToList), new[] { type }, unaryExpr);
                     NumberType2ArrayLinqToListExpressionMap[type] = Expression
                         .Lambda<Func<Array, IList>>(callExpr, paramExpr)
                         .Compile();
                 }
 
                 {
-                    var initExpr = Expression.New(typeof(List<>).MakeGenericType(type));
+                    NewExpression initExpr = Expression.New(typeof(List<>).MakeGenericType(type));
                     NumberType2ListConstructorExpressionMap[type] = Expression
                         .Lambda<Func<IList>>(initExpr)
                         .Compile();
                 }
 
                 {
-                    var paramExpr = Expression.Parameter(typeof(IList), "source");
-                    var unaryExpr = Expression.Convert(paramExpr, typeof(List<>).MakeGenericType(type));
-                    var callExpr = Expression.Call(typeof(Enumerable), nameof(Enumerable.ToArray), new[] { type }, unaryExpr);
+                    ParameterExpression paramExpr = Expression.Parameter(typeof(IList), "source");
+                    UnaryExpression unaryExpr = Expression.Convert(paramExpr, typeof(List<>).MakeGenericType(type));
+                    MethodCallExpression callExpr = Expression.Call(typeof(Enumerable), nameof(Enumerable.ToArray), new[] { type }, unaryExpr);
                     NumberType2ListLinqToArrayExpressionMap[type] = Expression
                         .Lambda<Func<IList, Array>>(callExpr, paramExpr)
                         .Compile();

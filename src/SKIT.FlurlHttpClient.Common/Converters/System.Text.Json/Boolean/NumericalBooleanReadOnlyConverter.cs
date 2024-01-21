@@ -33,8 +33,8 @@ namespace System.Text.Json.Serialization.Common
     {
         private sealed class InternalNumericalNullableBooleanReadOnlyConverter : JsonConverter<bool?>
         {
-            private readonly JsonConverterFactory _factory = new NumericalBooleanConverter();
-            private readonly JsonConverter<bool?> _fallback = (JsonConverter<bool?>)JsonSerializerOptions.Default.GetConverter(typeof(bool?));
+            private static readonly JsonConverterFactory _factory = new NumericalBooleanConverter();
+            private static readonly JsonConverter<bool?> _fallback = (JsonConverter<bool?>)JsonSerializerOptions.Default.GetConverter(typeof(bool?));
 
             public override bool? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
@@ -50,7 +50,7 @@ namespace System.Text.Json.Serialization.Common
 
         private sealed class InternalNumericalBooleanReadOnlyConverter : JsonConverter<bool>
         {
-            private readonly JsonConverter<bool?> _converter = new InternalNumericalNullableBooleanReadOnlyConverter();
+            private static readonly JsonConverter<bool?> _converter = new InternalNumericalNullableBooleanReadOnlyConverter();
 
             public override bool Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

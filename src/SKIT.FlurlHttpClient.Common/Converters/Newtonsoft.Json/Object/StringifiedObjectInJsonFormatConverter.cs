@@ -61,7 +61,7 @@ namespace Newtonsoft.Json.Converters.Common
     /// </summary>
     public sealed class StringifiedObjectInJsonFormatConverter<T> : JsonConverter<T>
     {
-        private readonly JsonConverter _converter = new StringifiedObjectInJsonFormatConverter();
+        private static readonly JsonConverter _converter = new StringifiedObjectInJsonFormatConverter();
 
         public override bool CanRead
         {

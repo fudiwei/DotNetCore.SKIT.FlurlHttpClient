@@ -24,7 +24,7 @@ namespace Newtonsoft.Json.Converters.Common
     /// </summary>
     public sealed class TextualNumberReadOnlyConverter : JsonConverter
     {
-        private readonly JsonConverter _converter = new TextualNumberConverter();
+        private static readonly JsonConverter _converter = new TextualNumberConverter();
 
         public override bool CanRead
         {
