@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -7,6 +7,8 @@ using System.Xml.Serialization;
 
 namespace SKIT.FlurlHttpClient.Tools.CodeAnalyzer.Helpers
 {
+    using SKIT.FlurlHttpClient.Internal;
+
     internal static class XmlHelper
     {
         public static bool TryDeserialize(string xml, Type type, out Exception error)
@@ -15,9 +17,7 @@ namespace SKIT.FlurlHttpClient.Tools.CodeAnalyzer.Helpers
 
             try
             {
-                using TextReader xmlReader = new StringReader(xml);
-                XmlSerializer xmlSerializer = new XmlSerializer(type, new XmlRootAttribute("xml"));
-                xmlSerializer.Deserialize(xmlReader);
+                _XmlSimpleSerializer.Deserialize(xml, type);
             }
             catch (Exception ex)
             {
@@ -30,7 +30,7 @@ namespace SKIT.FlurlHttpClient.Tools.CodeAnalyzer.Helpers
                 XmlDocument xmlDocument = new XmlDocument();
                 xmlDocument.LoadXml(xml);
 
-                if (xmlDocument.DocumentElement != null)
+                if (xmlDocument.DocumentElement is not null)
                 {
                     Action<Type, XmlNode> func = default!;
                     func = new Action<Type, XmlNode>((curType, curNode) =>
@@ -60,10 +60,10 @@ namespace SKIT.FlurlHttpClient.Tools.CodeAnalyzer.Helpers
                                            curNode.Name == xmlArrayItemAttribute?.ElementName;
                                 })
                                 .PropertyType;
-                            XmlNode nextNode = curNode.ChildNodes[i];
+                            XmlNode nextNode = curNode.ChildNodes[i]!;
 
                             if (nextType.IsArray)
-                                nextType = nextType.GetElementType();
+                                nextType = nextType.GetElementType()!;
 
                             func.Invoke(nextType, nextNode);
                         }
@@ -71,7 +71,7 @@ namespace SKIT.FlurlHttpClient.Tools.CodeAnalyzer.Helpers
 
                     for (int i = 0; i < xmlDocument.DocumentElement.ChildNodes.Count; i++)
                     {
-                        func.Invoke(type, xmlDocument.DocumentElement.ChildNodes[i]);
+                        func.Invoke(type, xmlDocument.DocumentElement.ChildNodes[i]!);
                     }
                 }
             }

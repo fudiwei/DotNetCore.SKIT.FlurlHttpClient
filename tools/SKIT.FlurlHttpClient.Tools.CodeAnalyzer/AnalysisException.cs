@@ -1,21 +1,27 @@
-﻿using System;
+using System;
 
 namespace SKIT.FlurlHttpClient.Tools.CodeAnalyzer
 {
-    public class CodeAnalyzerException : Exception
+    /// <summary>
+    /// 代码质量分析时引发的异常。
+    /// </summary>
+    public class AnalysisException : Exception
     {
         private const string PREFIX_MESSAGE = "[ISSUE] ";
 
-        public CodeAnalyzerException(string issue)
+        /// <inheritdoc/>
+        public AnalysisException(string issue)
             : base(PREFIX_MESSAGE + issue)
         {
         }
 
-        public CodeAnalyzerException(string issue, Exception innerException)
+        /// <inheritdoc/>
+        public AnalysisException(string issue, Exception innerException)
             : base(PREFIX_MESSAGE + issue, innerException)
         {
         }
 
+        /// <inheritdoc/>
         public string ToFullString()
         {
             if (InnerException is null)
