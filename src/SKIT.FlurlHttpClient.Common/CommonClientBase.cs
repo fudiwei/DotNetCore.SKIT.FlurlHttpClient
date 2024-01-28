@@ -150,12 +150,12 @@ namespace SKIT.FlurlHttpClient
         /// 
         /// </summary>
         /// <returns></returns>
-        protected virtual IFlurlRequest CreateFlurlRequest(CommonRequestBase request, HttpMethod method, params object[] urlSegments)
+        protected virtual IFlurlRequest CreateFlurlRequest(CommonRequestBase request, HttpMethod httpMethod, params object[] urlSegments)
         {
             if (request is null) throw new ArgumentNullException(nameof(request));
             if (_disposed) throw new ObjectDisposedException(nameof(FlurlClient));
 
-            IFlurlRequest flurlRequest = FlurlClient.Request(urlSegments).WithVerb(method);
+            IFlurlRequest flurlRequest = FlurlClient.Request(urlSegments).WithVerb(httpMethod);
 
             if (request._InternalTimeout is not null)
             {

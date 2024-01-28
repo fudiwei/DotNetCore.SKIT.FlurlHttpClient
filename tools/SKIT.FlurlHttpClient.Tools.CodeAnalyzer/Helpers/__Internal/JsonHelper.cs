@@ -2,8 +2,6 @@ using System;
 
 namespace SKIT.FlurlHttpClient.Tools.CodeAnalyzer.Helpers
 {
-    using SKIT.FlurlHttpClient.Configuration;
-
     internal static class JsonHelper
     {
         private static IJsonSerializer GetNewtonsoftJsonSerializer()

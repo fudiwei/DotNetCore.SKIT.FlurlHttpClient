@@ -1,3 +1,4 @@
+using System;
 using System.Text;
 using NUnit.Framework;
 
@@ -70,7 +71,7 @@ namespace SKIT.FlurlHttpClient.UnitTests.TestCases
                 Assert.That(Encoding.UTF8.GetString(EncodedString.FromHexString(new EncodedString(ENC_TEXT))), Is.EqualTo(RAW_TEXT).IgnoreCase);
                 Assert.That(Encoding.UTF8.GetString(EncodedString.FromHexString(new EncodedString(ENC_TEXT, EncodingKinds.Unspecified))), Is.EqualTo(RAW_TEXT).IgnoreCase);
                 Assert.That(Encoding.UTF8.GetString(EncodedString.FromHexString(new EncodedString(ENC_TEXT, EncodingKinds.Hex))), Is.EqualTo(RAW_TEXT).IgnoreCase);
-                Assert.Catch(() => Encoding.UTF8.GetString(EncodedString.FromHexString(new EncodedString(ENC_TEXT, EncodingKinds.Base64))));
+                Assert.Throws<FormatException>(() => Encoding.UTF8.GetString(EncodedString.FromHexString(new EncodedString(ENC_TEXT, EncodingKinds.Base64))));
             });
 
             Assert.Multiple(() =>
@@ -87,7 +88,7 @@ namespace SKIT.FlurlHttpClient.UnitTests.TestCases
                 Assert.That(Encoding.UTF8.GetString(EncodedString.FromBase64String(new EncodedString(ENC_TEXT))), Is.EqualTo(RAW_TEXT));
                 Assert.That(Encoding.UTF8.GetString(EncodedString.FromBase64String(new EncodedString(ENC_TEXT, EncodingKinds.Unspecified))), Is.EqualTo(RAW_TEXT));
                 Assert.That(Encoding.UTF8.GetString(EncodedString.FromBase64String(new EncodedString(ENC_TEXT, EncodingKinds.Base64))), Is.EqualTo(RAW_TEXT));
-                Assert.Catch(() => Encoding.UTF8.GetString(EncodedString.FromBase64String(new EncodedString(ENC_TEXT, EncodingKinds.Hex))));
+                Assert.Throws<FormatException>(() => Encoding.UTF8.GetString(EncodedString.FromBase64String(new EncodedString(ENC_TEXT, EncodingKinds.Hex))));
             });
         }
     }

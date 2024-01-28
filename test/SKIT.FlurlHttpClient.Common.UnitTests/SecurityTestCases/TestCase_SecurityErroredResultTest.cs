@@ -49,7 +49,7 @@ namespace SKIT.FlurlHttpClient.UnitTests.TestCases
                 Assert.That(new ErroredResult(false, mockError).Error, Is.EqualTo(mockError));
             });
 
-            Assert.Catch(() =>
+            Assert.Throws<ArgumentException>(() =>
             {
                 new ErroredResult(true, new Exception());
             });
