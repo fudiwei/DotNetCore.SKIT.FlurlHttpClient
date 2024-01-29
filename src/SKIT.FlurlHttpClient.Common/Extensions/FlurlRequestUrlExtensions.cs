@@ -4,9 +4,9 @@ namespace Flurl.Http
 {
     public static class FlurlRequestUrlExtensions
     {
-        public static IFlurlRequest WithUrl(this IFlurlRequest request, string baseUrl)
+        public static IFlurlRequest WithUrl(this IFlurlRequest request, string url)
         {
-            return WithUrl(request, new Url(baseUrl));
+            return WithUrl(request, Url.Parse(url));
         }
 
         public static IFlurlRequest WithUrl(this IFlurlRequest request, Uri uri)

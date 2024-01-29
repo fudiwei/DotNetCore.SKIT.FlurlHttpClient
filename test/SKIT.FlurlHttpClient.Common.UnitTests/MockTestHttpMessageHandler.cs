@@ -23,12 +23,15 @@ namespace SKIT.FlurlHttpClient
 
             HttpResponseMessage httpResponseMessage = new HttpResponseMessage
             {
+                RequestMessage = request,
                 StatusCode = HttpStatusCode.OK,
+                ReasonPhrase = "OK",
                 Content = new StringContent(JsonSerializer.Serialize(new Dictionary<string, object?>()
                 {
                     { "ret", true },
                     { "req_data", reqBytes }
-                }))
+                })),
+                Version = request.Version
             };
             return httpResponseMessage;
         }
