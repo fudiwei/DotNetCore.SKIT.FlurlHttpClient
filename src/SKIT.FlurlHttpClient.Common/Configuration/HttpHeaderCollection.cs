@@ -169,10 +169,11 @@ namespace SKIT.FlurlHttpClient
         internal HttpHeaderCollection(IReadOnlyNameValueList<string> httpHeaders)
         {
             _dict = new ReadOnlyDictionary<string, IEnumerable<string>>(
-                new Dictionary<string, IEnumerable<string>>(
-                    httpHeaders.ToDictionary(
-                        static k => k.Name.ToLower(),
-                        v => httpHeaders.GetAll(v.Name)
+                new Dictionary<string, IEnumerable<string>>(httpHeaders
+                    .GroupBy(e => e.Name.ToLower())
+                    .ToDictionary(
+                        static k => k.Key,
+                        v => v.SelectMany(e => httpHeaders.GetAll(e.Name))
                     ),
                     StringComparer.OrdinalIgnoreCase
                 )
