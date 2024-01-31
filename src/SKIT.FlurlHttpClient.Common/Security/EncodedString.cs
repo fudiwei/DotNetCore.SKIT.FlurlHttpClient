@@ -40,7 +40,6 @@ namespace SKIT.FlurlHttpClient
                         if (s.Value is null)
                             return Array.Empty<byte>();
 
-
 #if NETCOREAPP || NET5_0_OR_GREATER
                         byte[] bytes = Convert.FromHexString(s.Value);
 #else
