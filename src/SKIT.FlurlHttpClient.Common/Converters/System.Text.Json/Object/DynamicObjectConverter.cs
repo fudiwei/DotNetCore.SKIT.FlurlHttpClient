@@ -139,7 +139,7 @@ namespace System.Text.Json.Serialization.Common
 
             private static object? ReadArray(ref Utf8JsonReader reader, JsonSerializerOptions options)
             {
-                IList<object?> list = new List<object?>();
+                IList<object?> list = new List<object?>(capacity: 8);
 
                 while (reader.Read())
                 {

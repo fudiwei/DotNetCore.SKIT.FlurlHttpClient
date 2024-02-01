@@ -19,7 +19,7 @@ namespace SKIT.FlurlHttpClient.Internal
 
         private static XmlSerializer GetTypedSerializer(Type type, string rootName)
         {
-            string key = type.FullName + ", XmlRoot=" + rootName;
+            string key = (type.FullName ?? type.ToString()) + ", XmlRoot=" + rootName;
             XmlSerializer? xmlSerializer = (XmlSerializer?)_cache[key];
             if (xmlSerializer == null)
             {

@@ -1,6 +1,6 @@
 using System;
 
-namespace SKIT.FlurlHttpClient
+namespace SKIT.FlurlHttpClient.Primitives
 {
     /// <summary>
     /// 表示一个包含错误信息的布尔值。

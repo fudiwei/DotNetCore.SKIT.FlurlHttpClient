@@ -12,10 +12,10 @@ namespace SKIT.FlurlHttpClient.Internal
         {
             if (task is null) throw new ArgumentNullException(nameof(task));
 
-            Task taskWithCt = await Task.WhenAny(task, Task.Delay(Timeout.Infinite, cancellationToken));
+            Task taskWithCt = await Task.WhenAny(task, Task.Delay(Timeout.Infinite, cancellationToken)).ConfigureAwait(false);
             if (taskWithCt == task)
             {
-                return await task;
+                return await task.ConfigureAwait(false);
             }
             else
             {

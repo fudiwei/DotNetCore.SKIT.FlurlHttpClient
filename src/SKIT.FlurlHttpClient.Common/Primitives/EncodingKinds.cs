@@ -1,4 +1,4 @@
-namespace SKIT.FlurlHttpClient
+namespace SKIT.FlurlHttpClient.Primitives
 {
     /// <summary>
     /// 指定编码方式。
@@ -11,13 +11,18 @@ namespace SKIT.FlurlHttpClient
         Unspecified = 0,
 
         /// <summary>
+        /// 未编码。
+        /// </summary>
+        Literal = 1,
+
+        /// <summary>
         /// 十六进制编码。
         /// </summary>
-        Hex = 1,
+        Hex = 2,
 
         /// <summary>
         /// Base64 编码。
         /// </summary>
-        Base64 = 2
+        Base64 = 3
     }
 }

@@ -30,7 +30,7 @@ namespace SKIT.FlurlHttpClient
 
         internal HttpInterceptorCollection()
         {
-            _list = new List<HttpInterceptor>();
+            _list = new List<HttpInterceptor>(capacity: 4);
         }
 
         /// <inheritdoc/>
