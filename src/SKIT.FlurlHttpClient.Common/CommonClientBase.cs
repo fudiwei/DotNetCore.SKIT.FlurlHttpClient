@@ -79,7 +79,7 @@ namespace SKIT.FlurlHttpClient
 
                         try
                         {
-                            await Interceptors[i].BeforeCallAsync(context, cancellationToken: cts.Token);
+                            await Interceptors[i].BeforeCallAsync(context, cancellationToken: cts.Token).ConfigureAwait(false);
                         }
                         catch (OperationCanceledException)
                         {
@@ -110,7 +110,7 @@ namespace SKIT.FlurlHttpClient
 
                         try
                         {
-                            await Interceptors[i].AfterCallAsync(context, cancellationToken: cts.Token);
+                            await Interceptors[i].AfterCallAsync(context, cancellationToken: cts.Token).ConfigureAwait(false);
                         }
                         catch (OperationCanceledException)
                         {
@@ -183,7 +183,8 @@ namespace SKIT.FlurlHttpClient
 
                 return await flurlRequest
                     .AllowAnyHttpStatus()
-                    .SendAsync(flurlRequest.Verb, httpContent, cancellationToken: cancellationToken);
+                    .SendAsync(flurlRequest.Verb, httpContent, cancellationToken: cancellationToken)
+                    .ConfigureAwait(false);
             }
             catch (OperationCanceledException)
             {
@@ -235,7 +236,7 @@ namespace SKIT.FlurlHttpClient
 
             try
             {
-                return await SendFlurlRequestAsync(flurlRequest, httpContent, cancellationToken);
+                return await SendFlurlRequestAsync(flurlRequest, httpContent, cancellationToken).ConfigureAwait(false);
             }
             catch (OperationCanceledException)
             {
@@ -291,7 +292,7 @@ namespace SKIT.FlurlHttpClient
 
             try
             {
-                return await SendFlurlRequestAsync(flurlRequest, httpContent, cancellationToken);
+                return await SendFlurlRequestAsync(flurlRequest, httpContent, cancellationToken).ConfigureAwait(false);
             }
             catch (OperationCanceledException)
             {
@@ -334,7 +335,7 @@ namespace SKIT.FlurlHttpClient
             TResponse result = new TResponse();
             result._InternalRawStatus = flurlResponse.StatusCode;
             result._InternalRawHeaders = new HttpHeaderCollection(flurlResponse.Headers);
-            result._InternalRawBytes = await _AsyncEx.RunTaskWithCancellationTokenAsync(flurlResponse.GetBytesAsync(), cancellationToken);
+            result._InternalRawBytes = await _AsyncEx.RunTaskWithCancellationTokenAsync(flurlResponse.GetBytesAsync(), cancellationToken).ConfigureAwait(false);
             return result;
         }
 
@@ -352,7 +353,7 @@ namespace SKIT.FlurlHttpClient
 
             TResponse result;
 
-            TResponse tmp = await WrapFlurlResponseAsync<TResponse>(flurlResponse, cancellationToken);
+            TResponse tmp = await WrapFlurlResponseAsync<TResponse>(flurlResponse, cancellationToken).ConfigureAwait(false);
             if (_StringSyntaxAssert.MaybeJson(tmp._InternalRawBytes))
             {
                 try

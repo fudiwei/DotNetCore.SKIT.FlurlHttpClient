@@ -36,7 +36,7 @@ namespace SKIT.FlurlHttpClient
         }
 
         internal HttpInterceptorContext(FlurlCall flurlCall)
-            : this(flurlCall, new Dictionary<object, object?>())
+            : this(flurlCall, new Dictionary<object, object?>(capacity: 4))
         {
         }
 

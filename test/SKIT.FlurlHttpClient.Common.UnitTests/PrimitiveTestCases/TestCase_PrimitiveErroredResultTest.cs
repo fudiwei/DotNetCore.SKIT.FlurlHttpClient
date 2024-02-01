@@ -3,7 +3,9 @@ using NUnit.Framework;
 
 namespace SKIT.FlurlHttpClient.UnitTests.TestCases
 {
-    public class TestCase_SecurityErroredResultTest
+    using SKIT.FlurlHttpClient.Primitives;
+
+    public class TestCase_PrimitiveErroredResultTest
     {
         [Test(Description = "测试用例：ErroredResult")]
         public void TestSecurityErroredResult()

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using Flurl.Util;
@@ -13,10 +14,14 @@ namespace SKIT.FlurlHttpClient
     /// </summary>
     public sealed class HttpHeaderCollection : IDictionary<string, IEnumerable<string>>, IReadOnlyDictionary<string, IEnumerable<string>>
     {
+        /// <summary>
+        /// 获取一个表示空白标头集合的 <see cref="HttpHeaderCollection"/> 对象。
+        /// </summary>
         public static readonly HttpHeaderCollection Empty = new HttpHeaderCollection(new Dictionary<string, IEnumerable<string>>());
 
         private readonly ReadOnlyDictionary<string, IEnumerable<string>> _dict;
 
+        /// <inheritdoc/>
         public IEnumerable<string> this[string key]
         {
             get { return _dict[key]; }
@@ -204,15 +209,23 @@ namespace SKIT.FlurlHttpClient
         {
             return _dict.GetEnumerator();
         }
-        
+
         /// <inheritdoc/>
+#if NETCOREAPP || NET5_0_OR_GREATER
+        public bool TryGetValue(string key, [NotNullWhen(true)] out IEnumerable<string>? value)
+#else
         public bool TryGetValue(string key, out IEnumerable<string> value)
+#endif
         {
-            return _dict.TryGetValue(key, out value!);
+            return _dict.TryGetValue(key, out value);
         }
 
         /// <inheritdoc/>
+#if NETCOREAPP || NET5_0_OR_GREATER
+        public bool TryGetMergedValue(string key, [NotNullWhen(true)] out string? value)
+#else
         public bool TryGetMergedValue(string key, out string? value)
+#endif
         {
             bool result = _dict.TryGetValue(key, out IEnumerable<string>? values);
             value = values is null ? null : string.Join(", ", values);
@@ -220,7 +233,11 @@ namespace SKIT.FlurlHttpClient
         }
 
         /// <inheritdoc/>
+#if NETCOREAPP || NET5_0_OR_GREATER
+        public bool TryGetFirstValue(string key, [NotNullWhen(true)] out string? value)
+#else
         public bool TryGetFirstValue(string key, out string? value)
+#endif
         {
             bool result = _dict.TryGetValue(key, out IEnumerable<string>? values);
             value = values?.FirstOrDefault();

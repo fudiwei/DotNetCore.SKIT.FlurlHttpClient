@@ -4,7 +4,9 @@ using NUnit.Framework;
 
 namespace SKIT.FlurlHttpClient.UnitTests.TestCases
 {
-    public class TestCase_SecurityEncodedStringTest
+    using SKIT.FlurlHttpClient.Primitives;
+
+    public class TestCase_PrimitiveEncodedStringTest
     {
         [Test(Description = "测试用例：EncodedString")]
         public void TestSecurityEncodedString()
@@ -62,12 +64,12 @@ namespace SKIT.FlurlHttpClient.UnitTests.TestCases
                 const string RAW_TEXT = "SKIT.FlurlHttpClient is AWESOME!";
                 const string ENC_TEXT = "534B49542E466C75726C48747470436C69656E7420697320415745534F4D4521";
 
-                Assert.That(EncodedString.ToEncodedString(Encoding.UTF8.GetBytes(RAW_TEXT), EncodingKinds.Hex).EncodingKind, Is.EqualTo(EncodingKinds.Hex));
-                Assert.That(EncodedString.ToEncodedString(Encoding.UTF8.GetBytes(RAW_TEXT), EncodingKinds.Hex).Value, Is.EqualTo(ENC_TEXT));
+                Assert.That(EncodedString.ToString(Encoding.UTF8.GetBytes(RAW_TEXT), EncodingKinds.Hex).EncodingKind, Is.EqualTo(EncodingKinds.Hex));
+                Assert.That(EncodedString.ToString(Encoding.UTF8.GetBytes(RAW_TEXT), EncodingKinds.Hex).Value, Is.EqualTo(ENC_TEXT));
                 Assert.That(EncodedString.ToHexString(Encoding.UTF8.GetBytes(RAW_TEXT)).EncodingKind, Is.EqualTo(EncodingKinds.Hex));
                 Assert.That(EncodedString.ToHexString(Encoding.UTF8.GetBytes(RAW_TEXT)).Value, Is.EqualTo(ENC_TEXT));
 
-                Assert.That(Encoding.UTF8.GetString(EncodedString.FromEncodedString(ENC_TEXT, EncodingKinds.Hex)), Is.EqualTo(RAW_TEXT).IgnoreCase);
+                Assert.That(Encoding.UTF8.GetString(EncodedString.FromString(ENC_TEXT, EncodingKinds.Hex)), Is.EqualTo(RAW_TEXT).IgnoreCase);
                 Assert.That(Encoding.UTF8.GetString(EncodedString.FromHexString(new EncodedString(ENC_TEXT))), Is.EqualTo(RAW_TEXT).IgnoreCase);
                 Assert.That(Encoding.UTF8.GetString(EncodedString.FromHexString(new EncodedString(ENC_TEXT, EncodingKinds.Unspecified))), Is.EqualTo(RAW_TEXT).IgnoreCase);
                 Assert.That(Encoding.UTF8.GetString(EncodedString.FromHexString(new EncodedString(ENC_TEXT, EncodingKinds.Hex))), Is.EqualTo(RAW_TEXT).IgnoreCase);
@@ -79,12 +81,12 @@ namespace SKIT.FlurlHttpClient.UnitTests.TestCases
                 const string RAW_TEXT = "SKIT.FlurlHttpClient is AWESOME!";
                 const string ENC_TEXT = "U0tJVC5GbHVybEh0dHBDbGllbnQgaXMgQVdFU09NRSE=";
 
-                Assert.That(EncodedString.ToEncodedString(Encoding.UTF8.GetBytes(RAW_TEXT), EncodingKinds.Base64).EncodingKind, Is.EqualTo(EncodingKinds.Base64));
-                Assert.That(EncodedString.ToEncodedString(Encoding.UTF8.GetBytes(RAW_TEXT), EncodingKinds.Base64).Value, Is.EqualTo(ENC_TEXT));
+                Assert.That(EncodedString.ToString(Encoding.UTF8.GetBytes(RAW_TEXT), EncodingKinds.Base64).EncodingKind, Is.EqualTo(EncodingKinds.Base64));
+                Assert.That(EncodedString.ToString(Encoding.UTF8.GetBytes(RAW_TEXT), EncodingKinds.Base64).Value, Is.EqualTo(ENC_TEXT));
                 Assert.That(EncodedString.ToBase64String(Encoding.UTF8.GetBytes(RAW_TEXT)).EncodingKind, Is.EqualTo(EncodingKinds.Base64));
                 Assert.That(EncodedString.ToBase64String(Encoding.UTF8.GetBytes(RAW_TEXT)).Value, Is.EqualTo(ENC_TEXT));
 
-                Assert.That(Encoding.UTF8.GetString(EncodedString.FromEncodedString(ENC_TEXT, EncodingKinds.Base64)), Is.EqualTo(RAW_TEXT));
+                Assert.That(Encoding.UTF8.GetString(EncodedString.FromString(ENC_TEXT, EncodingKinds.Base64)), Is.EqualTo(RAW_TEXT));
                 Assert.That(Encoding.UTF8.GetString(EncodedString.FromBase64String(new EncodedString(ENC_TEXT))), Is.EqualTo(RAW_TEXT));
                 Assert.That(Encoding.UTF8.GetString(EncodedString.FromBase64String(new EncodedString(ENC_TEXT, EncodingKinds.Unspecified))), Is.EqualTo(RAW_TEXT));
                 Assert.That(Encoding.UTF8.GetString(EncodedString.FromBase64String(new EncodedString(ENC_TEXT, EncodingKinds.Base64))), Is.EqualTo(RAW_TEXT));

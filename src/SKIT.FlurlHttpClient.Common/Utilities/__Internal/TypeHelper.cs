@@ -9,7 +9,12 @@ namespace SKIT.FlurlHttpClient.Internal
 {
     internal static class TypeHelper
     {
-        private static readonly Type[] NumberTypes = new Type[]
+        private const int NumberTypesCount = 22; // 即 NumberTypes 的总数量，用于后续为集合设置初始大小
+#if NETCOREAPP || NET5_0_OR_GREATER
+        private static readonly HashSet<Type> NumberTypes = new HashSet<Type>(capacity: NumberTypesCount)
+#else
+        private static readonly HashSet<Type> NumberTypes = new HashSet<Type>()
+#endif
         {
             typeof(sbyte),
             typeof(byte),
@@ -42,10 +47,10 @@ namespace SKIT.FlurlHttpClient.Internal
 
         static TypeHelper()
         {
-            NumberType2ArrayConstructorExpressionMap = new Dictionary<Type, Func<int, Array>>(capacity: NumberTypes.Length + 1);
-            NumberType2ArrayLinqToListExpressionMap = new Dictionary<Type, Func<Array, IList>>(capacity: NumberTypes.Length + 1);
-            NumberType2ListConstructorExpressionMap = new Dictionary<Type, Func<IList>>(capacity: NumberTypes.Length + 1);
-            NumberType2ListLinqToArrayExpressionMap = new Dictionary<Type, Func<IList, Array>>(capacity: NumberTypes.Length + 1);
+            NumberType2ArrayConstructorExpressionMap = new Dictionary<Type, Func<int, Array>>(capacity: NumberTypesCount);
+            NumberType2ArrayLinqToListExpressionMap = new Dictionary<Type, Func<Array, IList>>(capacity: NumberTypesCount);
+            NumberType2ListConstructorExpressionMap = new Dictionary<Type, Func<IList>>(capacity: NumberTypesCount);
+            NumberType2ListLinqToArrayExpressionMap = new Dictionary<Type, Func<IList, Array>>(capacity: NumberTypesCount);
 
             foreach (Type type in NumberTypes)
             {
