@@ -5,7 +5,9 @@
 拦截器是一种可以监视或重写请求调用的强大机制。下面给出一个用于记录传出请求和传入响应的拦截器简单示例：
 
 ```csharp
-public class LoggingInterceptor : FlurlHttpCallInterceptor
+using SKIT.FlurlHttpClient;
+
+public class LoggingInterceptor : HttpInterceptor
 {
     private readonly ILogger _logger;
 
@@ -14,15 +16,15 @@ public class LoggingInterceptor : FlurlHttpCallInterceptor
         _logger = logger;
     }
 
-    public override Task BeforeCallAsync(FlurlCall flurlCall)
+    public override Task BeforeCallAsync(HttpInterceptorContext context, CancellationToken cancellationToken)
     {
-        logger.LogInformation($"Sending request to {flurlCall.Request.Url} on {DateTimeOffset.Now}.");
+        logger.LogInformation($"Sending request to {context.FlurlCall.Request.Url} on {DateTimeOffset.Now}.");
         return Task.CompletedTask;
     }
 
-    public override Task AfterCallAsync(FlurlCall flurlCall)
+    public override Task AfterCallAsync(HttpInterceptorContext context, CancellationToken cancellationToken)
     {
-        logger.LogInformation($"Received response in {flurlCall.Duration.Value.TotalMilliseconds}ms.");
+        logger.LogInformation($"Received response in {context.FlurlCall.Duration.Value.TotalMilliseconds}ms.");
         return Task.CompletedTask;
     }
 }
