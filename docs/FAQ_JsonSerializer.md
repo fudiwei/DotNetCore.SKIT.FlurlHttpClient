@@ -16,9 +16,9 @@ using SKIT.FlurlHttpClient;
 
 client.Configure(config =>
 {
-    JsonSerializerOptions jsonSerializerOptions = FlurlSystemTextJsonSerializer.GetDefaultSerializerOptions();
+    JsonSerializerOptions jsonSerializerOptions = SystemTextJsonSerializer.GetDefaultSerializerOptions();
     jsonSerializerOptions.WriteIndented = true;
-    config.JsonSerializer = new FlurlSystemTextJsonSerializer(jsonSerializerOptions);
+    config.JsonSerializer = new SystemTextJsonSerializer(jsonSerializerOptions);
 });
 ```
 
@@ -30,10 +30,10 @@ using SKIT.FlurlHttpClient;
 
 client.Configure(config =>
 {
-    JsonSerializerSettings jsonSerializerSettings = FlurlNewtonsoftJsonSerializer.GetDefaultSerializerSettings();
+    JsonSerializerSettings jsonSerializerSettings = NewtonsoftJsonSerializer.GetDefaultSerializerSettings();
     jsonSerializerSettings.Formatting = Formatting.Indented;
-    config.JsonSerializer = new FlurlNewtonsoftJsonSerializer(jsonSerializerSettings);
+    config.JsonSerializer = new NewtonsoftJsonSerializer(jsonSerializerSettings);
 });
 ```
 
-需要注意的是，虽然你也可在代码中指定成其他实现 `ISerializer` 的 JSON 序列化器，但因本库的接口模型定义与实际发送的 JSON 数据并非完全一致，使用其他实现会导致意外的执行结果，所以请务必只使用本库内置的这两种 JSON 序列化器。
+需要注意的是，虽然你也可在代码中指定成其他实现 `SKIT.FlurlHttpClient.IJsonSerializer` 的 JSON 序列化器，但因本库的接口模型定义与实际发送的 JSON 数据并非完全一致，使用其他实现会导致意外的执行结果，所以请务必只使用本库内置的这两种 JSON 序列化器。
