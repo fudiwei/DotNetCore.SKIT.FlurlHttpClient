@@ -32,10 +32,17 @@ public class LoggingInterceptor : HttpInterceptor
 
 示例代码中的 `FlurlCall` 对象，是 `Flurl.Http` 的内置类型，有关该类型的更进一步的说明，请自行阅读相关文档。
 
-你可以在构造得到相应 SDK 的 API 客户端对象后，将拦截器注入到该客户端中：
+你可以在构造得到相应 SDK 的 API 客户端对象时，将拦截器注入到该客户端中：
 
 ```csharp
-client.Interceptors.Add(new LoggingInterceptor(loggerFactory.CreateLogger()));
+HttpInterceptor interceptor = new LoggingInterceptor(loggerFactory.CreateLogger());
+
+// 利用构造器注入
+builder.UseInterceptor(interceptor);
+builder.Build();
+
+// 或直接注入
+client.Interceptors.Add(interceptor);
 ```
 
 拦截器的工作方式类似于洋葱模型。对于请求拦截器而言，将按照添加时的顺序依次执行；对于响应拦截器而言，将按照添加时的顺序逆序依次执行。

@@ -1,5 +1,19 @@
 ﻿# CHANGELOG
 
+-   Release 3.0.0
+
+    -   **新增**：全新的可配置项、拦截器、异常等的实现。
+
+    -   **新增**：全新的自定义 JSON 序列化器。
+
+    -   **变更**：升级 .NET 基础库至 .NET 8.0。
+
+    -   **变更**：升级依赖 `Flurl` 至 v4.0.0。
+
+    -   **变更**：升级依赖 `Flurl.Http` 至 v4.0.2。
+
+    -   **变更**：.NET Framework 目标框架由 .NET Framework 4.6.1 调整至 .NET Framework 4.6.2。
+
 -   Release 2.6.0
 
     -   **新增**：`ICommonResponse.RawHeaders` 调整为不区分标头名的大小写。
