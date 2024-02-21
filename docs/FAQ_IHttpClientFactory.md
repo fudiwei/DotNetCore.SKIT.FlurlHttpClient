@@ -42,4 +42,4 @@ public class WechatApiClientFactory
 }
 ```
 
-需要强调的是，虽然 `SKIT.FlurlHttpClient.Wechat.Api.WechatApiClient` 实现了 `System.IDisposable` 接口，但你不应该在 DI/IoC 中手动释放它，而是应该交给 IoC 容器自动管理它。否则，请务必配合 `using` 语句或显式地执行 `Dispose()` 方法，以免造成内存泄漏。
+需要强调的是，虽然 `SKIT.FlurlHttpClient.Wechat.Api.WechatApiClient` 实现了 `System.IDisposable` 接口，但你不应该在 DI/IoC 中手动释放它，而是应该交给 DI/IoC 容器自动管理。否则，请务必配合 `using` 语句或显式地执行 `Dispose()` 方法，以免产生内存泄漏。
