@@ -7,8 +7,10 @@
 
 ### FAQ
 
+-   [如何销毁客户端（避免内存泄漏）？](./FAQ_Dispose.md)
+
 -   [如何与 `IHttpClientFactory` 集成？](./FAQ_IHttpClientFactory.md)
 
--   [如何指定 JSON 序列化器？](./FAQ_JsonSerializer.md)
+-   [如何配置 JSON 序列化器？](./FAQ_JsonSerializer.md)
 
 -   [如何使用拦截器？](./FAQ_Interceptor.md)

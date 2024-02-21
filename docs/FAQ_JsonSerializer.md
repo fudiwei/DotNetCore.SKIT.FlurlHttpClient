@@ -1,4 +1,4 @@
-﻿### FAQ：如何指定 JSON 序列化器？
+﻿### FAQ：如何配置 JSON 序列化器？
 
 ---
 
@@ -8,12 +8,22 @@
 
 默认情况下，本库使用 `System.Text.Json` 作为 JSON 序列化器。
 
-如果你希望调整一些序列化器的配置项，那么你可以在构造得到相应 SDK 的 API 客户端对象后：
+如果你希望调整一些序列化器的配置项，那么你可以在构造得到相应 SDK 的 API 客户端对象时：
 
 ```csharp
 using System.Text.Json;
 using SKIT.FlurlHttpClient;
 
+// 利用构造器配置
+builder.Configure(config =>
+{
+    JsonSerializerOptions jsonSerializerOptions = SystemTextJsonSerializer.GetDefaultSerializerOptions();
+    jsonSerializerOptions.WriteIndented = true;
+    config.JsonSerializer = new SystemTextJsonSerializer(jsonSerializerOptions);
+});
+builder.Build();
+
+// 或直接配置单个客户端
 client.Configure(config =>
 {
     JsonSerializerOptions jsonSerializerOptions = SystemTextJsonSerializer.GetDefaultSerializerOptions();
@@ -27,7 +37,18 @@ client.Configure(config =>
 ```csharp
 using Newtonsoft.Json;
 using SKIT.FlurlHttpClient;
+using SKIT.FlurlHttpClient.Wechat.Api;
 
+// 利用构造器配置
+builder.Configure(config =>
+{
+    JsonSerializerSettings jsonSerializerSettings = NewtonsoftJsonSerializer.GetDefaultSerializerSettings();
+    jsonSerializerSettings.Formatting = Formatting.Indented;
+    config.JsonSerializer = new NewtonsoftJsonSerializer(jsonSerializerSettings);
+});
+builder.Build();
+
+// 或直接配置单个客户端
 client.Configure(config =>
 {
     JsonSerializerSettings jsonSerializerSettings = NewtonsoftJsonSerializer.GetDefaultSerializerSettings();
