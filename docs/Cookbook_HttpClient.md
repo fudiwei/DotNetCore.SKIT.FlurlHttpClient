@@ -1,4 +1,4 @@
-﻿### 高级技巧：配置 HttpClient
+﻿### 高级用法：配置 HttpClient
 
 ---
 
