@@ -1,4 +1,4 @@
-﻿### FAQ：如何与 `IHttpClientFactory` 集成？
+﻿### 最佳实践：与 `IHttpClientFactory` 集成
 
 ---
 
@@ -10,7 +10,9 @@
 >
 > [《Microsoft Docs - .NET Core 2.1 的新增功能：套接字改进》](https://docs.microsoft.com/zh-CN/dotnet/core/whats-new/dotnet-core-2-1#sockets-improvements)
 
-如果你想手动管理 `HttpClient`，那么可以参考下面基于 DI/IoC 的代码实现：
+我们强烈推荐开发者搭配 `System.Net.Http.IHttpClientFactory` 来使用相应 SDK 的 API 客户端，以获得更好的性能提升和开发体验。
+
+下面给出一个基于 DI/IoC 实现的简单示例：
 
 ```csharp
 /* 以微信 Wechat.Api 模块为例，其他 SDK 模块集成方式完全一致，只需替换为相应的构造器 */
@@ -41,5 +43,3 @@ public class WechatApiClientFactory
     }
 }
 ```
-
-需要强调的是，虽然 `SKIT.FlurlHttpClient.Wechat.Api.WechatApiClient` 实现了 `System.IDisposable` 接口，但你不应该在 DI/IoC 中手动释放它，而是应该交给 DI/IoC 容器自动管理。否则，请务必配合 `using` 语句或显式地执行 `Dispose()` 方法，以免产生内存泄漏。
