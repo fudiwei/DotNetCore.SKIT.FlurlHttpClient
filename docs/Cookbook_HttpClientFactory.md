@@ -37,7 +37,7 @@ public class WechatApiClientFactory
     public WechatApiClient CreateClient()
     {
         WechatApiClient client = WechatApiClientBuilder.Create(_wechatApiClientOptions.Value)
-            .UseHttpClient(_httpClientFactory.Create(), disposeClient: false) // 设置 HttpClient 不随客户端一同销毁
+            .UseHttpClient(_httpClientFactory.CreateClient(), disposeClient: false) // 设置 HttpClient 不随客户端一同销毁
             .Build();
         return client;
     }
