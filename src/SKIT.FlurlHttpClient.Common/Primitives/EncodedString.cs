@@ -79,7 +79,7 @@ namespace SKIT.FlurlHttpClient.Primitives
                         if (s.Value is null)
                             return Array.Empty<byte>();
 
-#if NETCOREAPP || NET5_0_OR_GREATER
+#if NET5_0_OR_GREATER
                         byte[] bytes = Convert.FromHexString(s.Value);
 #else
                         if (s.Value.Length == 0)
@@ -182,7 +182,7 @@ namespace SKIT.FlurlHttpClient.Primitives
         public static EncodedString ToHexString(byte[] bytes)
         {
 
-#if NETCOREAPP || NET5_0_OR_GREATER
+#if NET5_0_OR_GREATER
             string s = Convert.ToHexString(bytes);
 #else
             string s = BitConverter.ToString(bytes).Replace("-", "");
