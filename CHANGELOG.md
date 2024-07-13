@@ -1,5 +1,11 @@
 ﻿# CHANGELOG
 
+-   Release 3.1.0
+
+    -   **新增**：新增 MIME 类型映射工具方法。
+
+    -   **变更**：停止对 .NET Core 2.0 目标框架的支持，最低支持至 .NET Core 3.1。
+
 -   Release 3.0.0
 
     -   **新增**：全新的可配置项、拦截器、异常等的实现。
@@ -12,7 +18,7 @@
 
     -   **变更**：升级依赖 `Flurl.Http` 至 v4.0.2。
 
-    -   **变更**：.NET Framework 目标框架由 .NET Framework 4.6.1 调整至 .NET Framework 4.6.2。
+    -   **变更**：停止对 .NET Framework 4.6.1 目标框架的支持，最低支持至 .NET Framework 4.6.2。
 
 -   Release 2.6.0
 
