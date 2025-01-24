@@ -1,5 +1,9 @@
 ﻿# CHANGELOG
 
+-   Release 3.1.1
+
+    -   **变更**：升级依赖 `System.Text.Json` 至 v8.0.5。
+
 -   Release 3.1.0
 
     -   **新增**：新增 MIME 类型映射工具方法。
