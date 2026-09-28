@@ -4,10 +4,10 @@
   </Folder>
   <Folder Name="/test/">
     <Project Path="test/SKIT.FlurlHttpClient.Common.UnitTests/SKIT.FlurlHttpClient.Common.UnitTests.csproj" />
-    <Project Path="test/SKIT.FlurlHttpClient.Tools.CodeAnalyzer.UnitTests/SKIT.FlurlHttpClient.Tools.CodeAnalyzer.UnitTests.csproj" />
   </Folder>
   <Folder Name="/tools/">
     <Project Path="tools/SKIT.FlurlHttpClient.Tools.CodeAnalyzer/SKIT.FlurlHttpClient.Tools.CodeAnalyzer.csproj" />
+    <Project Path="tools/SKIT.FlurlHttpClient.Tools.CodeAnalyzer.IntegratedTests/SKIT.FlurlHttpClient.Tools.CodeAnalyzer.IntegratedTests.csproj" />
     <Project Path="tools/SKIT.FlurlHttpClient.Tools.DocsTracker/SKIT.FlurlHttpClient.Tools.DocsTracker.csproj" />
   </Folder>
 </Solution>

@@ -1,18 +1,15 @@
 using System.Reflection;
-using NUnit.Framework;
 
 namespace SKIT.FlurlHttpClient.Tools.CodeAnalyzer.UnitTests
 {
-    using System;
-    using System.IO;
     using SKIT.FlurlHttpClient.Tools.CodeAnalyzer.UnitTests.MockSdk;
 
     public class TestCase_AnalyzerTest
     {
-        [Test(Description = "测试用例：质量分析器之 TypeDeclarationAnalyzer")]
+        [Fact(DisplayName = "测试用例：质量分析器之 TypeDeclarationAnalyzer")]
         public void TestTypeDeclarationAnalyzer()
         {
-            Assert.DoesNotThrow(() =>
+            Exception? exception = Record.Exception(() =>
             {
                 IAnalyzer analyzer = new TypeDeclarationAnalyzer(new TypeDeclarationAnalyzerOptions()
                 {
@@ -28,12 +25,14 @@ namespace SKIT.FlurlHttpClient.Tools.CodeAnalyzer.UnitTests
                 });
                 analyzer.AssertNoIssues();
             });
+
+            Assert.Null(exception);
         }
 
-        [Test(Description = "测试用例：质量分析器之 SourceFileAnalyzer")]
+        [Fact(DisplayName = "测试用例：质量分析器之 SourceFileAnalyzer")]
         public void TestSourceFileAnalyzer()
         {
-            Assert.DoesNotThrow(() =>
+            Exception? exception = Record.Exception(() =>
             {
                 string workdir = Environment.CurrentDirectory;
                 string rootdir = Path.Combine(workdir, "../../../");
@@ -62,6 +61,8 @@ namespace SKIT.FlurlHttpClient.Tools.CodeAnalyzer.UnitTests
                 });
                 analyzer.AssertNoIssues();
             });
+
+            Assert.Null(exception);
         }
     }
 }

@@ -5,5 +5,8 @@ namespace SKIT.FlurlHttpClient.Tools.CodeAnalyzer.UnitTests.MockSdk.Models
     /// </summary>
     public class PostFooRequest : MockRequest
     {
+        [Newtonsoft.Json.JsonProperty("id")]
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public string Id { get; set; } = string.Empty;
     }
 }

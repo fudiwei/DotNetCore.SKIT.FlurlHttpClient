@@ -1,3 +1,3 @@
 using System.Runtime.CompilerServices;
 
-[assembly: InternalsVisibleTo("SKIT.FlurlHttpClient.Tools.CodeAnalyzer.UnitTests")]
+[assembly: InternalsVisibleTo("SKIT.FlurlHttpClient.Tools.CodeAnalyzer.IntegratedTests")]
