@@ -1,5 +1,3 @@
-using NUnit.Framework;
-
 namespace SKIT.FlurlHttpClient.UnitTests.TestCases
 {
     using SKIT.FlurlHttpClient.Internal;
@@ -18,7 +16,7 @@ namespace SKIT.FlurlHttpClient.UnitTests.TestCases
             public MockObject? PropertyAsObject { get; set; }
         }
 
-        [Test(Description = "测试用例：_XmlSimpleSerializer 工具类")]
+        [Fact(DisplayName = "测试用例：_XmlSimpleSerializer 工具类")]
         public void TestUtilityInternalSimpleXmlSerializer()
         {
             var expectObj = new MockObject()
@@ -33,12 +31,12 @@ namespace SKIT.FlurlHttpClient.UnitTests.TestCases
             var actualXml = _XmlSimpleSerializer.Serialize(expectObj, typeof(MockObject));
             var actualObj = (MockObject)_XmlSimpleSerializer.Deserialize(actualXml, typeof(MockObject));
 
-            Assert.That(actualXml, Is.EqualTo("<xml><PropertyAsString>hello world</PropertyAsString><PropertyAsInt32>2147483647</PropertyAsInt32><PropertyAsObject><PropertyAsInt32>-2147483648</PropertyAsInt32></PropertyAsObject></xml>"));
+            Assert.Equal("<xml><PropertyAsString>hello world</PropertyAsString><PropertyAsInt32>2147483647</PropertyAsInt32><PropertyAsObject><PropertyAsInt32>-2147483648</PropertyAsInt32></PropertyAsObject></xml>", actualXml);
 
-            Assert.That(actualObj.PropertyAsString, Is.EqualTo(expectObj.PropertyAsString));
-            Assert.That(actualObj.PropertyAsInt32, Is.EqualTo(expectObj.PropertyAsInt32));
-            Assert.That(actualObj.PropertyAsObject?.PropertyAsString, Is.EqualTo(expectObj.PropertyAsObject.PropertyAsString));
-            Assert.That(actualObj.PropertyAsObject?.PropertyAsInt32, Is.EqualTo(expectObj.PropertyAsObject.PropertyAsInt32));
+            Assert.Equal(expectObj.PropertyAsString, actualObj.PropertyAsString);
+            Assert.Equal(expectObj.PropertyAsInt32, actualObj.PropertyAsInt32);
+            Assert.Equal(expectObj.PropertyAsObject.PropertyAsString, actualObj.PropertyAsObject?.PropertyAsString);
+            Assert.Equal(expectObj.PropertyAsObject.PropertyAsInt32, actualObj.PropertyAsObject?.PropertyAsInt32);
         }
     }
 }

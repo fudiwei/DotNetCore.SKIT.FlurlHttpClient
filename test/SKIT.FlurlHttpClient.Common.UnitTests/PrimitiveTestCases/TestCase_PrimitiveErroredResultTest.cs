@@ -1,55 +1,49 @@
-using System;
-using NUnit.Framework;
-
 namespace SKIT.FlurlHttpClient.UnitTests.TestCases
 {
     using SKIT.FlurlHttpClient.Primitives;
 
     public class TestCase_PrimitiveErroredResultTest
     {
-        [Test(Description = "测试用例：ErroredResult")]
+        [Fact(DisplayName = "测试用例：ErroredResult")]
         public void TestSecurityErroredResult()
         {
-            Assert.Multiple(() =>
             {
-                Assert.That(ErroredResult.True == true, Is.True);
-                Assert.That(ErroredResult.True == false, Is.False);
-                Assert.That(ErroredResult.True != true, Is.False);
-                Assert.That(ErroredResult.True != false, Is.True);
-                Assert.That(true == ErroredResult.True , Is.True);
-                Assert.That(false == ErroredResult.True, Is.False);
-                Assert.That(true != ErroredResult.True, Is.False);
-                Assert.That(false != ErroredResult.True, Is.True);
+                Assert.True(ErroredResult.True == true);
+                Assert.False(ErroredResult.True == false);
+                Assert.False(ErroredResult.True != true);
+                Assert.True(ErroredResult.True != false);
+                Assert.True(true == ErroredResult.True);
+                Assert.False(false == ErroredResult.True);
+                Assert.False(true != ErroredResult.True);
+                Assert.True(false != ErroredResult.True);
 
-                Assert.That(ErroredResult.False == true, Is.False);
-                Assert.That(ErroredResult.False == false, Is.True);
-                Assert.That(ErroredResult.False != true, Is.True);
-                Assert.That(ErroredResult.False != false, Is.False);
-                Assert.That(true == ErroredResult.False, Is.False);
-                Assert.That(false == ErroredResult.False, Is.True);
-                Assert.That(true != ErroredResult.False, Is.True);
-                Assert.That(false != ErroredResult.False, Is.False);
+                Assert.False(ErroredResult.False == true);
+                Assert.True(ErroredResult.False == false);
+                Assert.True(ErroredResult.False != true);
+                Assert.False(ErroredResult.False != false);
+                Assert.False(true == ErroredResult.False);
+                Assert.True(false == ErroredResult.False);
+                Assert.True(true != ErroredResult.False);
+                Assert.False(false != ErroredResult.False);
 
-                Assert.That((bool)ErroredResult.True, Is.True);
-                Assert.That((bool)ErroredResult.False, Is.False);
+                Assert.True((bool)ErroredResult.True);
+                Assert.False((bool)ErroredResult.False);
 
-                Assert.That((bool?)ErroredResult.True, Is.True);
-                Assert.That((bool?)ErroredResult.False, Is.False);
-            });
+                Assert.True((bool?)ErroredResult.True);
+                Assert.False((bool?)ErroredResult.False);
+            }
 
-            Assert.Multiple(() =>
             {
-                Assert.That(ErroredResult.Ok(), Is.EqualTo(ErroredResult.True));
-                Assert.That(ErroredResult.Fail(), Is.EqualTo(ErroredResult.False));
-            });
+                Assert.Equal(ErroredResult.True, ErroredResult.Ok());
+                Assert.Equal(ErroredResult.False, ErroredResult.Fail());
+            }
 
-            Assert.Multiple(() =>
             {
                 Exception? mockError = new Exception();
 
-                Assert.That(ErroredResult.Fail(mockError).Error, Is.EqualTo(mockError));
-                Assert.That(new ErroredResult(false, mockError).Error, Is.EqualTo(mockError));
-            });
+                Assert.Equal(mockError, ErroredResult.Fail(mockError).Error);
+                Assert.Equal(mockError, new ErroredResult(false, mockError).Error);
+            }
 
             Assert.Throws<ArgumentException>(() =>
             {

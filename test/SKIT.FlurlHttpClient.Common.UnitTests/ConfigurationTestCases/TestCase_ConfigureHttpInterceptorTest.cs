@@ -1,9 +1,3 @@
-using System.Net.Http;
-using System.Threading;
-using System.Threading.Tasks;
-using Flurl.Http;
-using NUnit.Framework;
-
 namespace SKIT.FlurlHttpClient.UnitTests.TestCases
 {
     public class TestCase_ConfigureHttpInterceptorTest
@@ -12,7 +6,7 @@ namespace SKIT.FlurlHttpClient.UnitTests.TestCases
         {
             public override Task BeforeCallAsync(HttpInterceptorContext context, CancellationToken cancellationToken = default)
             {
-                Assert.That(context.Items.ContainsKey("TEST_KEY"), Is.False);
+                Assert.False(context.Items.ContainsKey("TEST_KEY"));
 
                 context.Items.Add("TEST_KEY", "TEST_VALUE_1");
 
@@ -21,7 +15,7 @@ namespace SKIT.FlurlHttpClient.UnitTests.TestCases
 
             public override Task AfterCallAsync(HttpInterceptorContext context, CancellationToken cancellationToken = default)
             {
-                Assert.That(context.Items["TEST_KEY"], Is.EqualTo("TEST_VALUE_2"));
+                Assert.Equal("TEST_VALUE_2", context.Items["TEST_KEY"]);
 
                 return base.AfterCallAsync(context, cancellationToken);
             }
@@ -31,14 +25,14 @@ namespace SKIT.FlurlHttpClient.UnitTests.TestCases
         {
             public override Task BeforeCallAsync(HttpInterceptorContext context, CancellationToken cancellationToken = default)
             {
-                Assert.That(context.Items["TEST_KEY"], Is.EqualTo("TEST_VALUE_1"));
+                Assert.Equal("TEST_VALUE_1", context.Items["TEST_KEY"]);
 
                 return base.BeforeCallAsync(context, cancellationToken);
             }
 
             public override Task AfterCallAsync(HttpInterceptorContext context, CancellationToken cancellationToken = default)
             {
-                Assert.That(context.Items["TEST_KEY"], Is.EqualTo("TEST_VALUE_1"));
+                Assert.Equal("TEST_VALUE_1", context.Items["TEST_KEY"]);
 
                 context.Items["TEST_KEY"] = "TEST_VALUE_2";
 
@@ -53,7 +47,7 @@ namespace SKIT.FlurlHttpClient.UnitTests.TestCases
                 var client = context.GetOriginalClient();
                 if (client is MockTestClient mockClient)
                 {
-                    Assert.That(mockClient.Interceptors, Is.Not.Null);
+                    Assert.NotNull(mockClient.Interceptors);
                 }
                 else
                 {
@@ -63,7 +57,7 @@ namespace SKIT.FlurlHttpClient.UnitTests.TestCases
                 var request = context.GetOriginalRequest();
                 if (request is MockTestRequest mockRequest)
                 {
-                    Assert.That(mockRequest.Data, Is.EqualTo("MockInterceptor"));
+                    Assert.Equal("MockInterceptor", mockRequest.Data);
                 }
                 else
                 {
@@ -74,29 +68,26 @@ namespace SKIT.FlurlHttpClient.UnitTests.TestCases
             }
         }
 
-        [Test(Description = "测试用例：配置项之拦截器")]
+        [Fact(DisplayName = "测试用例：配置项之拦截器")]
         public async Task TestClientConfigure_HttpInterceptor()
         {
             using var client = new MockTestClient();
             client.Interceptors.Add(new MockInterceptor1());
             client.Interceptors.Add(new MockInterceptor2());
             client.Interceptors.Add(new MockInterceptor3());
-            Assert.That(client.Interceptors, Is.Not.Null);
+            Assert.NotNull(client.Interceptors);
 
-            await Assert.MultipleAsync(async () =>
-            {
-                var request = new MockTestRequest();
-                request.Data = "MockInterceptor";
+            var request = new MockTestRequest();
+            request.Data = "MockInterceptor";
 
-                IFlurlRequest flurlRequest = client.CreateFlurlRequest(request, HttpMethod.Post, "mock_url");
+            IFlurlRequest flurlRequest = client.CreateFlurlRequest(request, HttpMethod.Post, "mock_url");
 
-                var response = await client.SendFlurlRequestAsJsonAsync<MockTestResponse>(flurlRequest);
+            var response = await client.SendFlurlRequestAsJsonAsync<MockTestResponse>(flurlRequest);
 
-                Assert.That(response.IsSuccessful(), Is.True);
-                Assert.That(response.GetRawStatus(), Is.Not.Null);
-                Assert.That(response.GetRawBytes(), Is.Not.Null);
-                Assert.That(response.GetRawHeaders(), Is.Not.Null);
-            });
+            Assert.True(response.IsSuccessful());
+            Assert.NotEqual(0, response.GetRawStatus());
+            Assert.NotNull(response.GetRawBytes());
+            Assert.NotNull(response.GetRawHeaders());
         }
     }
 }
