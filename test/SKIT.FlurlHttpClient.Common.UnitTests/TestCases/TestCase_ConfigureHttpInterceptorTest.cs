@@ -68,7 +68,7 @@ namespace SKIT.FlurlHttpClient.UnitTests.TestCases
             }
         }
 
-        [Fact(DisplayName = "测试用例：配置项之拦截器")]
+        [Fact(DisplayName = "测试用例：拦截器")]
         public async Task TestClientConfigure_HttpInterceptor()
         {
             using var client = new MockTestClient();

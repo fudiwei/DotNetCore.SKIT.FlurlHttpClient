@@ -4,9 +4,10 @@ namespace SKIT.FlurlHttpClient.UnitTests.TestCases
 
     public class TestCase_PrimitiveErroredResultTest
     {
-        [Fact(DisplayName = "测试用例：ErroredResult")]
-        public void TestSecurityErroredResult()
+        [Fact(DisplayName = "测试用例：元类型 `ErroredResult`")]
+        public void TestErroredResult()
         {
+            Assert.Multiple(() =>
             {
                 Assert.True(ErroredResult.True == true);
                 Assert.False(ErroredResult.True == false);
@@ -31,19 +32,21 @@ namespace SKIT.FlurlHttpClient.UnitTests.TestCases
 
                 Assert.True((bool?)ErroredResult.True);
                 Assert.False((bool?)ErroredResult.False);
-            }
+            });
 
+            Assert.Multiple(() =>
             {
                 Assert.Equal(ErroredResult.True, ErroredResult.Ok());
                 Assert.Equal(ErroredResult.False, ErroredResult.Fail());
-            }
+            });
 
+            Assert.Multiple(() =>
             {
                 Exception? mockError = new Exception();
 
                 Assert.Equal(mockError, ErroredResult.Fail(mockError).Error);
                 Assert.Equal(mockError, new ErroredResult(false, mockError).Error);
-            }
+            });
 
             Assert.Throws<ArgumentException>(() =>
             {

@@ -50,7 +50,7 @@ namespace SKIT.FlurlHttpClient.UnitTests.TestCases
             }
         }
 
-        [Fact(DisplayName = "测试用例：配置项之 FormUrlEncoded 序列化器")]
+        [Fact(DisplayName = "测试用例：FormUrlEncoded 序列化器")]
         public void TestClientConfigure_FormUrlEncodedSerializer_JsonifiedFormUrlEncodedSerializer()
         {
             TestConfigureFormUrlEncodedSerializer(new JsonifiedFormUrlEncodedSerializer(new NewtonsoftJsonSerializer()));

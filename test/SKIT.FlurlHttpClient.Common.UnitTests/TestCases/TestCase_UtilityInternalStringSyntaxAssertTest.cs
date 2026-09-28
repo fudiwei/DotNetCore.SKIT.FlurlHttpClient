@@ -4,7 +4,7 @@ namespace SKIT.FlurlHttpClient.UnitTests.TestCases
 
     public class TestCase_UtilityInternalStringSyntaxAssertTest
     {
-        [Fact(DisplayName = "测试用例：_StringSyntaxAssert 工具类之 `MaybeJson`")]
+        [Fact(DisplayName = "测试用例：工具类 `_StringSyntaxAssert.MaybeJson`")]
         public void TestUtilityInternalStringSyntaxAssert_MaybeJson()
         {
             Assert.True(_StringSyntaxAssert.MaybeJson("{}"));
@@ -42,7 +42,7 @@ namespace SKIT.FlurlHttpClient.UnitTests.TestCases
             Assert.False(_StringSyntaxAssert.MaybeJson(Encoding.UTF8.GetBytes("[}")));
         }
 
-        [Fact(DisplayName = "测试用例：_StringSyntaxAssert 工具类之 `MaybeXml`")]
+        [Fact(DisplayName = "测试用例：工具类 `_StringSyntaxAssert.MaybeXml`")]
         public void TestUtilityInternalStringAssert_MaybeXml()
         {
             Assert.True(_StringSyntaxAssert.MaybeXml("<xml></xml>"));

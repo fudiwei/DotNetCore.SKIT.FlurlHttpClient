@@ -1,8 +1,8 @@
 namespace SKIT.FlurlHttpClient.UnitTests.TestCases
 {
-    public class TestCase_UtilityMimeMappingTest
+    public class TestCase_ConstantMimeTypesTest
     {
-        [Fact(DisplayName = "测试用例：MIME 映射")]
+        [Fact(DisplayName = "测试用例：MIME 类型映射")]
         public void TestMimeTypesMapping()
         {
             Assert.Equal(MimeTypes.Binary, MimeTypes.GetMimeMapping(default!));

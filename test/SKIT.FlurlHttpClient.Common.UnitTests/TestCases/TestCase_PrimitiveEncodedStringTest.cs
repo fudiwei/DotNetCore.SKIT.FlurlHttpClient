@@ -4,17 +4,19 @@ namespace SKIT.FlurlHttpClient.UnitTests.TestCases
 
     public class TestCase_PrimitiveEncodedStringTest
     {
-        [Fact(DisplayName = "测试用例：EncodedString")]
-        public void TestSecurityEncodedString()
+        [Fact(DisplayName = "测试用例：元类型 `EncodedString`")]
+        public void TestEncodedString()
         {
+            Assert.Multiple(() =>
             {
                 const string TEXT = "SKIT.FlurlHttpClient is AWESOME!";
 
                 Assert.Equal(TEXT, (string?)new EncodedString(TEXT));
 
                 Assert.Equal(new EncodedString(TEXT), (EncodedString)TEXT);
-            }
+            });
 
+            Assert.Multiple(() =>
             {
                 Assert.Equal(new EncodedString(null), new EncodedString(null));
                 Assert.Equal(new EncodedString(""), new EncodedString(""));
@@ -51,8 +53,9 @@ namespace SKIT.FlurlHttpClient.UnitTests.TestCases
                 Assert.True(new EncodedString("Base64", EncodingKinds.Base64) != new EncodedString("Unspecified", EncodingKinds.Unspecified));
                 Assert.True(new EncodedString("Base64", EncodingKinds.Base64) != new EncodedString("Hex", EncodingKinds.Hex));
                 Assert.True(new EncodedString("Base64", EncodingKinds.Base64) != new EncodedString("", EncodingKinds.Base64));
-            }
+            });
 
+            Assert.Multiple(() =>
             {
                 const string RAW_TEXT = "SKIT.FlurlHttpClient is AWESOME!";
                 const string ENC_TEXT = "534B49542E466C75726C48747470436C69656E7420697320415745534F4D4521";
@@ -67,8 +70,9 @@ namespace SKIT.FlurlHttpClient.UnitTests.TestCases
                 Assert.Equal(RAW_TEXT, Encoding.UTF8.GetString(EncodedString.FromHexString(new EncodedString(ENC_TEXT, EncodingKinds.Unspecified))), ignoreCase: true);
                 Assert.Equal(RAW_TEXT, Encoding.UTF8.GetString(EncodedString.FromHexString(new EncodedString(ENC_TEXT, EncodingKinds.Hex))), ignoreCase: true);
                 Assert.Throws<FormatException>(() => Encoding.UTF8.GetString(EncodedString.FromHexString(new EncodedString(ENC_TEXT, EncodingKinds.Base64))));
-            }
+            });
 
+            Assert.Multiple(() =>
             {
                 const string RAW_TEXT = "SKIT.FlurlHttpClient is AWESOME!";
                 const string ENC_TEXT = "U0tJVC5GbHVybEh0dHBDbGllbnQgaXMgQVdFU09NRSE=";
@@ -83,7 +87,7 @@ namespace SKIT.FlurlHttpClient.UnitTests.TestCases
                 Assert.Equal(RAW_TEXT, Encoding.UTF8.GetString(EncodedString.FromBase64String(new EncodedString(ENC_TEXT, EncodingKinds.Unspecified))));
                 Assert.Equal(RAW_TEXT, Encoding.UTF8.GetString(EncodedString.FromBase64String(new EncodedString(ENC_TEXT, EncodingKinds.Base64))));
                 Assert.Throws<FormatException>(() => Encoding.UTF8.GetString(EncodedString.FromBase64String(new EncodedString(ENC_TEXT, EncodingKinds.Hex))));
-            }
+            });
         }
     }
 }

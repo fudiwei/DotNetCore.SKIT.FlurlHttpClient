@@ -2,7 +2,7 @@ namespace SKIT.FlurlHttpClient.UnitTests.TestCases
 {
     public class TestCase_ConfigureJsonSerializerTest
     {
-        [Fact(DisplayName = "测试用例：配置项之 JSON 序列化器")]
+        [Fact(DisplayName = "测试用例：JSON 序列化器")]
         public void TestClientConfigure_JsonSerializer()
         {
             using var client = new MockTestClient();

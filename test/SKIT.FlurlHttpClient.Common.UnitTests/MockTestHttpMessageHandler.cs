@@ -27,6 +27,7 @@ namespace SKIT.FlurlHttpClient
                 })),
                 Version = request.Version
             };
+            httpResponseMessage.Headers.TryAddWithoutValidation("X-Test-Multi", new[] { "value-1", "value-2" });
             return httpResponseMessage;
         }
     }

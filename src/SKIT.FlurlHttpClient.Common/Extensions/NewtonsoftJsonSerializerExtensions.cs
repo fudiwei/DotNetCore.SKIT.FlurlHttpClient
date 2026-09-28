@@ -1,7 +1,33 @@
+using System;
+using System.Linq.Expressions;
+using System.Reflection;
+
 namespace Newtonsoft.Json
 {
     public static class NewtonsoftJsonSerializerExtensions
     {
+        private static readonly FieldInfo? _newtonsoftErrorEventField = typeof(JsonSerializer).GetField(
+            nameof(JsonSerializer.Error),
+            BindingFlags.Instance | BindingFlags.NonPublic
+        );
+        private static readonly Func<JsonSerializer, EventHandler<Serialization.ErrorEventArgs>?>? _newtonsoftErrorEventGetter;
+
+        static NewtonsoftJsonSerializerExtensions()
+        {
+            if (_newtonsoftErrorEventField is null) return;
+
+            try
+            {
+                ParameterExpression serializerParameter = Expression.Parameter(typeof(JsonSerializer), "serializer");
+                MemberExpression errorEventField = Expression.Field(serializerParameter, _newtonsoftErrorEventField);
+                UnaryExpression convertExpression = Expression.Convert(errorEventField, typeof(EventHandler<Serialization.ErrorEventArgs>));
+                _newtonsoftErrorEventGetter = Expression.Lambda<Func<JsonSerializer, EventHandler<Serialization.ErrorEventArgs>?>>(convertExpression, serializerParameter).Compile();
+            }
+            catch
+            {
+            }
+        }
+
         public static JsonSerializerSettings ExtractSerializerSettings(this JsonSerializer serializer)
         {
             if (serializer is null)
@@ -24,7 +50,7 @@ namespace Newtonsoft.Json
                 DateTimeZoneHandling = serializer.DateTimeZoneHandling,
                 DefaultValueHandling = serializer.DefaultValueHandling,
                 EqualityComparer = serializer.EqualityComparer,
-                //Error = serializer.Error,
+                Error = _newtonsoftErrorEventGetter is null ? _newtonsoftErrorEventField?.GetValue(serializer) as EventHandler<Serialization.ErrorEventArgs> : _newtonsoftErrorEventGetter(serializer),
                 FloatFormatHandling = serializer.FloatFormatHandling,
                 Formatting = serializer.Formatting,
                 FloatParseHandling = serializer.FloatParseHandling,

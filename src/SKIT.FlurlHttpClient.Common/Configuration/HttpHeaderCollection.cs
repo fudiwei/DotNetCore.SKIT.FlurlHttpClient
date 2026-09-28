@@ -178,7 +178,7 @@ namespace SKIT.FlurlHttpClient
                     .GroupBy(e => e.Name.ToLower())
                     .ToDictionary(
                         static k => k.Key,
-                        v => v.SelectMany(e => httpHeaders.GetAll(e.Name))
+                        static v => v.Select(e => e.Value)
                     ),
                     StringComparer.OrdinalIgnoreCase
                 )
