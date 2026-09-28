@@ -72,14 +72,14 @@ namespace SKIT.FlurlHttpClient
                     if (flurlCall.Request.Settings.Timeout.HasValue)
                         cts.CancelAfter(flurlCall.Request.Settings.Timeout.Value);
 
-                    HttpInterceptorContext context = flurlCall.GetHttpInterceptorContext();
+                    HttpInterceptorContext context = flurlCall.GetHttpInterceptorContextWithClient(this);
                     for (int i = 0, len = Interceptors.Count; i < len; i++)
                     {
                         cts.Token.ThrowIfCancellationRequested();
 
                         try
                         {
-                            await Interceptors[i].BeforeCallAsync(context, cancellationToken: cts.Token).ConfigureAwait(false);
+                            await Interceptors[i].BeforeCallAsync(context, cts.Token).ConfigureAwait(false);
                         }
                         catch (OperationCanceledException)
                         {
@@ -103,14 +103,14 @@ namespace SKIT.FlurlHttpClient
                     if (flurlCall.Request.Settings.Timeout.HasValue)
                         cts.CancelAfter(flurlCall.Request.Settings.Timeout.Value);
 
-                    HttpInterceptorContext context = flurlCall.GetHttpInterceptorContext();
+                    HttpInterceptorContext context = flurlCall.GetHttpInterceptorContextWithClient(this);
                     for (int i = Interceptors.Count - 1; i >= 0; i--)
                     {
                         cts.Token.ThrowIfCancellationRequested();
 
                         try
                         {
-                            await Interceptors[i].AfterCallAsync(context, cancellationToken: cts.Token).ConfigureAwait(false);
+                            await Interceptors[i].AfterCallAsync(context, cts.Token).ConfigureAwait(false);
                         }
                         catch (OperationCanceledException)
                         {
@@ -155,7 +155,8 @@ namespace SKIT.FlurlHttpClient
             if (request is null) throw new ArgumentNullException(nameof(request));
             if (_disposed) throw new ObjectDisposedException(nameof(FlurlClient));
 
-            IFlurlRequest flurlRequest = FlurlClient.Request(urlSegments).WithVerb(httpMethod);
+            IFlurlRequest flurlRequest = new InternalWrappedFlurlRequest(FlurlClient.Request(urlSegments), request)
+                .WithVerb(httpMethod);
 
             if (request._InternalTimeout is not null)
             {
@@ -180,11 +181,10 @@ namespace SKIT.FlurlHttpClient
             try
             {
                 flurlRequest.Client = FlurlClient;
+                flurlRequest.AllowAnyHttpStatus();
 
-                return await flurlRequest
-                    .AllowAnyHttpStatus()
-                    .SendAsync(flurlRequest.Verb, httpContent, cancellationToken: cancellationToken)
-                    .ConfigureAwait(false);
+                // DO NOT use `flurlRequest.SendAsync()`! It will lose the wrapped object.
+                return await FlurlClient.SendAsync(flurlRequest, HttpCompletionOption.ResponseContentRead, cancellationToken).ConfigureAwait(false);
             }
             catch (OperationCanceledException)
             {

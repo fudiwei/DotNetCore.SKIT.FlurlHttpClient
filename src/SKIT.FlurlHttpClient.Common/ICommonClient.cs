@@ -13,12 +13,12 @@ namespace SKIT.FlurlHttpClient
         public HttpInterceptorCollection Interceptors { get; }
 
         /// <summary>
-        /// 获取当前客户端使用的针对 "application/json" 内容请求的序列化器。
+        /// 获取当前客户端使用的针对 "application/json" 请求载荷的序列化器。
         /// </summary>
         public IJsonSerializer JsonSerializer { get; }
 
         /// <summary>
-        /// 获取当前客户端使用的针对 "application/x-www-form-urlencoded" 内容请求的序列化器。
+        /// 获取当前客户端使用的针对 "application/x-www-form-urlencoded" 请求载荷的序列化器。
         /// </summary>
         public IFormUrlEncodedSerializer FormUrlEncodedSerializer { get; }
 
