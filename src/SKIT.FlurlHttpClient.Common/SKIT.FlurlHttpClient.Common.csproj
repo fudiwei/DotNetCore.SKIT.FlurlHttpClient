@@ -1,22 +1,23 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFrameworks>netstandard2.0; net462; netcoreapp3.1; net6.0; net8.0; net10.0</TargetFrameworks>
+        <TargetFrameworks>netstandard2.0; net462; net6.0; net8.0; net10.0</TargetFrameworks>
         <LangVersion>10.0</LangVersion>
         <Nullable>enable</Nullable>
         <RootNamespace>SKIT.FlurlHttpClient</RootNamespace>
+        <SuppressTfmSupportBuildWarnings>true</SuppressTfmSupportBuildWarnings>
     </PropertyGroup>
 
     <PropertyGroup>
         <PackageId>SKIT.FlurlHttpClient.Common</PackageId>
+        <PackageVersion>4.0.0-dev</PackageVersion>
         <PackageIcon>LOGO.png</PackageIcon>
         <PackageReadmeFile>README.md</PackageReadmeFile>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <PackageProjectUrl>https://github.com/fudiwei/DotNetCore.SKIT.FlurlHttpClient</PackageProjectUrl>
         <PackageTags>Flurl.Http</PackageTags>
-        <Version>4.0.0-dev</Version>
-        <Description>SKIT.FlurlHttpClient 系列开发工具包的公共组件。</Description>
         <Authors>Fu Diwei</Authors>
+        <Description>SKIT.FlurlHttpClient 系列开发工具包的公共组件。</Description>
         <RepositoryType>git</RepositoryType>
         <RepositoryUrl>https://github.com/fudiwei/DotNetCore.SKIT.FlurlHttpClient.git</RepositoryUrl>
     </PropertyGroup>
@@ -28,7 +29,6 @@
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
         <IncludeSymbols>true</IncludeSymbols>
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-        <SuppressTfmSupportBuildWarnings>true</SuppressTfmSupportBuildWarnings>
     </PropertyGroup>
 
     <ItemGroup>
@@ -45,10 +45,10 @@
         <PackageReference Include="Flurl" Version="4.0.0" />
         <PackageReference Include="Flurl.Http" Version="4.0.2" />
         <PackageReference Include="Microsoft.CSharp" Version="4.7.0" Condition="'$(TargetFramework)' == 'netstandard2.0'" />
-        <PackageReference Include="Microsoft.SourceLink.GitHub" Version="10.0.401" PrivateAssets="All" />
+        <PackageReference Include="Microsoft.SourceLink.GitHub" Version="10.0.402" PrivateAssets="All" />
         <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
-        <PackageReference Include="System.Text.Encodings.Web" Version="10.0.12" />
-        <PackageReference Include="System.Text.Json" Version="10.0.12" />
+        <PackageReference Include="System.Text.Encodings.Web" Version="10.0.13" />
+        <PackageReference Include="System.Text.Json" Version="10.0.13" />
     </ItemGroup>
 
 </Project>
