@@ -82,7 +82,7 @@ namespace SKIT.FlurlHttpClient.UnitTests.TestCases
 
             IFlurlRequest flurlRequest = client.CreateFlurlRequest(request, HttpMethod.Post, "mock_url");
 
-            var response = await client.SendFlurlRequestAsJsonAsync<MockTestResponse>(flurlRequest);
+            var response = await client.SendFlurlRequestAsJsonAsync<MockTestResponse>(flurlRequest, request, TestContext.Current.CancellationToken);
 
             Assert.True(response.IsSuccessful());
             Assert.NotEqual(0, response.GetRawStatus());
