@@ -40,7 +40,7 @@ namespace SKIT.FlurlHttpClient
             options.Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping;
             options.NumberHandling = JsonNumberHandling.AllowReadingFromString;
             options.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
-            options.AllowDuplicateProperties = false;
+            options.AllowDuplicateProperties = true;
             options.WriteIndented = false;
             options.PropertyNamingPolicy = null;
             options.PropertyNameCaseInsensitive = true;

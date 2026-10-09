@@ -7,7 +7,7 @@ namespace SKIT.FlurlHttpClient.UnitTests.TestCases
         [Fact(DisplayName = "测试用例：工具类 `_AsyncEx.RunTaskWithCancellationTokenAsync` 之任务完成")]
         public async Task TestUtilityInternalAsyncEx_RunTaskWithCancellationTokenAsync_CompletedTask()
         {
-            int result = await _AsyncEx.RunTaskWithCancellationTokenAsync(Task.FromResult(42));
+            int result = await _AsyncEx.RunTaskWithCancellationTokenAsync(Task.FromResult(42), TestContext.Current.CancellationToken);
 
             Assert.Equal(42, result);
         }
@@ -19,7 +19,7 @@ namespace SKIT.FlurlHttpClient.UnitTests.TestCases
             Task<int> task = Task.FromException<int>(exception);
 
             InvalidOperationException actual = await Assert.ThrowsAsync<InvalidOperationException>(
-                () => _AsyncEx.RunTaskWithCancellationTokenAsync(task));
+                () => _AsyncEx.RunTaskWithCancellationTokenAsync(task, TestContext.Current.CancellationToken));
 
             Assert.Same(exception, actual);
         }
@@ -43,7 +43,7 @@ namespace SKIT.FlurlHttpClient.UnitTests.TestCases
         {
             await Assert.ThrowsAsync<ArgumentNullException>(() =>
             {
-                return _AsyncEx.RunTaskWithCancellationTokenAsync<int>(null!);
+                return _AsyncEx.RunTaskWithCancellationTokenAsync<int>(null!, TestContext.Current.CancellationToken);
             });
         }
     }
