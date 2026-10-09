@@ -1,5 +1,3 @@
-using System;
-
 namespace SKIT.FlurlHttpClient.Internal
 {
 #pragma warning disable IDE1006

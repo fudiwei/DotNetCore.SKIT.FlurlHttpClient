@@ -1,7 +1,4 @@
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.IO;
 using System.Web;
 
 namespace SKIT.FlurlHttpClient
@@ -617,7 +614,7 @@ namespace SKIT.FlurlHttpClient
         public static string? GetMimeMapping(string fileName)
         {
             string? extension = Path.GetExtension(fileName);
-            return extension is not null && _mappings.Value.TryGetValue(extension, out string? mimeType) ? mimeType: Binary;
+            return extension is not null && _mappings.Value.TryGetValue(extension, out string? mimeType) ? mimeType : Binary;
         }
 #endif
     }

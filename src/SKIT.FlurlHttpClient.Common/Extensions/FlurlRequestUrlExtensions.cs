@@ -1,5 +1,3 @@
-using System;
-
 namespace Flurl.Http
 {
     public static class FlurlRequestUrlExtensions

@@ -1,6 +1,3 @@
-using System;
-using System.Net.Http;
-
 namespace Flurl.Http
 {
     public static class FlurlRequestVerbExtensions

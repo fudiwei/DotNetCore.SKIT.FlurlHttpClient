@@ -1,10 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Net.Http;
-using System.Threading;
-using System.Threading.Tasks;
 using Flurl;
-using Flurl.Http;
 using Flurl.Http.Configuration;
 using Flurl.Util;
 

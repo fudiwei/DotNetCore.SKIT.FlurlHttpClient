@@ -1,6 +1,3 @@
-using System;
-using Flurl.Http;
-
 namespace SKIT.FlurlHttpClient
 {
     /// <summary>

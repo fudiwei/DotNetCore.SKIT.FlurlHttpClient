@@ -1,7 +1,3 @@
-using System;
-using System.Threading;
-using System.Threading.Tasks;
-
 namespace SKIT.FlurlHttpClient.Internal
 {
 #pragma warning disable IDE1006

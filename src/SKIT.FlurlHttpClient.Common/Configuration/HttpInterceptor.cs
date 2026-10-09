@@ -1,7 +1,3 @@
-using System.Threading;
-using System.Threading.Tasks;
-using Flurl.Http;
-
 namespace SKIT.FlurlHttpClient
 {
     /// <summary>

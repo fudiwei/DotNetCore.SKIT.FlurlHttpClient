@@ -1,5 +1,3 @@
-using System;
-using System.IO;
 using Flurl.Http.Configuration;
 
 namespace SKIT.FlurlHttpClient
