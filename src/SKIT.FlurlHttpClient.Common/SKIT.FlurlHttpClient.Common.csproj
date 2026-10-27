@@ -45,10 +45,10 @@
         <PackageReference Include="Flurl" Version="4.0.0" />
         <PackageReference Include="Flurl.Http" Version="4.0.2" />
         <PackageReference Include="Microsoft.CSharp" Version="4.7.0" Condition="'$(TargetFramework)' == 'netstandard2.0'" />
-        <PackageReference Include="Microsoft.SourceLink.GitHub" Version="10.0.402" PrivateAssets="All" />
+        <PackageReference Include="Microsoft.SourceLink.GitHub" Version="10.0.403" PrivateAssets="All" />
         <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
-        <PackageReference Include="System.Text.Encodings.Web" Version="10.0.13" />
-        <PackageReference Include="System.Text.Json" Version="10.0.13" />
+        <PackageReference Include="System.Text.Encodings.Web" Version="10.0.14" />
+        <PackageReference Include="System.Text.Json" Version="10.0.14" />
     </ItemGroup>
 
 </Project>

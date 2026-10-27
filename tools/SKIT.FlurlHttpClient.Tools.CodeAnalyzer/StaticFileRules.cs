@@ -16,6 +16,8 @@ namespace SKIT.FlurlHttpClient.Tools.CodeAnalyzer
     {
         public const string RULE_ID_PREFIX = "static-file";
 
+        private const char FILE_NAME_SEPARATOR = '#';
+
         public static IReadOnlyList<(string Id, StaticFileRule Rule)> Defaults { get; } = new[]
         {
             UseModelNameCaseRule(),
@@ -130,18 +132,9 @@ namespace SKIT.FlurlHttpClient.Tools.CodeAnalyzer
                     }
 
                     string className = classes[0].Identifier.ValueText;
-                    string fileName = Path.GetFileNameWithoutExtension(unit.FileInfo.Name);
+                    string fileName = Path.GetFileNameWithoutExtension(unit.FileInfo.Name).Split(FILE_NAME_SEPARATOR)[0];
                     if (!string.Equals(fileName, className, StringComparison.Ordinal))
-                    {
-                        if (fileName.Contains('_'))
-                        {
-                            fileName = fileName.Split('_')[0];
-                            if (string.Equals(fileName, className, StringComparison.Ordinal))
-                                yield break;
-                        }
-
                         yield return new StaticFileAnalysisIssue(RuleId, $"接口方法源代码类声明的与文件名不匹配。（Expected: \"{fileName}\", Actual: \"{className}\"）", unit);
-                    }
                 }
             }
             );
@@ -382,7 +375,7 @@ namespace SKIT.FlurlHttpClient.Tools.CodeAnalyzer
                     if (!unit.FileInfo.Extension.Equals(".json", StringComparison.OrdinalIgnoreCase))
                         yield break;
 
-                    string name = Path.GetFileNameWithoutExtension(unit.FileInfo.Name).Split('#').First();
+                    string name = Path.GetFileNameWithoutExtension(unit.FileInfo.Name).Split(FILE_NAME_SEPARATOR).First();
                     string content = ctx.ReadFile(unit);
 
                     Type? type = null;
@@ -437,7 +430,7 @@ namespace SKIT.FlurlHttpClient.Tools.CodeAnalyzer
                     if (!unit.FileInfo.Extension.Equals(".xml", StringComparison.OrdinalIgnoreCase))
                         yield break;
 
-                    string name = Path.GetFileNameWithoutExtension(unit.FileInfo.Name).Split('#').First();
+                    string name = Path.GetFileNameWithoutExtension(unit.FileInfo.Name).Split(FILE_NAME_SEPARATOR).First();
                     string content = ctx.ReadFile(unit);
 
                     Type? type = null;

@@ -23,7 +23,7 @@ namespace SKIT.FlurlHttpClient.Tools.CodeAnalyzer
         {
             _options = options ?? throw new ArgumentNullException(nameof(options));
             _options.ProjectSDKModelsCodeFileNameMatchRegex ??= new Regex("(Request|Response)\\.cs$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
-            _options.ProjectSDKMethodsCodeFileNameMatchRegex ??= new Regex("[a-zA-Z0-9]+ClientExecute[a-zA-Z0-9]+Extensions\\.cs$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+            _options.ProjectSDKMethodsCodeFileNameMatchRegex ??= new Regex("[a-zA-Z0-9]+ClientExecute[a-zA-Z0-9]*Extensions(#[a-zA-Z0-9]+)?\\.cs$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
             _options.ProjectSDKWebhooksCodeFileNameMatchRegex ??= new Regex("\\.cs$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
             if (_options.Assembly is null)
