@@ -1,4 +1,4 @@
-﻿# CHANGELOG
+# CHANGELOG
 
 - v3.1.1 (2025-01-24)
     - **变更**：升级依赖 `System.Text.Json` 至 v8.0.5。

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using HtmlAgilityPack;
 
 namespace SKIT.FlurlHttpClient.Tools.DocsTracker.Trackers

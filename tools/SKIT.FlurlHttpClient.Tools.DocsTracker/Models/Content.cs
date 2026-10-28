@@ -1,4 +1,4 @@
-﻿namespace SKIT.FlurlHttpClient.Tools.DocsTracker.Models
+namespace SKIT.FlurlHttpClient.Tools.DocsTracker.Models
 {
     public class Content
     {
