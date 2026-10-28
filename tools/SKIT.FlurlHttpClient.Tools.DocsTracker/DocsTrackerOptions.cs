@@ -1,4 +1,4 @@
-﻿namespace SKIT.FlurlHttpClient.Tools.DocsTracker
+namespace SKIT.FlurlHttpClient.Tools.DocsTracker
 {
     public class DocsTrackerOptions
     {

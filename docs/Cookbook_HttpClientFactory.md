@@ -1,4 +1,4 @@
-﻿### 最佳实践：与 `IHttpClientFactory` 集成
+### 最佳实践：与 `IHttpClientFactory` 集成
 
 ---
 
