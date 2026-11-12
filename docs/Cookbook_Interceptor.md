@@ -49,3 +49,32 @@ public class HttpLoggingInterceptor : HttpInterceptor
 ```
 
 示例代码中的 `FlurlCall` 对象，是 `Flurl.Http` 的内置类型，有关该类型的更进一步的说明，请自行阅读相关文档。
+
+---
+
+#### 在拦截器中访问原始客户端或请求模型
+
+如果你想在多个客户端中复用拦截器，并根据特定客户端或请求来处理不同的分支逻辑，你可以：
+
+```csharp
+public class CustomInterceptor : HttpInterceptor
+{
+    public override Task BeforeCallAsync(HttpInterceptorContext context, CancellationToken cancellationToken)
+    {
+        var client = context.GetOriginalClient();
+        var request = context.GetOriginalRequest();
+
+        if (client is WechatApiClient wxClient)
+        {
+            if (request is CgibinTokenRequest wxCgibinTokenRequest)
+            {
+                // Do something...
+            }
+        }
+
+        return Task.CompletedTask;
+    }
+}
+```
+
+需要注意的是，你不应该在拦截器中修改原始客户端或请求模型，这可能会导致意外的结果。
