@@ -173,6 +173,7 @@ namespace SKIT.FlurlHttpClient
             try
             {
                 flurlRequest.Client = FlurlClient;
+                flurlRequest.Content = httpContent;
                 flurlRequest.AllowAnyHttpStatus();
 
                 // DO NOT use `flurlRequest.SendAsync()`! It will lose the wrapped object.
