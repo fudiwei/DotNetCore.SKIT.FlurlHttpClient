@@ -7,7 +7,7 @@ namespace SKIT.FlurlHttpClient.UnitTests.TestCases
         {
             using var client = new MockTestClient();
             IFlurlRequest request = client.CreateFlurlRequest(new MockTestRequest(), HttpMethod.Get, "mock_url");
-            MockTestResponse response = await client.SendFlurlRequestAsJsonAsync<MockTestResponse>(request);
+            MockTestResponse response = await client.SendFlurlRequestAsJsonAsync<MockTestResponse>(request, TestContext.Current.CancellationToken);
             HttpHeaderCollection headers = response.GetRawHeaders();
 
             Assert.True(headers.ContainsKey("x-test-multi"));
