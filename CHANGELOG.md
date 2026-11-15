@@ -1,5 +1,8 @@
 # CHANGELOG
 
+- v4.0.1 (2026-11-15)
+    - **修复**：修复发送请求时请求体丢失的问题。
+
 - v4.0.0 (2026-11-12)
     - **新增**：拦截器中可获取原始客户端或请求模型对象。
     - **变更**：移除内置自定义 JsonConverter。相关类型已转移至 [SKIT.JsonConv 项目](https://github.com/fudiwei/DotNetCore.SKIT.JsonConv)。
